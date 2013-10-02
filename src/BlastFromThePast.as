@@ -23,7 +23,7 @@ package
 			this.addChild(stats);
 			
 			
-			//Starling.multitouchEnabled = true;
+			Starling.multitouchEnabled = true;
 			
 			stage.frameRate = 60;
 		

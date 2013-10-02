@@ -22,11 +22,4 @@
 		<nature>com.adobe.flexbuilder.project.apollonature</nature>
 		<nature>com.adobe.flexbuilder.project.actionscriptnature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>[source path] src</name>
-			<type>2</type>
-			<location>C:/Users/Anders Nord/Mina program/Adobe Flash Builder v.4.6 Premium (2011) [Multilanguage + Crack][WwW.ZoNaTorrent.CoM]/SWC/stats/src</location>
-		</link>
-	</linkedResources>
 </projectDescription>
