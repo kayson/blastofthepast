@@ -1,6 +1,9 @@
 package
 {
 	import flash.display.Bitmap;
+	import flash.display.StageOrientation;
+	import flash.geom.Orientation3D;
+	import flash.text.AutoCapitalize;
 	
 	import nape.geom.Vec2;
 	import nape.phys.Body;
@@ -18,10 +21,10 @@ package
 	
 	public class GameWorld extends Sprite
 	{
-		[Embed(source="C:/Users/Anders Nord/Adobe Flash Builder 4.6/TutorialStarling/Starling Nape Basics/lib/CircleBadGuy.png")] private const circleBadGuyRaw:Class;
+		[Embed(source="../images/CircleBadGuy.png")] private const circleBadGuyRaw:Class;
 		private const circleBadGuyBitmap:Bitmap = new circleBadGuyRaw();
 		
-		[Embed(source="C:/Users/Anders Nord/Adobe Flash Builder 4.6/TutorialStarling/Starling Nape Basics/lib/ScaredBox.png")] private const scaredBoxRaw:Class;
+		[Embed(source="../images/ScaredBox.png")] private const scaredBoxRaw:Class;
 		private const scaredBoxBitmap:Bitmap = new scaredBoxRaw();
 		
 		private var mySpace:Space;
@@ -32,6 +35,7 @@ package
 		
 		public function GameWorld()
 		{
+			//stage.set  setOrientation( StageOrientation.ROTATED_RIGHT );
 			addEventListener( Event.ADDED_TO_STAGE, onInit );
 			super();
 		}
@@ -50,8 +54,8 @@ package
 			var worldGravity:Vec2 = Vec2.weak(0,500);
 			mySpace = new Space( worldGravity );
 			
-			screenWidth = Starling.current.nativeStage.fullScreenWidth;
-			screenHeight = Starling.current.nativeStage.fullScreenHeight;
+			screenWidth = 960;//Starling.current.nativeStage.fullScreenWidth;
+			screenHeight = 640;//Starling.current.nativeStage.fullScreenHeight;
 		}
 		
 		
