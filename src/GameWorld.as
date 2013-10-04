@@ -35,7 +35,6 @@ package
 		
 		public function GameWorld()
 		{
-			//stage.set  setOrientation( StageOrientation.ROTATED_RIGHT );
 			addEventListener( Event.ADDED_TO_STAGE, onInit );
 			super();
 		}
