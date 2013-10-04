@@ -1,9 +1,6 @@
 package
 {
 	import flash.display.Bitmap;
-	import flash.display.StageOrientation;
-	import flash.geom.Orientation3D;
-	import flash.text.AutoCapitalize;
 	
 	import nape.geom.Vec2;
 	import nape.phys.Body;
