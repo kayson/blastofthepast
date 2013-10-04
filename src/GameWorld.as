@@ -9,10 +9,15 @@ package
 	import nape.shape.Circle;
 	import nape.shape.Polygon;
 	import nape.space.Space;
-	
+
 	import starling.core.Starling;
 	import starling.display.Image;
 	import starling.display.Sprite;
+
+	//touchevents
+	import starling.events.Touch;
+	import starling.events.TouchEvent;
+	import starling.events.TouchPhase;
 	import starling.events.Event;
 	
 	
@@ -42,6 +47,7 @@ package
 			InitBodies();
 			
 			addEventListener( Event.ENTER_FRAME, UpdateWorld );
+			stage.addEventListener(TouchEvent.TOUCH, touch);
 		}		
 		
 		
@@ -50,8 +56,8 @@ package
 			var worldGravity:Vec2 = Vec2.weak(0,500);
 			mySpace = new Space( worldGravity );
 			
-			screenWidth = Starling.current.nativeStage.fullScreenWidth;
-			screenHeight = Starling.current.nativeStage.fullScreenHeight;
+			screenWidth = 960;//Starling.current.nativeStage.fullScreenWidth;
+			screenHeight = 640;//Starling.current.nativeStage.fullScreenHeight;
 		}
 		
 		
@@ -75,6 +81,8 @@ package
 			var floor:Body = new Body( BodyType.STATIC );
 			floor.shapes.add( new Polygon(Polygon.rect(0,screenHeight - 20, screenWidth, 20)) );
 			floor.space = mySpace;
+			
+			
 			
 			for( var i:int = 0; i < 6; i++ )
 			{
@@ -104,8 +112,18 @@ package
 		private function UpdateWorld( evt:Event ):void
 		{
 			mySpace.step( 1 / 60 );
+			
 			mySpace.liveBodies.foreach( updateGraphics );
 		}
+		
+		private function touch(e:TouchEvent):void
+		{
+			var touch:Touch = e.getTouch(stage, TouchPhase.BEGAN);
+			if (touch)
+			{
+				mySpace.liveBodies.at(0).position.setxy(screenWidth / 2, 0);
+			}
+		}	
 		
 		
 		private function updateGraphics( body:Body ):void
@@ -115,7 +133,9 @@ package
 			graphic.y = body.position.y;
 			
 			graphic.rotation = body.rotation;
-		}		
+		}
+		
+		
 
 	}
 }
