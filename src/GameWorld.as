@@ -58,6 +58,7 @@ package
 			
 			screenWidth = 960;//Starling.current.nativeStage.fullScreenWidth;
 			screenHeight = 640;//Starling.current.nativeStage.fullScreenHeight;
+
 		}
 		
 		
