@@ -54,8 +54,8 @@ package
 			var worldGravity:Vec2 = Vec2.weak(0,500);
 			mySpace = new Space( worldGravity );
 			
-			screenWidth = 960;//Starling.current.nativeStage.fullScreenWidth;
-			screenHeight = 640;//Starling.current.nativeStage.fullScreenHeight;
+			screenWidth = Starling.current.nativeStage.fullScreenWidth;
+			screenHeight = Starling.current.nativeStage.fullScreenHeight;
 		}
 		
 		
@@ -92,6 +92,7 @@ package
 					
 					scaredBox.shapes.add( new Polygon( Polygon.box(32,32) ) );
 					scaredBox.position.setxy( (screenWidth / 2) - (j * 32), (screenHeight - 20) - (i * 32) );
+
 					scaredBox.userData.graphic = scaredBoxImage;
 					scaredBox.space = mySpace;
 					

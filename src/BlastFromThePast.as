@@ -27,15 +27,12 @@ package
 			
 			stage.frameRate = 60;
 		
-			myStarling = new Starling(GameWorld, stage, new Rectangle(0,0,640,960));
+			myStarling = new Starling(GameWorld, stage, new Rectangle(0,0,960,640));
 			myStarling.simulateMultitouch = true;
 			myStarling.antiAliasing = 1;
 			myStarling.start();
 			super();
 			
-			// support autoOrients
-			stage.align = StageAlign.TOP_LEFT;
-			stage.scaleMode = StageScaleMode.NO_SCALE;
 		}
 	}
 }
