@@ -50,8 +50,9 @@ package
 			var worldGravity:Vec2 = Vec2.weak(0,500);
 			mySpace = new Space( worldGravity );
 			
-			screenWidth = Starling.current.nativeStage.fullScreenWidth;
-			screenHeight = Starling.current.nativeStage.fullScreenHeight;
+			screenWidth = 960;//Starling.current.nativeStage.fullScreenWidth;
+			screenHeight = 640;//Starling.current.nativeStage.fullScreenHeight;
+
 		}
 		
 		
