@@ -41,10 +41,12 @@ package
 		private var screenWidth:Number;
 		private var screenHeight:Number;
 		private var circleBadGuyImage:Image;
+		private var scaredBoxImage:Image;
 		private var fireBallImage:Image;
 		private var projectile:CbType = new CbType();
 		
 		private var circleBadGuy:Body;
+		private var scaredBox:Body;
 		
 		private var xDir:Number;
 		private var yDir:Number;
@@ -98,6 +100,30 @@ package
 			circleBadGuyImage.y = circleBadGuy.position.y;
 			addChild(circleBadGuyImage);
 			
+			
+			
+			scaredBoxImage = Image.fromBitmap( scaredBoxBitmap, false );
+			scaredBoxImage.pivotX = scaredBoxImage.width / 2;
+			scaredBoxImage.pivotY = scaredBoxImage.height / 2;
+
+			
+			scaredBox = new Body( BodyType.DYNAMIC );
+			scaredBox.shapes.add( new Polygon( Polygon.box(32,32)) );
+			scaredBox.position.setxy(700 , 50);
+			
+			scaredBox.setShapeFilters(new InteractionFilter(2));
+			
+			scaredBox.userData.graphic = scaredBoxImage;
+			scaredBox.space = mySpace;
+			scaredBox.gravMass = 0;
+			
+			scaredBoxImage.x = scaredBox.position.x;
+			scaredBoxImage.y = scaredBox.position.y;
+			addChild(scaredBoxImage);
+			
+			
+			
+			
 			var floor:Body = new Body( BodyType.STATIC );
 			floor.shapes.add( new Polygon(Polygon.rect(0,screenHeight - 20, screenWidth, 20)) );
 			floor.space = mySpace;
@@ -128,6 +154,7 @@ package
 			{			
 				var shootDir:Vec2 = Vec2.get(1*(touch.globalX-xDir),1*(touch.globalY-yDir));
 				shootDir = shootDir.normalise();
+				
 				shootDir.x *= 100;
 				shootDir.y *= 100;
 						
@@ -146,6 +173,7 @@ package
 				fireBall.space = mySpace;
 				fireBall.gravMass = 0;
 				fireBall.setShapeFilters(new InteractionFilter(1,~1));
+				fireBall.rotation = shootDir.angle;
 				
 				fireBallImage.x = circleBadGuy.position.x;
 				fireBallImage.y = circleBadGuy.position.y;
