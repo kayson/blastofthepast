@@ -12,9 +12,11 @@ package
 	
 	public class GameWorld extends Sprite
 	{
+
 		private var screenWelcome:Welcome;
 		private var screenInGame:InGame;
 	
+
 		public function GameWorld()
 		{
 			addEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
@@ -27,9 +29,11 @@ package
 			
 			this.addEventListener(events.NavigationEvent.CHANGE_SCREEN, onChangeScreen);
 			
+
 			screenInGame = new InGame();
 			screenInGame.disposeTemporarily();
 			this.addChild(screenInGame);
+
 			
 			screenWelcome = new Welcome();
 			this.addChild(screenWelcome);
@@ -41,10 +45,12 @@ package
 		{
 			switch (event.params.id)
 			{
+
 				case "play":
 					screenWelcome.disposeTemporarily();
 					screenInGame.initialize();
 					break;
+
 			}
 		}
 
