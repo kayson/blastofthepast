@@ -8,6 +8,8 @@ package
 	
 	import starling.core.Starling;
 	
+	[SWF(frameRate="60")]
+	
 	public class BlastFromThePast extends Sprite
 	{
 		
