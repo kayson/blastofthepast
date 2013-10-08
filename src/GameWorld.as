@@ -1,13 +1,13 @@
 package
 {
 
-	import starling.display.Sprite;
-	import starling.events.Event;
-
+	import events.NavigationEvent;
+	
 	import screens.InGame;
 	import screens.Welcome;
 	
-	import events.NavigationEvent;
+	import starling.display.Sprite;
+	import starling.events.Event;
 	
 	
 	public class GameWorld extends Sprite
@@ -15,6 +15,7 @@ package
 
 		private var screenWelcome:Welcome;
 		private var screenInGame:InGame;
+
 	
 
 		public function GameWorld()

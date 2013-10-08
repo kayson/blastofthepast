@@ -1,8 +1,8 @@
 package screens
 {
-	import events.NavigationEvent;
-	
 	import flash.display.Bitmap;
+	
+	import events.NavigationEvent;
 	
 	import nape.callbacks.CbEvent;
 	import nape.callbacks.CbType;
@@ -38,6 +38,7 @@ package screens
 		private var fireBallImage:Image;
 		private var scaredBoxImage:Image;
 		private var projectile:CbType = new CbType();
+		private var other:CbType = new CbType();
 		private var scaredBox:Body;
 		private var circleBadGuy:Body;
 		private var xDir:Number;
@@ -60,7 +61,7 @@ package screens
 			
 			addEventListener( TouchEvent.TOUCH, touch );
 			
-			mySpace.listeners.add(new InteractionListener(CbEvent.BEGIN, InteractionType.COLLISION, projectile, projectile, hasCollided));
+			mySpace.listeners.add(new InteractionListener(CbEvent.BEGIN, InteractionType.COLLISION, projectile, other, hasCollided));
 			
 		
 		}
@@ -86,45 +87,53 @@ package screens
 			
 			circleBadGuy = new Body( BodyType.DYNAMIC );
 			circleBadGuy.shapes.add( new Circle( 32 ) );
-			circleBadGuy.position.setxy(screenWidth / 2, 0);
+			circleBadGuy.position.setxy(screenWidth / 2, 10);
 			circleBadGuy.setShapeMaterials( Material.steel() );
 			circleBadGuy.userData.graphic = circleBadGuyImage;
-			circleBadGuy.space = mySpace;
-			
+			circleBadGuy.space = mySpace;		
+			circleBadGuy.gravMass = 0;
 			circleBadGuy.setShapeFilters(new InteractionFilter(1));
 			
 			circleBadGuyImage.x = circleBadGuy.position.x;
 			circleBadGuyImage.y = circleBadGuy.position.y;
 			addChild(circleBadGuyImage);
 			
-			
-			
-			scaredBoxImage = new Image(Assets.getTexture((("scaredBoxRaw"))));
-			scaredBoxImage.pivotX = scaredBoxImage.width / 2;
-			scaredBoxImage.pivotY = scaredBoxImage.height / 2;
-			
-			
-			scaredBox = new Body( BodyType.DYNAMIC );
-			scaredBox.shapes.add( new Polygon( Polygon.box(32,32)) );
-			scaredBox.position.setxy(700 , 50);
-			
-			scaredBox.setShapeFilters(new InteractionFilter(2));
-			
-			scaredBox.userData.graphic = scaredBoxImage;
-			scaredBox.space = mySpace;
-			scaredBox.gravMass = 0;
-			
-			scaredBoxImage.x = scaredBox.position.x;
-			scaredBoxImage.y = scaredBox.position.y;
-			addChild(scaredBoxImage);
-			
+			for( var i:int = 0; i < 6; i++ )
+			{
+				for( var j:int = -3; j < 4; j++ )
+				{
+					var scaredBox:Body = new Body( BodyType.DYNAMIC );
+					var scaredBoxImage:Image =  new Image(Assets.getTexture((("scaredBoxRaw"))));
+					
+					scaredBoxImage.pivotX = scaredBoxImage.width / 2;
+					scaredBoxImage.pivotY = scaredBoxImage.height / 2;
+					scaredBoxImage.scaleX = 0.5;
+					scaredBoxImage.scaleY = 0.5;
+					
+					scaredBox.shapes.add( new Polygon( Polygon.box(16,16) ) );
+					scaredBox.position.setxy( (screenWidth / 2) - (j * 16), (screenHeight - 20) - (i * 16) );
+					scaredBox.userData.graphic = scaredBoxImage;
+					scaredBox.space = mySpace;
+					
+					scaredBox.setShapeFilters(new InteractionFilter(2));
+					
+					scaredBox.cbTypes.add(other);
+					
+					scaredBoxImage.x = scaredBox.position.x;
+					scaredBoxImage.y = scaredBox.position.y;
+					addChild(scaredBoxImage);
+				}
+			}
+						
 			
 			
 			
 			var floor:Body = new Body( BodyType.STATIC );
 			floor.shapes.add( new Polygon(Polygon.rect(0,screenHeight - 20, screenWidth, 20)) );
 			floor.space = mySpace;
+		
 		}
+		
 		
 		
 		private function UpdateWorld( evt:Event ):void
@@ -183,9 +192,19 @@ package screens
 		private function hasCollided(cb:InteractionCallback):void {
 			
 			var a:Body = cb.int1 as Body;
-			var b:Body = cb.int2 as Body;
-			
-			trace("COLLIDE");
+			var explosionPos:Vec2 = a.position;
+			for(var i:int = 0; i < mySpace.liveBodies.length; i++)
+			{		
+				var b:Body = mySpace.liveBodies.at(i);
+				var bodyPos:Vec2 = b.position;
+				var impulseVector:Vec2 = new Vec2(bodyPos.x-explosionPos.x, bodyPos.y-explosionPos.y);
+				if(b.cbTypes.has(other) && impulseVector.length < 400)
+				{
+					var impulseForce:Number = Math.log((400-impulseVector.length)/80 + 1)*80;
+					var impulse:Vec2 = impulseVector.mul(impulseForce/impulseVector.length);
+					b.applyImpulse(impulse);
+				}
+			}
 		}
 
 		private function updateGraphics( body:Body ):void
