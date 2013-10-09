@@ -80,9 +80,13 @@ package screens
 		
 		private function InitBodies():void
 		{	
+			//Parallax background baby!
+			
 			bg = new GameBackground();
-			bg.speed = 20;
+			bg.speed = 10;
 			this.addChild(bg);
+			
+			// Initialize objects etc
 			
 			circleBadGuyImage = new Image(Assets.getTexture((("circleBadGuyRaw"))));
 			circleBadGuyImage.pivotX = circleBadGuyImage.width / 2;
@@ -92,11 +96,13 @@ package screens
 			
 			circleBadGuy = new Body( BodyType.DYNAMIC );
 			circleBadGuy.shapes.add( new Circle( 32 ) );
-			circleBadGuy.position.setxy(screenWidth / 2, 10);
-			circleBadGuy.setShapeMaterials( Material.steel() );
+			circleBadGuy.position.setxy(screenWidth / 2, 0);
+			circleBadGuy.setShapeMaterials( Material.rubber() );
 			circleBadGuy.userData.graphic = circleBadGuyImage;
 			circleBadGuy.space = mySpace;		
-			circleBadGuy.gravMass = 0;
+			circleBadGuy.cbTypes.add(other);
+			circleBadGuy.mass = 0.5;
+
 			circleBadGuy.setShapeFilters(new InteractionFilter(1));
 			
 			circleBadGuyImage.x = circleBadGuy.position.x;
@@ -145,15 +151,24 @@ package screens
 			//stoneImage.height = 20;
 			
 			var floor:Body = new Body( BodyType.STATIC );
+
 			floor.shapes.add( new Polygon(Polygon.box(128, 128)));
-			
+			floor.setShapeFilters(new InteractionFilter(2));
+			floor.cbTypes.add(other);
 			
 			floor.position.setxy(screenWidth / 2, screenHeight - 20);
 			//floor.setShapeMaterials( Material.steel() );
 			floor.userData.graphic = stoneImage;
 			
+
+			/*floor.shapes.add( new Polygon(Polygon.rect(0,screenHeight - 20, screenWidth, 20)) );
+			floor.setShapeFilters(new InteractionFilter(2));
+			floor.cbTypes.add(other);*/
+			
+			
+			
 			floor.space = mySpace;
-			//floor.setShapeFilters(new InteractionFilter(1));
+		
 			
 			stoneImage.x = screenWidth / 2;//floor.position.x;
 			stoneImage.y = screenHeight - 20;//floor.position.y;
@@ -179,9 +194,11 @@ package screens
 			//floor.setShapeMaterials( Material.steel() );
 			floor2.userData.graphic = stoneImage2;
 			
-			floor2.space = mySpace;
-			//floor.setShapeFilters(new InteractionFilter(1));
+			floor2.setShapeFilters(new InteractionFilter(2));
+			floor2.cbTypes.add(other);
 			
+			floor2.space = mySpace;
+
 			stoneImage2.x = floor2.position.x;
 			stoneImage2.y = floor2.position.y;
 			//stoneImage.width = screenWidth;
@@ -212,7 +229,7 @@ package screens
 			
 			if(touch.phase == TouchPhase.ENDED) //on finger up
 			{	
-				var shootDir:Vec2 = Vec2.get(1*(touch.globalX-xDir),1*(touch.globalY-yDir));
+				var shootDir:Vec2 = Vec2.get(-1*(touch.globalX-xDir),-1*(touch.globalY-yDir));
 				shootDir = shootDir.normalise();
 				
 				shootDir.x *= 100;
