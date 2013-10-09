@@ -9,7 +9,7 @@ package
 	public class Assets
 	{
 		
-		[Embed(source="../media/graphics/bgWelcome.jpg")]
+		[Embed(source="../images/bgWelcome.jpg")]
 		public static const BgWelcome:Class;
 		
 		[Embed(source="../images/play.png")]
@@ -24,6 +24,24 @@ package
 		[Embed(source="../images/Fireball.png")] 
 		private static const fireBallRaw:Class;
 		
+		[Embed(source="../images/stone.jpg")] 
+		private static const stoneBlock:Class;
+		
+		//Background layers
+		
+		[Embed(source="../images/bgLayer1.jpg")]
+		public static const BgLayer1:Class;
+		
+		[Embed(source="../images/bgLayer2.png")]
+		public static const BgLayer2:Class;
+		
+		[Embed(source="../images/bgLayer3.png")]
+		public static const BgLayer3:Class;
+		
+		[Embed(source="../images/bgLayer4.png")]
+		public static const BgLayer4:Class;
+		
+		
 		private static var gameTextures:Dictionary = new Dictionary();
 			
 		public static function getTexture(name:String):Texture
@@ -35,15 +53,6 @@ package
 			}
 			return gameTextures[name];
 		}
-		
-		public static function getBitmap(name:String):Bitmap
-		{
-			if (gameTextures[name] == undefined)
-			{
-				var bitmap:Bitmap = new Assets[name]();
-				gameTextures[name] = bitmap;
-			}
-			return gameTextures[name];
-		}
+
 	}
 }

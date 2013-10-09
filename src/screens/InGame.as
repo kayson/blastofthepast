@@ -3,6 +3,7 @@ package screens
 	import flash.display.Bitmap;
 	
 	import events.NavigationEvent;
+	import objects.GameBackground;
 	
 	import nape.callbacks.CbEvent;
 	import nape.callbacks.CbType;
@@ -43,6 +44,7 @@ package screens
 		private var circleBadGuy:Body;
 		private var xDir:Number;
 		private var yDir:Number;
+		private var bg:GameBackground;
 
 				
 		public function InGame()
@@ -78,6 +80,9 @@ package screens
 		
 		private function InitBodies():void
 		{	
+			bg = new GameBackground();
+			bg.speed = 20;
+			this.addChild(bg);
 			
 			circleBadGuyImage = new Image(Assets.getTexture((("circleBadGuyRaw"))));
 			circleBadGuyImage.pivotX = circleBadGuyImage.width / 2;
@@ -109,9 +114,10 @@ package screens
 					scaredBoxImage.pivotY = scaredBoxImage.height / 2;
 					scaredBoxImage.scaleX = 0.5;
 					scaredBoxImage.scaleY = 0.5;
+				
 					
 					scaredBox.shapes.add( new Polygon( Polygon.box(16,16) ) );
-					scaredBox.position.setxy( (screenWidth / 2) - (j * 16), (screenHeight - 20) - (i * 16) );
+					scaredBox.position.setxy( (screenWidth / 2) - (j * 16), (screenHeight - 100) - (i * 16) );
 					scaredBox.userData.graphic = scaredBoxImage;
 					scaredBox.space = mySpace;
 					
@@ -125,12 +131,63 @@ package screens
 				}
 			}
 						
+			//Detta har Anders gjort , temporärt lite grötigt bara för att få upp lite hinder etc.
 			
-			
+			//The level building blocks.  -----------------------------------
+
+			var stoneImage:Image;
+			stoneImage = new Image(Assets.getTexture((("stoneBlock"))));
+			stoneImage.pivotX = stoneImage.width / 2;
+			stoneImage.pivotY = stoneImage.height / 2;
+			stoneImage.scaleX = 0.5;
+			stoneImage.scaleY = 0.5;
+			//stoneImage.width = screenWidth;
+			//stoneImage.height = 20;
 			
 			var floor:Body = new Body( BodyType.STATIC );
-			floor.shapes.add( new Polygon(Polygon.rect(0,screenHeight - 20, screenWidth, 20)) );
+			floor.shapes.add( new Polygon(Polygon.box(128, 128)));
+			
+			
+			floor.position.setxy(screenWidth / 2, screenHeight - 20);
+			//floor.setShapeMaterials( Material.steel() );
+			floor.userData.graphic = stoneImage;
+			
 			floor.space = mySpace;
+			//floor.setShapeFilters(new InteractionFilter(1));
+			
+			stoneImage.x = screenWidth / 2;//floor.position.x;
+			stoneImage.y = screenHeight - 20;//floor.position.y;
+			//stoneImage.width = screenWidth;
+			addChild(stoneImage);
+			
+			//The level building blocks. -----------------------------------
+		
+			var stoneImage2:Image;
+			stoneImage2 = new Image(Assets.getTexture((("stoneBlock"))));
+			stoneImage2.pivotX = stoneImage2.width / 2;
+			stoneImage2.pivotY = stoneImage2.height / 2;
+			stoneImage2.scaleX = 0.5;
+			stoneImage2.scaleY = 0.5;
+			//stoneImage.width = screenWidth;
+			//stoneImage.height = 20;
+			
+			var floor2:Body = new Body( BodyType.STATIC );
+			floor2.shapes.add( new Polygon(Polygon.box(128, 128)));
+			
+			
+			floor2.position.setxy(screenWidth / 4, screenHeight - 20);
+			//floor.setShapeMaterials( Material.steel() );
+			floor2.userData.graphic = stoneImage2;
+			
+			floor2.space = mySpace;
+			//floor.setShapeFilters(new InteractionFilter(1));
+			
+			stoneImage2.x = floor2.position.x;
+			stoneImage2.y = floor2.position.y;
+			//stoneImage.width = screenWidth;
+			addChild(stoneImage2);
+			
+		
 		
 		}
 		
