@@ -87,11 +87,13 @@ package screens
 			
 			circleBadGuy = new Body( BodyType.DYNAMIC );
 			circleBadGuy.shapes.add( new Circle( 32 ) );
-			circleBadGuy.position.setxy(screenWidth / 2, 10);
-			circleBadGuy.setShapeMaterials( Material.steel() );
+			circleBadGuy.position.setxy(screenWidth / 2, 0);
+			circleBadGuy.setShapeMaterials( Material.rubber() );
 			circleBadGuy.userData.graphic = circleBadGuyImage;
 			circleBadGuy.space = mySpace;		
-			circleBadGuy.gravMass = 0;
+			circleBadGuy.cbTypes.add(other);
+			circleBadGuy.mass = 0.5;
+
 			circleBadGuy.setShapeFilters(new InteractionFilter(1));
 			
 			circleBadGuyImage.x = circleBadGuy.position.x;
@@ -130,6 +132,8 @@ package screens
 			
 			var floor:Body = new Body( BodyType.STATIC );
 			floor.shapes.add( new Polygon(Polygon.rect(0,screenHeight - 20, screenWidth, 20)) );
+			floor.setShapeFilters(new InteractionFilter(2));
+			floor.cbTypes.add(other);
 			floor.space = mySpace;
 		
 		}
@@ -155,7 +159,7 @@ package screens
 			
 			if(touch.phase == TouchPhase.ENDED) //on finger up
 			{	
-				var shootDir:Vec2 = Vec2.get(1*(touch.globalX-xDir),1*(touch.globalY-yDir));
+				var shootDir:Vec2 = Vec2.get(-1*(touch.globalX-xDir),-1*(touch.globalY-yDir));
 				shootDir = shootDir.normalise();
 				
 				shootDir.x *= 100;
