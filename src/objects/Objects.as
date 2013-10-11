@@ -14,23 +14,18 @@ package objects
 	import nape.shape.Circle;
 	import nape.shape.Polygon;
 	import nape.space.Space;
-	
-	import starling.core.Starling;
 	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.events.Event;
 	import starling.events.Touch;
-	import starling.events.TouchEvent;
-	import starling.events.TouchPhase;
+
 	
-	public class StaticObjects extends Sprite
+	public class Objects extends Sprite
 	{
-		
-		private var bgLayer1:BgLayer;
 		private var screenWidth:Number = 960;
 		private var screenHeight:Number= 640;
 		private var _mySpace:Space;
-		private var _cbStatic:CbType;
+		private var _cbType:CbType;
 		private var _position:Vec2;
 		private var _WidthHeight:Vec2;
 		
@@ -38,20 +33,25 @@ package objects
 
 		private var _speed:Number = 0;
 		
-		public function StaticObjects(type:String,mySpace:Space,cbStatic:CbType,position:Vec2,wh:Vec2 )
+		public function Objects(type:String,mySpace:Space,cbType:CbType,position:Vec2,wh:Vec2 )
 		{
 			super();
 			//Koppla till de lokala variablerna
 			_mySpace 	= mySpace;
-			_cbStatic	= cbStatic;
+			_cbType		= cbType;
 			_position	= position;
 			_WidthHeight= wh;
-			
-			//kanske fixa så det inte kan bli fel här.
-			if(type == "Stone")
+
+			switch(type)	
 			{
-				trace("Stone created");
-				this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStageStone);
+				case "Stone":
+					trace("Stone created ");
+					this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStageStone);
+				break;
+				case "Box":
+					trace("Box created ");
+					this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStageBox);
+				break;
 			}
 				
 		}
@@ -68,17 +68,15 @@ package objects
 			stoneImage.pivotY = stoneImage.height / 2;
 			stoneImage.scaleX = _WidthHeight.x / stoneImage.width;
 			stoneImage.scaleY = _WidthHeight.y / stoneImage.height;
-			//stoneImage.width = screenWidth;
-			//stoneImage.height = 20;
 			
 			var floor:Body = new Body( BodyType.STATIC );
 			
 			floor.shapes.add( new Polygon(Polygon.box(_WidthHeight.x, _WidthHeight.y)));
 			floor.setShapeFilters(new InteractionFilter(2));
-			floor.cbTypes.add(_cbStatic);
+			floor.cbTypes.add(_cbType);
 				
 			floor.position.setxy(_position.x, _position.y);
-			//floor.setShapeMaterials( Material.steel() );
+			floor.setShapeMaterials( Material.steel() );
 			floor.userData.graphic = stoneImage;
 
 			floor.space = _mySpace;
@@ -88,32 +86,34 @@ package objects
 
 			addChild(stoneImage);
 
-			//this.addEventListener(Event.ENTER_FRAME, onEnterFrame);
 		}
 		
-		private function onEnterFrame(event:Event):void
+		private function onAddedToStageBox(event:Event):void
 		{
-			bgLayer1.x -= Math.ceil(_speed * bgLayer1.parallax);
-			if (bgLayer1.x < -stage.stageWidth) bgLayer1.x = 0;
+			this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStageStone);
+		
+			var scaredBox:Body = new Body( BodyType.DYNAMIC );
+			var scaredBoxImage:Image =  new Image(Assets.getTexture((("scaredBoxRaw"))));
 			
-
+			scaredBoxImage.pivotX = scaredBoxImage.width / 2;
+			scaredBoxImage.pivotY = scaredBoxImage.height / 2;
+			scaredBoxImage.scaleX = _WidthHeight.x / scaredBoxImage.width;
+			scaredBoxImage.scaleY = _WidthHeight.y / scaredBoxImage.height;
+			
+			scaredBox.shapes.add( new Polygon( Polygon.box(_WidthHeight.x, _WidthHeight.y) ) );
+			scaredBox.position.setxy( _position.x, _position.y );
+			scaredBox.setShapeMaterials( Material.steel() );
+			scaredBox.userData.graphic = scaredBoxImage;
+			scaredBox.space = _mySpace;
+			
+			scaredBox.setShapeFilters(new InteractionFilter(2));
+			
+			scaredBox.cbTypes.add(_cbType);
+			
+			scaredBoxImage.x = scaredBox.position.x;
+			scaredBoxImage.y = scaredBox.position.y;
+			addChild(scaredBoxImage);
+		
 		}
-		
-		public function get position():Number
-		{
-			return _speed;
-		}
-		
-		public function set positionX(xy:Vec2):void
-		{
-			//this.position.setxy(
-		}
-		
-		public function set positionY(y:Number):void
-		{
-			//_speed = value;
-		}
-		
-		
 	}
 }

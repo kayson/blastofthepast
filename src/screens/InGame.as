@@ -20,7 +20,7 @@ package screens
 	import nape.space.Space;
 	
 	import objects.GameBackground;
-	import objects.StaticObjects;
+	import objects.Objects;
 	
 	import starling.core.Starling;
 	import starling.display.Image;
@@ -29,6 +29,7 @@ package screens
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
+
 	
 	
 	public class InGame extends Sprite
@@ -48,7 +49,8 @@ package screens
 		private var yDir:Number = 0;
 		
 		private var bg:GameBackground;
-		private var floor:StaticObjects;
+		private var floor:Objects;
+		private var box:Objects;
 
 				
 		public function InGame()
@@ -67,9 +69,7 @@ package screens
 			
 			addEventListener( TouchEvent.TOUCH, touch );
 			
-			mySpace.listeners.add(new InteractionListener(CbEvent.BEGIN, InteractionType.COLLISION, projectile, other, hasCollided));
-			
-		
+			mySpace.listeners.add(new InteractionListener(CbEvent.BEGIN, InteractionType.COLLISION, projectile, other, hasCollided));	
 		}
 		
 		private function InitSpace():void
@@ -90,7 +90,7 @@ package screens
 			bg.speed = 10;
 			this.addChild(bg);
 			
-			// Initialize objects etc
+			// Initialize objects etc (ska vi flytta ut smileygubben? eller göra en playerklass?)
 			
 			circleBadGuyImage = new Image(Assets.getTexture((("circleBadGuyRaw"))));
 			circleBadGuyImage.pivotX = circleBadGuyImage.width / 2;
@@ -114,49 +114,31 @@ package screens
 			circleBadGuyImage.y = circleBadGuy.position.y;
 			addChild(circleBadGuyImage);
 			
+			//Add boxes
 			for( var i:int = 0; i < 6; i++ )
 			{
 				for( var j:int = -3; j < 4; j++ )
 				{
-					var scaredBox:Body = new Body( BodyType.DYNAMIC );
-					var scaredBoxImage:Image =  new Image(Assets.getTexture((("scaredBoxRaw"))));
-					
-					scaredBoxImage.pivotX = scaredBoxImage.width / 2;
-					scaredBoxImage.pivotY = scaredBoxImage.height / 2;
-					scaredBoxImage.scaleX = 0.5;
-					scaredBoxImage.scaleY = 0.5;
-				
-					
-					scaredBox.shapes.add( new Polygon( Polygon.box(16,16) ) );
-					scaredBox.position.setxy( (screenWidth / 2) - (j * 16), (screenHeight - 100) - (i * 16) );
-					scaredBox.userData.graphic = scaredBoxImage;
-					scaredBox.space = mySpace;
-					
-					scaredBox.setShapeFilters(new InteractionFilter(2));
-					
-					scaredBox.cbTypes.add(other);
-					
-					scaredBoxImage.x = scaredBox.position.x;
-					scaredBoxImage.y = scaredBox.position.y;
-					addChild(scaredBoxImage);
+					box = new Objects("Box",mySpace,other,
+						Vec2.weak((screenWidth / 2) - (j * 16), (screenHeight - 100) - (i * 16)),
+						Vec2.weak(16,16));	
+					addChild(box);
 				}
 			}
-						
-			//Detta har Anders gjort , temporärt lite grötigt bara för att få upp lite hinder etc.
-			
+							
 			//The level building blocks. (STATIC objects)  -----------------------------------
 			
-			floor = new StaticObjects("Stone",mySpace,other,
+			floor = new Objects("Stone",mySpace,other,
 					Vec2.weak(screenWidth / 2, screenHeight - 20),
 					Vec2.weak(960,128));	
 			addChild(floor);
 			
-			floor = new StaticObjects("Stone",mySpace,other,
+			floor = new Objects("Stone",mySpace,other,
 				Vec2.weak(screenWidth, screenHeight / 2),
 				Vec2.weak(128,960));	
 			addChild(floor);
 			
-			floor = new StaticObjects("Stone",mySpace,other,
+			floor = new Objects("Stone",mySpace,other,
 				Vec2.weak(0, screenHeight / 2),
 				Vec2.weak(128,960));	
 			addChild(floor);
