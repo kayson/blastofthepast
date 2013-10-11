@@ -1,9 +1,8 @@
 package screens
 {
-	import flash.display.Bitmap;
-	
 	import events.NavigationEvent;
-	import objects.GameBackground;
+	
+	import flash.display.Bitmap;
 	
 	import nape.callbacks.CbEvent;
 	import nape.callbacks.CbType;
@@ -19,6 +18,9 @@ package screens
 	import nape.shape.Circle;
 	import nape.shape.Polygon;
 	import nape.space.Space;
+	
+	import objects.GameBackground;
+	import objects.StaticObjects;
 	
 	import starling.core.Starling;
 	import starling.display.Image;
@@ -42,9 +44,11 @@ package screens
 		private var other:CbType = new CbType();
 		private var scaredBox:Body;
 		private var circleBadGuy:Body;
-		private var xDir:Number;
-		private var yDir:Number;
+		private var xDir:Number = 0;
+		private var yDir:Number = 0;
+		
 		private var bg:GameBackground;
+		private var floor:StaticObjects;
 
 				
 		public function InGame()
@@ -102,6 +106,7 @@ package screens
 			circleBadGuy.space = mySpace;		
 			circleBadGuy.cbTypes.add(other);
 			circleBadGuy.mass = 0.5;
+			
 
 			circleBadGuy.setShapeFilters(new InteractionFilter(1));
 			
@@ -139,73 +144,23 @@ package screens
 						
 			//Detta har Anders gjort , temporärt lite grötigt bara för att få upp lite hinder etc.
 			
-			//The level building blocks.  -----------------------------------
-
-			var stoneImage:Image;
-			stoneImage = new Image(Assets.getTexture((("stoneBlock"))));
-			stoneImage.pivotX = stoneImage.width / 2;
-			stoneImage.pivotY = stoneImage.height / 2;
-			stoneImage.scaleX = 0.5;
-			stoneImage.scaleY = 0.5;
-			//stoneImage.width = screenWidth;
-			//stoneImage.height = 20;
+			//The level building blocks. (STATIC objects)  -----------------------------------
 			
-			var floor:Body = new Body( BodyType.STATIC );
-
-			floor.shapes.add( new Polygon(Polygon.box(128, 128)));
-			floor.setShapeFilters(new InteractionFilter(2));
-			floor.cbTypes.add(other);
+			floor = new StaticObjects("Stone",mySpace,other,
+					Vec2.weak(screenWidth / 2, screenHeight - 20),
+					Vec2.weak(960,128));	
+			addChild(floor);
 			
-			floor.position.setxy(screenWidth / 2, screenHeight - 20);
-			//floor.setShapeMaterials( Material.steel() );
-			floor.userData.graphic = stoneImage;
+			floor = new StaticObjects("Stone",mySpace,other,
+				Vec2.weak(screenWidth, screenHeight / 2),
+				Vec2.weak(128,960));	
+			addChild(floor);
 			
-
-			/*floor.shapes.add( new Polygon(Polygon.rect(0,screenHeight - 20, screenWidth, 20)) );
-			floor.setShapeFilters(new InteractionFilter(2));
-			floor.cbTypes.add(other);*/
-			
-			
-			
-			floor.space = mySpace;
-		
-			
-			stoneImage.x = screenWidth / 2;//floor.position.x;
-			stoneImage.y = screenHeight - 20;//floor.position.y;
-			//stoneImage.width = screenWidth;
-			addChild(stoneImage);
-			
-			//The level building blocks. -----------------------------------
-		
-			var stoneImage2:Image;
-			stoneImage2 = new Image(Assets.getTexture((("stoneBlock"))));
-			stoneImage2.pivotX = stoneImage2.width / 2;
-			stoneImage2.pivotY = stoneImage2.height / 2;
-			stoneImage2.scaleX = 0.5;
-			stoneImage2.scaleY = 0.5;
-			//stoneImage.width = screenWidth;
-			//stoneImage.height = 20;
-			
-			var floor2:Body = new Body( BodyType.STATIC );
-			floor2.shapes.add( new Polygon(Polygon.box(128, 128)));
-			
-			
-			floor2.position.setxy(screenWidth / 4, screenHeight - 20);
-			//floor.setShapeMaterials( Material.steel() );
-			floor2.userData.graphic = stoneImage2;
-			
-			floor2.setShapeFilters(new InteractionFilter(2));
-			floor2.cbTypes.add(other);
-			
-			floor2.space = mySpace;
-
-			stoneImage2.x = floor2.position.x;
-			stoneImage2.y = floor2.position.y;
-			//stoneImage.width = screenWidth;
-			addChild(stoneImage2);
-			
-		
-		
+			floor = new StaticObjects("Stone",mySpace,other,
+				Vec2.weak(0, screenHeight / 2),
+				Vec2.weak(128,960));	
+			addChild(floor);
+	
 		}
 		
 		
@@ -225,12 +180,11 @@ package screens
 				trace("BEGIN");
 				xDir = touch.globalX;
 				yDir = touch.globalY;
-			}
-			
-			if(touch.phase == TouchPhase.ENDED) //on finger up
+			}else if(touch.phase == TouchPhase.ENDED) //on finger up
 			{	
 				var shootDir:Vec2 = Vec2.get(-1*(touch.globalX-xDir),-1*(touch.globalY-yDir));
-				shootDir = shootDir.normalise();
+				if(shootDir.length != 0)
+					shootDir = shootDir.normalise();
 				
 				shootDir.x *= 100;
 				shootDir.y *= 100;
