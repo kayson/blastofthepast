@@ -1,8 +1,8 @@
 package screens
 {
-	import events.NavigationEvent;
-	
 	import flash.display.Bitmap;
+	
+	import events.NavigationEvent;
 	
 	import nape.callbacks.CbEvent;
 	import nape.callbacks.CbType;
@@ -23,12 +23,14 @@ package screens
 	import objects.Objects;
 	
 	import starling.core.Starling;
+	import starling.display.BlendMode;
 	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.events.Event;
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
+	
 
 	
 	
@@ -95,11 +97,11 @@ package screens
 			circleBadGuyImage = new Image(Assets.getTexture((("circleBadGuyRaw"))));
 			circleBadGuyImage.pivotX = circleBadGuyImage.width / 2;
 			circleBadGuyImage.pivotY = circleBadGuyImage.height / 2;
-			circleBadGuyImage.scaleX = 0.5;
-			circleBadGuyImage.scaleY = 0.5;		
+			circleBadGuyImage.scaleX = 0.25;
+			circleBadGuyImage.scaleY = 0.25;		
 			
 			circleBadGuy = new Body( BodyType.DYNAMIC );
-			circleBadGuy.shapes.add( new Circle( 32 ) );
+			circleBadGuy.shapes.add( new Circle( 16 ) );
 			circleBadGuy.position.setxy(screenWidth / 2, 0);
 			circleBadGuy.setShapeMaterials( Material.rubber() );
 			circleBadGuy.userData.graphic = circleBadGuyImage;
@@ -120,8 +122,8 @@ package screens
 				for( var j:int = -3; j < 4; j++ )
 				{
 					box = new Objects("Box",mySpace,other,
-						Vec2.weak((screenWidth / 2) - (j * 16), (screenHeight - 100) - (i * 16)),
-						Vec2.weak(16,16));	
+						Vec2.weak((screenWidth / 2) - (j * 8), (screenHeight - 100) - (i * 8)),
+						Vec2.weak(8,8));	
 					addChild(box);
 				}
 			}
@@ -176,11 +178,11 @@ package screens
 				
 				fireBallImage.pivotX = fireBallImage.width / 2;
 				fireBallImage.pivotY = fireBallImage.height / 2;
-				fireBallImage.scaleX = 16/648;
-				fireBallImage.scaleY = 16/648;
+				fireBallImage.scaleX = 8/648;
+				fireBallImage.scaleY = 8/648;
 				
-				fireBall.shapes.add( new Polygon( Polygon.box(16,16) ) );		
-				fireBall.position.setxy( xDir, yDir );
+				fireBall.shapes.add( new Polygon( Polygon.box(8,8) ) );		
+				fireBall.position.setxy( circleBadGuy.position.x, circleBadGuy.position.y );
 				
 				fireBall.userData.graphic = fireBallImage;
 				fireBall.space = mySpace;
@@ -213,6 +215,8 @@ package screens
 					var impulseForce:Number = Math.log((400-impulseVector.length)/80 + 1)*80;
 					var impulse:Vec2 = impulseVector.mul(impulseForce/impulseVector.length);
 					b.applyImpulse(impulse);
+					removeChild(a.userData.graphic);
+					mySpace.bodies.remove(a);
 				}
 			}
 		}
