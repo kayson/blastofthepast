@@ -159,45 +159,49 @@ package screens
 		private function touch(e:TouchEvent):void
 		{
 			var touch:Touch = e.getTouch(stage);
-			if(touch.phase == TouchPhase.BEGAN)//on finger down
+			if( touch )
 			{
-				trace("BEGIN");
-				xDir = touch.globalX;
-				yDir = touch.globalY;
-			}else if(touch.phase == TouchPhase.ENDED) //on finger up
-			{	
-				var shootDir:Vec2 = Vec2.get(-1*(touch.globalX-xDir),-1*(touch.globalY-yDir));
-				if(shootDir.length != 0)
-					shootDir = shootDir.normalise();
-				
-				shootDir.x *= 100;
-				shootDir.y *= 100;
-				
-				var fireBall:Body = new Body( BodyType.DYNAMIC );
-				var fireBallImage:Image = new Image(Assets.getTexture((("fireBallRaw"))));
-				
-				fireBallImage.pivotX = fireBallImage.width / 2;
-				fireBallImage.pivotY = fireBallImage.height / 2;
-				fireBallImage.scaleX = 8/648;
-				fireBallImage.scaleY = 8/648;
-				
-				fireBall.shapes.add( new Polygon( Polygon.box(8,8) ) );		
-				fireBall.position.setxy( circleBadGuy.position.x, circleBadGuy.position.y );
-				
-				fireBall.userData.graphic = fireBallImage;
-				fireBall.space = mySpace;
-				fireBall.gravMass = 0;
-				fireBall.setShapeFilters(new InteractionFilter(1,~1));
-				fireBall.rotation = shootDir.angle;
-				
-				fireBallImage.x = circleBadGuy.position.x;
-				fireBallImage.y = circleBadGuy.position.y;
-				addChild(fireBallImage);
-				
-				fireBall.applyImpulse(shootDir);			
-				
-				fireBall.cbTypes.add(projectile);
-				
+				if(touch.phase == TouchPhase.BEGAN)//on finger down
+				{
+					xDir = touch.globalX;
+					yDir = touch.globalY;
+				}else if(touch.phase == TouchPhase.ENDED) //on finger up
+				{	
+					var shootDir:Vec2 = Vec2.get(-1*(touch.globalX-xDir),-1*(touch.globalY-yDir));
+					if(shootDir.length != 0)
+						shootDir = shootDir.normalise();
+					
+					shootDir.x *= 10;
+					shootDir.y *= 10;
+	
+					
+					
+					var fireBall:Body = new Body( BodyType.DYNAMIC );
+					var fireBallImage:Image = new Image(Assets.getTexture((("fireBallRaw"))));
+					
+					fireBallImage.pivotX = fireBallImage.width / 2;
+					fireBallImage.pivotY = fireBallImage.height / 2;
+					fireBallImage.scaleX = 8/648;
+					fireBallImage.scaleY = 8/648;
+					
+					fireBall.shapes.add( new Polygon( Polygon.box(8,8) ) );		
+					fireBall.position.setxy( circleBadGuy.position.x, circleBadGuy.position.y );
+					
+					fireBall.userData.graphic = fireBallImage;
+					fireBall.space = mySpace;
+					fireBall.gravMass = 0;
+					fireBall.setShapeFilters(new InteractionFilter(1,~1));
+					fireBall.rotation = shootDir.angle;
+					
+					fireBallImage.x = circleBadGuy.position.x;
+					fireBallImage.y = circleBadGuy.position.y;
+					addChild(fireBallImage);
+					
+					fireBall.applyImpulse(shootDir);			
+					
+					fireBall.cbTypes.add(projectile);
+					
+				}
 			}
 		}
 		
