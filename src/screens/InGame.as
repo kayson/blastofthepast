@@ -3,6 +3,7 @@ package screens
 	import events.NavigationEvent;
 	
 	import flash.display.Bitmap;
+	import flash.geom.Rectangle;
 	
 	import nape.callbacks.CbEvent;
 	import nape.callbacks.CbType;
@@ -29,8 +30,7 @@ package screens
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
-
-	
+	import starling.extensions.camera.StarlingCamera;
 	
 	public class InGame extends Sprite
 	{
@@ -51,6 +51,9 @@ package screens
 		private var bg:GameBackground;
 		private var floor:Objects;
 		private var box:Objects;
+		
+		private var camera:StarlingCamera;
+		private var r:Number = 0;
 
 				
 		public function InGame()
@@ -63,6 +66,8 @@ package screens
 		private function onAddedToStage(event:Event):void
 		{
 			this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+			
+			
 			
 			InitSpace();
 			InitBodies();
@@ -85,12 +90,22 @@ package screens
 		private function InitBodies():void
 		{	
 			//Parallax background baby!
-			
+			/*
 			bg = new GameBackground();
 			bg.speed = 10;
 			this.addChild(bg);
-			
+			*/
 			// Initialize objects etc (ska vi flytta ut smileygubben? eller göra en playerklass?)
+			//Create a camera view
+			camera = new StarlingCamera();
+			camera.init(new Rectangle(0, 0, stage.stageWidth,
+				stage.stageHeight), 8, .5, false);
+			camera.reflect();
+			//Put it onstage
+			addChild(camera);
+			//Select a webcam
+			camera.selectCamera(0);
+			
 			
 			circleBadGuyImage = new Image(Assets.getTexture((("circleBadGuyRaw"))));
 			circleBadGuyImage.pivotX = circleBadGuyImage.width / 2;
@@ -131,7 +146,7 @@ package screens
 			floor = new Objects("Stone",mySpace,other,
 					Vec2.weak(screenWidth / 2, screenHeight - 20),
 					Vec2.weak(960,128));	
-			addChild(floor);
+			addChildAt(floor, 0);
 			
 			floor = new Objects("Stone",mySpace,other,
 				Vec2.weak(screenWidth, screenHeight / 2),
@@ -149,8 +164,7 @@ package screens
 		
 		private function UpdateWorld( evt:Event ):void
 		{
-			mySpace.step( 1 / 60 );
-			
+			mySpace.step( 1 / 60 );		
 			mySpace.liveBodies.foreach( updateGraphics );
 		}
 		
@@ -223,7 +237,10 @@ package screens
 			graphic.x = body.position.x;
 			graphic.y = body.position.y;
 			
+			camera.y = circleBadGuy.position.x;
+			
 			graphic.rotation = body.rotation;
+
 		}
 		
 		public function disposeTemporarily():void
