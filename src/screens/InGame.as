@@ -24,13 +24,15 @@ package screens
 	import objects.Objects;
 	
 	import starling.core.Starling;
+	import starling.display.BlendMode;
 	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.events.Event;
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
-	import starling.extensions.camera.StarlingCamera;
+
+
 	
 	public class InGame extends Sprite
 	{
@@ -52,7 +54,7 @@ package screens
 		private var floor:Objects;
 		private var box:Objects;
 		
-		private var camera:StarlingCamera;
+
 		private var r:Number = 0;
 
 				
@@ -90,32 +92,22 @@ package screens
 		private function InitBodies():void
 		{	
 			//Parallax background baby!
-			/*
+			
 			bg = new GameBackground();
 			bg.speed = 10;
 			this.addChild(bg);
-			*/
-			// Initialize objects etc (ska vi flytta ut smileygubben? eller göra en playerklass?)
-			//Create a camera view
-			camera = new StarlingCamera();
-			camera.init(new Rectangle(0, 0, stage.stageWidth,
-				stage.stageHeight), 8, .5, false);
-			camera.reflect();
-			//Put it onstage
-			addChild(camera);
-			//Select a webcam
-			camera.selectCamera(0);
+
 			
 			
 			circleBadGuyImage = new Image(Assets.getTexture((("circleBadGuyRaw"))));
 			circleBadGuyImage.pivotX = circleBadGuyImage.width / 2;
 			circleBadGuyImage.pivotY = circleBadGuyImage.height / 2;
-			circleBadGuyImage.scaleX = 0.5;
-			circleBadGuyImage.scaleY = 0.5;		
+			circleBadGuyImage.scaleX = 0.25;
+			circleBadGuyImage.scaleY = 0.25;		
 			
 			circleBadGuy = new Body( BodyType.DYNAMIC );
-			circleBadGuy.shapes.add( new Circle( 32 ) );
-			circleBadGuy.position.setxy(screenWidth / 2, 0);
+			circleBadGuy.shapes.add( new Circle( 16 ) );
+			circleBadGuy.position.setxy(screenWidth / 2, screenHeight / 2);
 			circleBadGuy.setShapeMaterials( Material.rubber() );
 			circleBadGuy.userData.graphic = circleBadGuyImage;
 			circleBadGuy.space = mySpace;		
@@ -135,8 +127,8 @@ package screens
 				for( var j:int = -3; j < 4; j++ )
 				{
 					box = new Objects("Box",mySpace,other,
-						Vec2.weak((screenWidth / 2) - (j * 16), (screenHeight - 100) - (i * 16)),
-						Vec2.weak(16,16));	
+						Vec2.weak((screenWidth / 2) - (j * 8), (screenHeight - 100) - (i * 8)),
+						Vec2.weak(8,8));	
 					addChild(box);
 				}
 			}
@@ -146,7 +138,7 @@ package screens
 			floor = new Objects("Stone",mySpace,other,
 					Vec2.weak(screenWidth / 2, screenHeight - 20),
 					Vec2.weak(960,128));	
-			addChildAt(floor, 0);
+			addChild(floor);
 			
 			floor = new Objects("Stone",mySpace,other,
 				Vec2.weak(screenWidth, screenHeight / 2),
@@ -165,51 +157,57 @@ package screens
 		private function UpdateWorld( evt:Event ):void
 		{
 			mySpace.step( 1 / 60 );		
-			mySpace.liveBodies.foreach( updateGraphics );
+			mySpace.bodies.foreach( updateGraphics );
+			
+			bg.bgPosition(circleBadGuy.position);
 		}
 		
 		private function touch(e:TouchEvent):void
 		{
 			var touch:Touch = e.getTouch(stage);
-			if(touch.phase == TouchPhase.BEGAN)//on finger down
+			if( touch )
 			{
-				trace("BEGIN");
-				xDir = touch.globalX;
-				yDir = touch.globalY;
-			}else if(touch.phase == TouchPhase.ENDED) //on finger up
-			{	
-				var shootDir:Vec2 = Vec2.get(-1*(touch.globalX-xDir),-1*(touch.globalY-yDir));
-				if(shootDir.length != 0)
-					shootDir = shootDir.normalise();
-				
-				shootDir.x *= 100;
-				shootDir.y *= 100;
-				
-				var fireBall:Body = new Body( BodyType.DYNAMIC );
-				var fireBallImage:Image = new Image(Assets.getTexture((("fireBallRaw"))));
-				
-				fireBallImage.pivotX = fireBallImage.width / 2;
-				fireBallImage.pivotY = fireBallImage.height / 2;
-				fireBallImage.scaleX = 16/648;
-				fireBallImage.scaleY = 16/648;
-				
-				fireBall.shapes.add( new Polygon( Polygon.box(16,16) ) );		
-				fireBall.position.setxy( xDir, yDir );
-				
-				fireBall.userData.graphic = fireBallImage;
-				fireBall.space = mySpace;
-				fireBall.gravMass = 0;
-				fireBall.setShapeFilters(new InteractionFilter(1,~1));
-				fireBall.rotation = shootDir.angle;
-				
-				fireBallImage.x = circleBadGuy.position.x;
-				fireBallImage.y = circleBadGuy.position.y;
-				addChild(fireBallImage);
-				
-				fireBall.applyImpulse(shootDir);			
-				
-				fireBall.cbTypes.add(projectile);
-				
+				if(touch.phase == TouchPhase.BEGAN)//on finger down
+				{
+					xDir = touch.globalX;
+					yDir = touch.globalY;
+				}else if(touch.phase == TouchPhase.ENDED) //on finger up
+				{	
+					var shootDir:Vec2 = Vec2.get(-1*(touch.globalX-xDir),-1*(touch.globalY-yDir));
+					if(shootDir.length != 0)
+						shootDir = shootDir.normalise();
+					
+					shootDir.x *= 10;
+					shootDir.y *= 10;
+	
+					
+					
+					var fireBall:Body = new Body( BodyType.DYNAMIC );
+					var fireBallImage:Image = new Image(Assets.getTexture((("fireBallRaw"))));
+					
+					fireBallImage.pivotX = fireBallImage.width / 2;
+					fireBallImage.pivotY = fireBallImage.height / 2;
+					fireBallImage.scaleX = 8/648;
+					fireBallImage.scaleY = 8/648;
+					
+					fireBall.shapes.add( new Polygon( Polygon.box(8,8) ) );		
+					fireBall.position.setxy( circleBadGuy.position.x, circleBadGuy.position.y );
+					
+					fireBall.userData.graphic = fireBallImage;
+					fireBall.space = mySpace;
+					fireBall.gravMass = 0;
+					fireBall.setShapeFilters(new InteractionFilter(1,~1));
+					fireBall.rotation = shootDir.angle;
+					
+					fireBallImage.x = circleBadGuy.position.x;
+					fireBallImage.y = circleBadGuy.position.y;
+					addChild(fireBallImage);
+					
+					fireBall.applyImpulse(shootDir);			
+					
+					fireBall.cbTypes.add(projectile);
+					
+				}
 			}
 		}
 		
@@ -227,6 +225,8 @@ package screens
 					var impulseForce:Number = Math.log((400-impulseVector.length)/80 + 1)*80;
 					var impulse:Vec2 = impulseVector.mul(impulseForce/impulseVector.length);
 					b.applyImpulse(impulse);
+					removeChild(a.userData.graphic);
+					mySpace.bodies.remove(a);
 				}
 			}
 		}
@@ -234,12 +234,19 @@ package screens
 		private function updateGraphics( body:Body ):void
 		{
 			var graphic:Image = body.userData.graphic;
-			graphic.x = body.position.x;
-			graphic.y = body.position.y;
-			
-			camera.y = circleBadGuy.position.x;
+			//graphic.x = body.position.x;
+			//Circlebadguy är här spelaren
+			//Man kan lägga in ett krav som kollar 
+			//mot golv och väggar och så
+			//Avsluta funktionen.
+			if(body != circleBadGuy)
+			{
+				graphic.y = body.position.y + (screenHeight / 2) - circleBadGuy.position.y;
+				graphic.x = body.position.x + (screenWidth / 2) - circleBadGuy.position.x;
+			}
 			
 			graphic.rotation = body.rotation;
+			
 
 		}
 		

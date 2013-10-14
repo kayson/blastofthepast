@@ -2,6 +2,7 @@ package objects
 {
 	import starling.display.Sprite;
 	import starling.events.Event;
+	import nape.geom.Vec2;
 	
 	public class GameBackground extends Sprite
 	{
@@ -23,22 +24,22 @@ package objects
 			this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			
 			bgLayer1 = new BgLayer(1);
-			bgLayer1.parallax = 0.02;
+			bgLayer1.parallax = 1;
 			this.addChild(bgLayer1);
 			
 			bgLayer2 = new BgLayer(2);
-			bgLayer2.parallax = 0.2;
+			bgLayer2.parallax = 2;
 			this.addChild(bgLayer2);
 			
 			bgLayer3 = new BgLayer(3);
-			bgLayer3.parallax = 0.5;
+			bgLayer3.parallax = 1.5;
 			this.addChild(bgLayer3);
 			
 			bgLayer4 = new BgLayer(4);
-			bgLayer4.parallax = 1;
+			bgLayer4.parallax = 1.8;
 			this.addChild(bgLayer4);
 			
-			this.addEventListener(Event.ENTER_FRAME, onEnterFrame);
+			//this.addEventListener(Event.ENTER_FRAME, onEnterFrame);
 		}
 		
 		private function onEnterFrame(event:Event):void
@@ -54,6 +55,23 @@ package objects
 			
 			bgLayer4.x -= Math.ceil(_speed * bgLayer4.parallax);
 			if (bgLayer4.x < -stage.stageWidth) bgLayer4.x = 0;
+		}
+		
+		public function bgPosition(position:Vec2):void
+		{
+
+			bgLayer1.y = (640 / 2 - position.y) * bgLayer1.parallax;
+			bgLayer1.x = (960 / 2 - position.x) * bgLayer1.parallax;
+			
+			bgLayer2.y = (640 / 2 - position.y) * 1.4;//bgLayer2.parallax;
+			bgLayer2.x = (960 / 2 - position.x) * bgLayer2.parallax;
+			
+			bgLayer3.y = (640 / 2 - position.y) * 1.4;//bgLayer2.parallax;
+			bgLayer3.x = (960 / 2 - position.x) * bgLayer3.parallax;
+			
+			bgLayer4.y = (640 / 2 - position.y) * 1.4;//bgLayer2.parallax;
+			bgLayer4.x = (960 / 2 - position.x) * bgLayer4.parallax;
+			
 		}
 		
 		public function get speed():Number
