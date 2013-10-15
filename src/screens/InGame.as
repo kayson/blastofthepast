@@ -210,7 +210,7 @@ package screens
 					var impulseForce:Number = Math.log((400-impulseVector.length)/80 + 1)*80;
 					var impulse:Vec2 = impulseVector.mul(impulseForce/impulseVector.length);
 					b.applyImpulse(impulse);
-					removeChild(a.userData.graphic);
+					removeChild(a.userData.graphic.parent);
 					mySpace.bodies.remove(a);
 				}
 			}
