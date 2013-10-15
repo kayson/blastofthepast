@@ -40,18 +40,16 @@ package screens
 		private var mySpace:Space;
 		private var screenWidth:Number;
 		private var screenHeight:Number;
-		private var circleBadGuyImage:Image;
 		private var fireBallImage:Image;
-		private var scaredBoxImage:Image;
 		private var projectile:CbType = new CbType();
 		private var other:CbType = new CbType();
-		private var scaredBox:Body;
-		private var circleBadGuy:Body;
 		private var xDir:Number = 0;
 		private var yDir:Number = 0;
 		
 		private var bg:GameBackground;
 		private var floor:Objects;
+		private var fireball:Objects;
+		private var player:Objects;
 		private var box:Objects;
 		
 
@@ -68,8 +66,6 @@ package screens
 		private function onAddedToStage(event:Event):void
 		{
 			this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
-			
-			
 			
 			InitSpace();
 			InitBodies();
@@ -92,35 +88,15 @@ package screens
 		private function InitBodies():void
 		{	
 			//Parallax background baby!
-			
 			bg = new GameBackground();
-			bg.speed = 10;
 			this.addChild(bg);
+			
+			//The player
+			player = new Objects("Player",mySpace,other,
+				Vec2.weak(screenWidth / 2, screenHeight / 2),
+				Vec2.weak(16,32)); //16 = radie, 32 = scalevalue. (Behövs fixas)	
+			addChild(player);
 
-			
-			
-			circleBadGuyImage = new Image(Assets.getTexture((("circleBadGuyRaw"))));
-			circleBadGuyImage.pivotX = circleBadGuyImage.width / 2;
-			circleBadGuyImage.pivotY = circleBadGuyImage.height / 2;
-			circleBadGuyImage.scaleX = 0.25;
-			circleBadGuyImage.scaleY = 0.25;		
-			
-			circleBadGuy = new Body( BodyType.DYNAMIC );
-			circleBadGuy.shapes.add( new Circle( 16 ) );
-			circleBadGuy.position.setxy(screenWidth / 2, screenHeight / 2);
-			circleBadGuy.setShapeMaterials( Material.rubber() );
-			circleBadGuy.userData.graphic = circleBadGuyImage;
-			circleBadGuy.space = mySpace;		
-			circleBadGuy.cbTypes.add(other);
-			circleBadGuy.mass = 0.5;
-			
-
-			circleBadGuy.setShapeFilters(new InteractionFilter(1));
-			
-			circleBadGuyImage.x = circleBadGuy.position.x;
-			circleBadGuyImage.y = circleBadGuy.position.y;
-			addChild(circleBadGuyImage);
-			
 			//Add boxes
 			for( var i:int = 0; i < 6; i++ )
 			{
@@ -159,7 +135,7 @@ package screens
 			mySpace.step( 1 / 60 );		
 			mySpace.bodies.foreach( updateGraphics );
 			
-			bg.bgPosition(circleBadGuy.position);
+			bg.bgPosition(player.getBody().position);
 		}
 		
 		private function touch(e:TouchEvent):void
@@ -179,10 +155,18 @@ package screens
 					
 					shootDir.x *= 10;
 					shootDir.y *= 10;
-	
+					
+					fireball = new Objects("Fireball",mySpace,projectile,
+						Vec2.weak(player.getBody().position.x, player.getBody().position.y),
+						Vec2.weak(8,8));	
+					addChild(fireball);
+					fireball.getBody().rotation = shootDir.angle;
+					fireball.getBody().applyImpulse(shootDir);			
+					
+					//fireball.getBody().cbTypes.add(projectile);
 					
 					
-					var fireBall:Body = new Body( BodyType.DYNAMIC );
+					/*var fireBall:Body = new Body( BodyType.DYNAMIC );
 					var fireBallImage:Image = new Image(Assets.getTexture((("fireBallRaw"))));
 					
 					fireBallImage.pivotX = fireBallImage.width / 2;
@@ -191,7 +175,7 @@ package screens
 					fireBallImage.scaleY = 8/648;
 					
 					fireBall.shapes.add( new Polygon( Polygon.box(8,8) ) );		
-					fireBall.position.setxy( circleBadGuy.position.x, circleBadGuy.position.y );
+					fireBall.position.setxy( player.getBody().position.x, player.getBody().position.y );
 					
 					fireBall.userData.graphic = fireBallImage;
 					fireBall.space = mySpace;
@@ -199,13 +183,14 @@ package screens
 					fireBall.setShapeFilters(new InteractionFilter(1,~1));
 					fireBall.rotation = shootDir.angle;
 					
-					fireBallImage.x = circleBadGuy.position.x;
-					fireBallImage.y = circleBadGuy.position.y;
+					fireBallImage.x = player.getBody().position.x;
+					fireBallImage.y = player.getBody().position.y;
 					addChild(fireBallImage);
 					
 					fireBall.applyImpulse(shootDir);			
 					
-					fireBall.cbTypes.add(projectile);
+					fireBall.cbTypes.add(projectile);,
+					*/
 					
 				}
 			}
@@ -239,10 +224,10 @@ package screens
 			//Man kan lägga in ett krav som kollar 
 			//mot golv och väggar och så
 			//Avsluta funktionen.
-			if(body != circleBadGuy)
+			if(body != player.getBody())
 			{
-				graphic.y = body.position.y + (screenHeight / 2) - circleBadGuy.position.y;
-				graphic.x = body.position.x + (screenWidth / 2) - circleBadGuy.position.x;
+				graphic.y = body.position.y + (screenHeight / 2) - player.getBody().position.y;
+				graphic.x = body.position.x + (screenWidth / 2) - player.getBody().position.x;
 			}
 			
 			graphic.rotation = body.rotation;
