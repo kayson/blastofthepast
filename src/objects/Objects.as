@@ -70,14 +70,12 @@ package objects
 		private function onAddedToStagePlayer(event:Event):void
 		{
 			this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStagePlayer);
-			
-			
-			var circleBadGuyImage:Image;
-			circleBadGuyImage = new Image(Assets.getTexture((("circleBadGuyRaw"))));
-			circleBadGuyImage.pivotX = circleBadGuyImage.width / 2;
-			circleBadGuyImage.pivotY = circleBadGuyImage.height / 2;
-			circleBadGuyImage.scaleX = _WidthHeight.y / circleBadGuyImage.width;
-			circleBadGuyImage.scaleY = _WidthHeight.y / circleBadGuyImage.height;
+
+			_objectImage = new Image(Assets.getTexture((("circleBadGuyRaw"))));
+			_objectImage.pivotX = _objectImage.width / 2;
+			_objectImage.pivotY = _objectImage.height / 2;
+			_objectImage.scaleX = _WidthHeight.y / _objectImage.width;
+			_objectImage.scaleY = _WidthHeight.y / _objectImage.height;
 			
 			_objectBody = new Body( BodyType.DYNAMIC );
 			
@@ -87,15 +85,15 @@ package objects
 			
 			_objectBody.position.setxy(_position.x, _position.y);
 			_objectBody.setShapeMaterials( Material.rubber() );
-			_objectBody.userData.graphic = circleBadGuyImage;
+			_objectBody.userData.graphic = _objectImage;
 			_objectBody.mass = 0.5;
 			
 			_objectBody.space = _mySpace;
 			
-			circleBadGuyImage.x = _objectBody.position.x;
-			circleBadGuyImage.y = _objectBody.position.y;
+			_objectImage.x = _objectBody.position.x;
+			_objectImage.y = _objectBody.position.y;
 			
-			addChild(circleBadGuyImage);
+			addChild(_objectImage);
 			
 		}
 		
@@ -135,12 +133,11 @@ package objects
 			
 			//The level building blocks.  -----------------------------------
 			
-			var stoneImage:Image;
-			stoneImage = new Image(Assets.getTexture((("stoneBlock"))));
-			stoneImage.pivotX = stoneImage.width / 2;
-			stoneImage.pivotY = stoneImage.height / 2;
-			stoneImage.scaleX = _WidthHeight.x / stoneImage.width;
-			stoneImage.scaleY = _WidthHeight.y / stoneImage.height;
+			_objectImage = new Image(Assets.getTexture((("stoneBlock"))));
+			_objectImage.pivotX = _objectImage.width / 2;
+			_objectImage.pivotY = _objectImage.height / 2;
+			_objectImage.scaleX = _WidthHeight.x / _objectImage.width;
+			_objectImage.scaleY = _WidthHeight.y / _objectImage.height;
 			
 			_objectBody = new Body( BodyType.STATIC );
 			
@@ -150,14 +147,14 @@ package objects
 				
 			_objectBody.position.setxy(_position.x, _position.y);
 			_objectBody.setShapeMaterials( Material.steel() );
-			_objectBody.userData.graphic = stoneImage;
+			_objectBody.userData.graphic = _objectImage;
 
 			_objectBody.space = _mySpace;
 
-			stoneImage.x = _objectBody.position.x;
-			stoneImage.y = _objectBody.position.y;
+			_objectImage.x = _objectBody.position.x;
+			_objectImage.y = _objectBody.position.y;
 
-			addChild(stoneImage);
+			addChild(_objectImage);
 
 		}
 		
@@ -166,32 +163,37 @@ package objects
 			this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStageStone);
 		
 			_objectBody = new Body( BodyType.DYNAMIC );
-			var scaredBoxImage:Image =  new Image(Assets.getTexture((("scaredBoxRaw"))));
+			_objectImage =  new Image(Assets.getTexture((("scaredBoxRaw"))));
 			
-			scaredBoxImage.pivotX = scaredBoxImage.width / 2;
-			scaredBoxImage.pivotY = scaredBoxImage.height / 2;
-			scaredBoxImage.scaleX = _WidthHeight.x / scaredBoxImage.width;
-			scaredBoxImage.scaleY = _WidthHeight.y / scaredBoxImage.height;
+			_objectImage.pivotX = _objectImage.width / 2;
+			_objectImage.pivotY = _objectImage.height / 2;
+			_objectImage.scaleX = _WidthHeight.x / _objectImage.width;
+			_objectImage.scaleY = _WidthHeight.y / _objectImage.height;
 			
 			_objectBody.shapes.add( new Polygon( Polygon.box(_WidthHeight.x, _WidthHeight.y) ) );
 			_objectBody.position.setxy( _position.x, _position.y );
 			_objectBody.setShapeMaterials( Material.steel() );
-			_objectBody.userData.graphic = scaredBoxImage;
+			_objectBody.userData.graphic = _objectImage;
 			_objectBody.space = _mySpace;
 			
 			_objectBody.setShapeFilters(new InteractionFilter(2));
 			
 			_objectBody.cbTypes.add(_cbType);
 			
-			scaredBoxImage.x = _objectBody.position.x;
-			scaredBoxImage.y = _objectBody.position.y;
-			addChild(scaredBoxImage);
+			_objectImage.x = _objectBody.position.x;
+			_objectImage.y = _objectBody.position.y;
+			addChild(_objectImage);
 		
 		}
 		
 		public function getBody():Body
 		{
 			return _objectBody;
+		}
+		
+		public function getImage():Image
+		{
+			return _objectImage;
 		}
 	}
 }
