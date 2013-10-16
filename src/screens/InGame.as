@@ -145,22 +145,7 @@ package screens
 		
 		private function hasCollided(cb:InteractionCallback):void {
 			
-			var a:Body = cb.int1 as Body;
-			var explosionPos:Vec2 = a.position;
-			for(var i:int = 0; i < mySpace.liveBodies.length; i++)
-			{		
-				var b:Body = mySpace.liveBodies.at(i);
-				var bodyPos:Vec2 = b.position;
-				var impulseVector:Vec2 = new Vec2(bodyPos.x-explosionPos.x, bodyPos.y-explosionPos.y);
-				if(b.cbTypes.has(other) && impulseVector.length < 400)
-				{
-					var impulseForce:Number = Math.log((400-impulseVector.length)/80 + 1)*80;
-					var impulse:Vec2 = impulseVector.mul(impulseForce/impulseVector.length);
-					b.applyImpulse(impulse);
-					stage.removeChild(a.userData.graphic.parent);
-					mySpace.bodies.remove(a);
-				}
-			}
+			globalFunctions.hasCollidedGlobal(cb, mySpace,other, stage);
 		}
 
 		private function updateGraphics( body:Body ):void
@@ -178,8 +163,6 @@ package screens
 			}
 			
 			graphic.rotation = body.rotation;
-			
-
 		}
 		
 		public function disposeTemporarily():void
