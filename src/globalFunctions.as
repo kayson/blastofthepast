@@ -87,6 +87,20 @@ package
 				}
 			}
 			
+			public static function enemyHitGlobal(cb:InteractionCallback, 
+													 mySpace:Space, other:CbType, stage:Stage):void {
+				
+				var a:Body = cb.int1 as Body;	
+				var b:Body = cb.int2 as Body;
+
+				stage.removeChild(a.userData.graphic.parent);
+				mySpace.bodies.remove(a);
+				
+				stage.removeChild(b.userData.graphic.parent);
+				mySpace.bodies.remove(b);
+
+			}
+			
 			
 			public static function updateGraphicsGlobal( body:Body, player:Objects, wh:Vec2 ):void
 			{

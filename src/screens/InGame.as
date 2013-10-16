@@ -74,7 +74,8 @@ package screens
 			
 			addEventListener( TouchEvent.TOUCH, touch);
 			
-			mySpace.listeners.add(new InteractionListener(CbEvent.BEGIN, InteractionType.COLLISION, projectile, other, hasCollided));	
+			mySpace.listeners.add(new InteractionListener(CbEvent.BEGIN, InteractionType.COLLISION, projectile, other, hasCollided));
+			mySpace.listeners.add(new InteractionListener(CbEvent.BEGIN, InteractionType.COLLISION, projectile, enemyCb, enemyHit));
 		}
 		
 		private function InitSpace():void
@@ -113,8 +114,8 @@ package screens
 			
 			//The enemy
 			enemy = new Objects("Enemy",mySpace,enemyCb,
-				Vec2.weak((2 * screenWidth)/ 3, screenHeight - 20),
-				Vec2.weak(18,15));
+				Vec2.weak((2.5 * screenWidth)/ 3, screenHeight - 30),
+				Vec2.weak(144,120));
 			addChild(enemy);
 							
 			//The level building blocks. (STATIC objects)  -----------------------------------
@@ -151,6 +152,11 @@ package screens
 		private function hasCollided(cb:InteractionCallback):void {
 			
 			globalFunctions.hasCollidedGlobal(cb, mySpace,other, stage);
+		}
+		
+		private function enemyHit(cb:InteractionCallback):void {
+			
+			globalFunctions.enemyHitGlobal(cb, mySpace,other, stage);
 		}
 
 		private function updateGraphics( body:Body ):void
