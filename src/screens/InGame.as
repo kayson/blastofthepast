@@ -70,7 +70,7 @@ package screens
 			InitSpace();
 			InitBodies();
 			
-			addEventListener( TouchEvent.TOUCH, touch );
+			addEventListener( TouchEvent.TOUCH, touch);
 			
 			mySpace.listeners.add(new InteractionListener(CbEvent.BEGIN, InteractionType.COLLISION, projectile, other, hasCollided));	
 		}
@@ -140,60 +140,7 @@ package screens
 		
 		private function touch(e:TouchEvent):void
 		{
-			var touch:Touch = e.getTouch(stage);
-			if( touch )
-			{
-				if(touch.phase == TouchPhase.BEGAN)//on finger down
-				{
-					xDir = touch.globalX;
-					yDir = touch.globalY;
-				}else if(touch.phase == TouchPhase.ENDED) //on finger up
-				{	
-					var shootDir:Vec2 = Vec2.get(-1*(touch.globalX-xDir),-1*(touch.globalY-yDir));
-					if(shootDir.length != 0)
-						shootDir = shootDir.normalise();
-					
-					shootDir.x *= 10;
-					shootDir.y *= 10;
-					
-					fireball = new Objects("Fireball",mySpace,projectile,
-						Vec2.weak(player.getBody().position.x, player.getBody().position.y),
-						Vec2.weak(8,8));	
-					addChild(fireball);
-					fireball.getBody().rotation = shootDir.angle;
-					fireball.getBody().applyImpulse(shootDir);			
-					
-					//fireball.getBody().cbTypes.add(projectile);
-					
-					
-					/*var fireBall:Body = new Body( BodyType.DYNAMIC );
-					var fireBallImage:Image = new Image(Assets.getTexture((("fireBallRaw"))));
-					
-					fireBallImage.pivotX = fireBallImage.width / 2;
-					fireBallImage.pivotY = fireBallImage.height / 2;
-					fireBallImage.scaleX = 8/648;
-					fireBallImage.scaleY = 8/648;
-					
-					fireBall.shapes.add( new Polygon( Polygon.box(8,8) ) );		
-					fireBall.position.setxy( player.getBody().position.x, player.getBody().position.y );
-					
-					fireBall.userData.graphic = fireBallImage;
-					fireBall.space = mySpace;
-					fireBall.gravMass = 0;
-					fireBall.setShapeFilters(new InteractionFilter(1,~1));
-					fireBall.rotation = shootDir.angle;
-					
-					fireBallImage.x = player.getBody().position.x;
-					fireBallImage.y = player.getBody().position.y;
-					addChild(fireBallImage);
-					
-					fireBall.applyImpulse(shootDir);			
-					
-					fireBall.cbTypes.add(projectile);,
-					*/
-					
-				}
-			}
+			globalFunctions.touchGlobal(e, stage,player,mySpace,projectile);
 		}
 		
 		private function hasCollided(cb:InteractionCallback):void {
@@ -210,7 +157,7 @@ package screens
 					var impulseForce:Number = Math.log((400-impulseVector.length)/80 + 1)*80;
 					var impulse:Vec2 = impulseVector.mul(impulseForce/impulseVector.length);
 					b.applyImpulse(impulse);
-					removeChild(a.userData.graphic.parent);
+					stage.removeChild(a.userData.graphic.parent);
 					mySpace.bodies.remove(a);
 				}
 			}
