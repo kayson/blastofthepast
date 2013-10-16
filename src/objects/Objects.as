@@ -55,6 +55,10 @@ package objects
 					trace("Stone created ");
 					this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStageStone);
 				break;
+				case "Enemy":
+					trace("Enemy created ");
+					this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStageEnemy);
+					break;
 				case "Box":
 					trace("Box created ");
 					this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStageBox);
@@ -95,6 +99,34 @@ package objects
 			
 			addChild(_objectImage);
 			
+		}
+		
+		private function onAddedToStageEnemy(event:Event):void
+		{
+			this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStagePlayer);
+			
+			_objectImage = new Image(Assets.getTexture("enemyRaw"));
+			_objectImage.pivotX = _objectImage.width / 2;
+			_objectImage.pivotY = _objectImage.height / 2;
+			_objectImage.scaleX = _WidthHeight.y / _objectImage.width;
+			_objectImage.scaleY = _WidthHeight.y / _objectImage.height;
+			
+			
+			_objectBody = new Body( BodyType.DYNAMIC );
+			
+			_objectBody.shapes.add( new Polygon(Polygon.box(_WidthHeight.x, _WidthHeight.y)));
+			_objectBody.position.setxy( _position.x, _position.y );
+			_objectBody.setShapeMaterials( Material.steel() );
+			_objectBody.userData.graphic = _objectImage;
+			_objectBody.space = _mySpace;
+			
+			_objectBody.setShapeFilters(new InteractionFilter(2));
+			
+			_objectBody.cbTypes.add(_cbType);
+			
+			_objectImage.x = _objectBody.position.x;
+			_objectImage.y = _objectBody.position.y;
+			addChild(_objectImage);
 		}
 		
 		private function onAddedToStageFireball(event:Event):void

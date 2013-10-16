@@ -24,6 +24,9 @@ package
 		[Embed(source="../images/Fireball.png")] 
 		private static const fireBallRaw:Class;
 		
+		[Embed(source="../images/enemy.png")]
+		private static const enemyRaw:Class;
+		
 		[Embed(source="../images/stone.jpg")] 
 		private static const stoneBlock:Class;
 		

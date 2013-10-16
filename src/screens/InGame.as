@@ -1,9 +1,9 @@
 package screens
 {
-	import events.NavigationEvent;
-	
 	import flash.display.Bitmap;
 	import flash.geom.Rectangle;
+	
+	import events.NavigationEvent;
 	
 	import nape.callbacks.CbEvent;
 	import nape.callbacks.CbType;
@@ -43,6 +43,7 @@ package screens
 		private var fireBallImage:Image;
 		private var projectile:CbType = new CbType();
 		private var other:CbType = new CbType();
+		private var enemyCb:CbType = new CbType();
 		private var xDir:Number = 0;
 		private var yDir:Number = 0;
 		
@@ -50,6 +51,7 @@ package screens
 		private var floor:Objects;
 		private var fireball:Objects;
 		private var player:Objects;
+		private var enemy:Objects;
 		private var box:Objects;
 		
 
@@ -108,6 +110,12 @@ package screens
 					addChild(box);
 				}
 			}
+			
+			//The enemy
+			enemy = new Objects("Enemy",mySpace,enemyCb,
+				Vec2.weak((2 * screenWidth)/ 3, screenHeight - 20),
+				Vec2.weak(18,15));
+			addChild(enemy);
 							
 			//The level building blocks. (STATIC objects)  -----------------------------------
 			
