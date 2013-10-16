@@ -129,13 +129,10 @@ package screens
 		}
 		
 		
-		
 		private function UpdateWorld( evt:Event ):void
 		{
-			mySpace.step( 1 / 60 );		
-			mySpace.bodies.foreach( updateGraphics );
-			
-			bg.bgPosition(player.getBody().position);
+			globalFunctions.UpdateWorldGlobal(evt, mySpace,player, bg,updateGraphics);
+
 		}
 		
 		private function touch(e:TouchEvent):void
@@ -150,19 +147,8 @@ package screens
 
 		private function updateGraphics( body:Body ):void
 		{
-			var graphic:Image = body.userData.graphic;
-			//graphic.x = body.position.x;
-			//Circlebadguy är här spelaren
-			//Man kan lägga in ett krav som kollar 
-			//mot golv och väggar och så
-			//Avsluta funktionen.
-			if(body != player.getBody())
-			{
-				graphic.y = body.position.y + (screenHeight / 2) - player.getBody().position.y;
-				graphic.x = body.position.x + (screenWidth / 2) - player.getBody().position.x;
-			}
-			
-			graphic.rotation = body.rotation;
+			globalFunctions.updateGraphicsGlobal(body, player, new Vec2(screenWidth,screenHeight));
+	
 		}
 		
 		public function disposeTemporarily():void
@@ -175,7 +161,6 @@ package screens
 		{
 			this.visible = true;
 			addEventListener( Event.ENTER_FRAME, UpdateWorld );
-			//stage.addEventListener(TouchEvent.TOUCH, touch);
 		}
 	}
 }
