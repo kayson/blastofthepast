@@ -7,10 +7,13 @@ package
 	import nape.callbacks.InteractionCallback;
 	import nape.geom.Vec2;
 	import nape.phys.Body;
+	import nape.shape.Circle;
 	import nape.space.Space;
 	
 	import objects.GameBackground;
 	import objects.Objects;
+	
+	import screens.InGame;
 	
 	import starling.core.Starling;
 	import starling.display.Image;
@@ -20,7 +23,7 @@ package
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
 	import starling.extensions.PDParticleSystem;
-	import starling.textures.Texture;	
+	import starling.textures.Texture;
 
 	public class globalFunctions extends Sprite
 	{
@@ -28,12 +31,17 @@ package
 			private static var xDir:Number = 0;
 			private static var yDir:Number = 0;
 			
+			// CBTYPES!!!
+			public static var projectile:CbType = new CbType();
+			public static var other:CbType = new CbType();
+			public static var enemyCb:CbType = new CbType();
+			
 			public static function performAction():void {
 				
 			}
 			
 			public static function touchGlobal(e:TouchEvent, stage:Stage,
-								player:Objects, mySpace:Space, projectile:CbType):void
+								player:Objects, mySpace:Space):void
 			{
 				var touch:Touch = e.getTouch(stage);
 				if( touch )
@@ -52,7 +60,7 @@ package
 						shootDir.x *= 10;
 						shootDir.y *= 10;
 
-						var fireball:Objects = new Objects("Fireball",mySpace,projectile,
+						var fireball:Objects = new Objects("Fireball",mySpace,
 							Vec2.weak(player.getBody().position.x, player.getBody().position.y),
 							Vec2.weak(8,8));	
 						stage.addChild(fireball);
@@ -63,48 +71,99 @@ package
 			}
 			
 			public static function hasCollidedGlobal(cb:InteractionCallback, 
-									mySpace:Space, other:CbType, stage:Stage):void {
+									mySpace:Space, stage:Stage):void {
 				
 				var a:Body = cb.int1 as Body;
-				var explosionPos:Vec2 = a.position;
+				var explosionPos:Vec2 = a.position;				
 				
 				var psConfig:XML = XML(new Assets.FireConfig());
 				var psTexture:Texture = Texture.fromBitmap(new Assets.FireParticle());
 				
 				var ps:PDParticleSystem = new PDParticleSystem(psConfig, psTexture);
-				ps.x = explosionPos.x;
-				ps.y = explosionPos.y;
+				ps.x = a.userData.graphic.x;
+				ps.y = a.userData.graphic.y;
 				
 				stage.addChild(ps);
 				Starling.juggler.add(ps);
 				
 				ps.start(0.2);
 				
+				
 				for(var i:int = 0; i < mySpace.liveBodies.length; i++)
 				{		
 					var b:Body = mySpace.liveBodies.at(i);
 					var bodyPos:Vec2 = b.position;
 					var impulseVector:Vec2 = new Vec2(bodyPos.x-explosionPos.x, bodyPos.y-explosionPos.y);
-					if(b.cbTypes.has(other) && impulseVector.length < 400)
+					if(b.cbTypes.has(other) && impulseVector.length < 300)
 					{
-						var impulseForce:Number = Math.log((400-impulseVector.length)/80 + 1)*80;
+						var impulseForce:Number = Math.log((300-impulseVector.length)/80 + 1)*80;
 						var impulse:Vec2 = impulseVector.mul(impulseForce/impulseVector.length);
 						b.applyImpulse(impulse);
-						stage.removeChild(a.userData.graphic.parent);
-						mySpace.bodies.remove(a);
+						
 					}
+					else if(b.cbTypes.has(enemyCb) && impulseVector.length < 300)
+					{
+						stage.removeChild(b.userData.graphic.parent);
+						mySpace.bodies.remove(b);
+						
+						var psConfig2:XML = XML(new Assets.EnemyDeathConfig());
+						var psTexture2:Texture = Texture.fromBitmap(new Assets.EnemyDeathParticle());
+						
+						var ps2:PDParticleSystem = new PDParticleSystem(psConfig2, psTexture2);
+						ps2.x = b.userData.graphic.x;
+						ps2.y = b.userData.graphic.y;
+						
+						ps2.scaleX = 0.8;
+						ps2.scaleY = 0.8;
+						
+						stage.addChild(ps2);
+						Starling.juggler.add(ps2);
+						
+						ps2.start(2);
+					}
+					
 				}
+				
+				stage.removeChild(a.userData.graphic.parent);
+				mySpace.bodies.remove(a);
 			}
 			
 			public static function enemyHitGlobal(cb:InteractionCallback, 
-													 mySpace:Space, other:CbType, stage:Stage):void {
+													 mySpace:Space, stage:Stage):void {
 				
 				var a:Body = cb.int1 as Body;	
 				var b:Body = cb.int2 as Body;
 
 				stage.removeChild(a.userData.graphic.parent);
 				mySpace.bodies.remove(a);
-		
+				
+				var psConfig:XML = XML(new Assets.FireConfig());
+				var psTexture:Texture = Texture.fromBitmap(new Assets.FireParticle());
+				
+				var ps:PDParticleSystem = new PDParticleSystem(psConfig, psTexture);
+				ps.x = a.userData.graphic.x;
+				ps.y = a.userData.graphic.y;
+				
+				stage.addChild(ps);
+				Starling.juggler.add(ps);
+				
+				ps.start(0.2);
+				
+				var psConfig2:XML = XML(new Assets.EnemyDeathConfig());
+				var psTexture2:Texture = Texture.fromBitmap(new Assets.EnemyDeathParticle());
+				
+				var ps2:PDParticleSystem = new PDParticleSystem(psConfig2, psTexture2);
+				ps2.x = b.userData.graphic.x;
+				ps2.y = b.userData.graphic.y;
+				
+				ps2.scaleX = 0.8;
+				ps2.scaleY = 0.8;
+				
+				stage.addChild(ps2);
+				Starling.juggler.add(ps2);
+				
+				ps2.start(2);
+				
 				stage.removeChild(b.userData.graphic.parent);
 				mySpace.bodies.remove(b);
 

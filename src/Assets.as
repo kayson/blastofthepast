@@ -52,6 +52,16 @@ package
 		[Embed(source="../particles/explosion/texture.png")]
 		public static const FireParticle:Class;
 		
+		[Embed(source="../particles/enemydeath/particle.pex", mimeType="application/octet-stream")]
+		public static const EnemyDeathConfig:Class;
+		
+		[Embed(source="../particles/enemydeath/texture.png")]
+		public static const EnemyDeathParticle:Class;
+		
+		
+		
+		
+		
 		private static var gameTextures:Dictionary = new Dictionary();
 			
 		public static function getTexture(name:String):Texture
