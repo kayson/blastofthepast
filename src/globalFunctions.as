@@ -12,19 +12,15 @@ package
 	import objects.GameBackground;
 	import objects.Objects;
 	
+	import starling.core.Starling;
 	import starling.display.Image;
 	import starling.display.Stage;
 	import starling.events.Event;
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
-	
-	
-	
-	
-	
-	
-	
+	import starling.extensions.PDParticleSystem;
+	import starling.textures.Texture;	
 
 	public class globalFunctions extends Sprite
 	{
@@ -71,6 +67,19 @@ package
 				
 				var a:Body = cb.int1 as Body;
 				var explosionPos:Vec2 = a.position;
+				
+				var psConfig:XML = XML(new Assets.FireConfig());
+				var psTexture:Texture = Texture.fromBitmap(new Assets.FireParticle());
+				
+				var ps:PDParticleSystem = new PDParticleSystem(psConfig, psTexture);
+				ps.x = explosionPos.x;
+				ps.y = explosionPos.y;
+				
+				stage.addChild(ps);
+				Starling.juggler.add(ps);
+				
+				ps.start(0.2);
+				
 				for(var i:int = 0; i < mySpace.liveBodies.length; i++)
 				{		
 					var b:Body = mySpace.liveBodies.at(i);
@@ -95,7 +104,7 @@ package
 
 				stage.removeChild(a.userData.graphic.parent);
 				mySpace.bodies.remove(a);
-				
+		
 				stage.removeChild(b.userData.graphic.parent);
 				mySpace.bodies.remove(b);
 

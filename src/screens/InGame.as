@@ -31,8 +31,8 @@ package screens
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
-
-
+	import starling.extensions.PDParticleSystem;
+	import starling.textures.Texture;
 	
 	public class InGame extends Sprite
 	{
@@ -134,7 +134,7 @@ package screens
 				Vec2.weak(0, screenHeight / 2),
 				Vec2.weak(128,960));	
 			addChild(floor);
-	
+		
 		}
 		
 		
