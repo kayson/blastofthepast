@@ -116,7 +116,7 @@ package screens
 			enemy = new Objects("Enemy",mySpace,enemyCb,
 				Vec2.weak((2.5 * screenWidth)/ 3, screenHeight - 30),
 				Vec2.weak(144,120));
-			addChild(enemy);
+			stage.addChild(enemy);
 							
 			//The level building blocks. (STATIC objects)  -----------------------------------
 			
