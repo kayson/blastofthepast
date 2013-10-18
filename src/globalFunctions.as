@@ -13,7 +13,7 @@ package
 	import objects.GameBackground;
 	import objects.Objects;
 	
-	import screens.InGame;
+	import screens.lvl1;
 	
 	import starling.core.Starling;
 	import starling.display.*;

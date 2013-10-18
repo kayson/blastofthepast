@@ -31,10 +31,10 @@ package screens
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
-	import starling.extensions.PDParticleSystem;
-	import starling.textures.Texture;
 	
-	public class InGame extends Sprite
+	
+	
+	public class lvl2 extends Sprite
 	{
 		
 		private var mySpace:Space;
@@ -48,17 +48,17 @@ package screens
 		private var yDir:Number = 0;
 		
 		private var bg:GameBackground;
-		private var floor:Objects;
+		private var stoneBlock:Objects;
 		private var fireball:Objects;
 		private var player:Objects;
 		private var enemy:Objects;
 		private var box:Objects;
 		
-
+		
 		private var r:Number = 0;
-
-				
-		public function InGame()
+		
+		
+		public function lvl2()
 		{
 			super();
 			this.addEventListener(starling.events.Event.ADDED_TO_STAGE, onAddedToStage);
@@ -99,7 +99,7 @@ package screens
 				Vec2.weak(screenWidth / 2, screenHeight / 2),
 				Vec2.weak(16,32)); //16 = radie, 32 = scalevalue. (Behövs fixas)	
 			addChild(player);
-
+			
 			//Add boxes
 			for( var i:int = 0; i < 6; i++ )
 			{
@@ -117,31 +117,56 @@ package screens
 				Vec2.weak((2.5 * screenWidth)/ 3, screenHeight - 30),
 				Vec2.weak(144,120));
 			stage.addChild(enemy);
-							
+			
 			//The level building blocks. (STATIC objects)  -----------------------------------
 			
-			floor = new Objects("Stone",mySpace,
-					Vec2.weak(screenWidth / 2, screenHeight - 20),
-					Vec2.weak(960,128));	
-			addChild(floor);
+			//Floor
+			stoneBlock = new Objects("Stone",mySpace,
+				Vec2.weak(screenWidth / 2, screenHeight - 20),
+				Vec2.weak(960 * 2,128));	
+			addChild(stoneBlock);
 			
-			floor = new Objects("Stone",mySpace,
-				Vec2.weak(screenWidth, screenHeight / 2),
+			//Right wall
+			stoneBlock = new Objects("Stone",mySpace,
+				Vec2.weak(screenWidth * 2, screenHeight / 2),
 				Vec2.weak(128,960));	
-			addChild(floor);
+			addChild(stoneBlock);
 			
-			floor = new Objects("Stone",mySpace,
+			//Left wall
+			stoneBlock = new Objects("Stone",mySpace,
 				Vec2.weak(0, screenHeight / 2),
 				Vec2.weak(128,960));	
-			addChild(floor);
-		
+			addChild(stoneBlock);
+			
+			//Roof
+			stoneBlock = new Objects("Stone",mySpace,
+				Vec2.weak(0, screenHeight / 2),
+				Vec2.weak(128,960));	
+			addChild(stoneBlock);
+			
+			//Level-buildingblocks
+			stoneBlock = new Objects("Stone",mySpace,
+				Vec2.weak(screenWidth * 2 / 2, screenHeight / 2),
+				Vec2.weak(128,960));	
+			addChild(stoneBlock);
+			
+			stoneBlock = new Objects("Stone",mySpace,
+				Vec2.weak(screenWidth * 2 / 1.4, screenHeight / 2),
+				Vec2.weak(128,960));	
+			addChild(stoneBlock);
+			
+			stoneBlock = new Objects("Stone",mySpace,
+				Vec2.weak(screenWidth * 2 / 1, screenHeight / 2),
+				Vec2.weak(128,960));	
+			addChild(stoneBlock);
+			
 		}
 		
 		
 		private function UpdateWorld( evt:Event ):void
 		{
 			globalFunctions.UpdateWorldGlobal(evt, mySpace,player, bg,updateGraphics);
-
+			
 		}
 		
 		private function touch(e:TouchEvent):void
@@ -158,11 +183,11 @@ package screens
 			
 			globalFunctions.enemyHitGlobal(cb, mySpace, stage);
 		}
-
+		
 		private function updateGraphics( body:Body ):void
 		{
 			globalFunctions.updateGraphicsGlobal(body, player, new Vec2(screenWidth,screenHeight));
-	
+			
 		}
 		
 		public function disposeTemporarily():void

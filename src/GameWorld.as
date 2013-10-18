@@ -3,7 +3,7 @@ package
 
 	import events.NavigationEvent;
 	
-	import screens.InGame;
+	import screens.lvl1;
 	import screens.Welcome;
 	import screens.lvl2;
 	
@@ -15,7 +15,8 @@ package
 	{
 
 		private var screenWelcome:Welcome;
-		private var screenInGame:InGame;
+		private var screenLvl1:lvl1;
+		private var screenLvl2:lvl2;
 
 	
 
@@ -32,9 +33,13 @@ package
 			this.addEventListener(events.NavigationEvent.CHANGE_SCREEN, onChangeScreen);
 			
 
-			screenInGame = new InGame();
-			screenInGame.disposeTemporarily();
-			this.addChild(screenInGame);
+			screenLvl1 = new lvl1();
+			screenLvl1.disposeTemporarily();
+			this.addChild(screenLvl1);
+			
+			screenLvl2 = new lvl2();
+			screenLvl2.disposeTemporarily();
+			this.addChild(screenLvl2);
 
 			
 			screenWelcome = new Welcome();
@@ -48,9 +53,13 @@ package
 			switch (event.params.id)
 			{
 
-				case "play":
+				case "lvl1":
 					screenWelcome.disposeTemporarily();
-					screenInGame.initialize();
+					screenLvl1.initialize();
+					break;
+				case "lvl2":
+					screenWelcome.disposeTemporarily();
+					screenLvl2.initialize();
 					break;
 
 			}
