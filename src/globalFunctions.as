@@ -13,6 +13,7 @@ package
 	import objects.Objects;
 	
 	import starling.core.Starling;
+	import starling.display.*;
 	import starling.display.Image;
 	import starling.display.Stage;
 	import starling.events.Event;
@@ -21,6 +22,7 @@ package
 	import starling.events.TouchPhase;
 	import starling.extensions.PDParticleSystem;
 	import starling.textures.Texture;	
+	//import starling.extensions.camera.StarlingCamera;
 
 	public class globalFunctions extends Sprite
 	{
@@ -72,9 +74,9 @@ package
 				var psTexture:Texture = Texture.fromBitmap(new Assets.FireParticle());
 				
 				var ps:PDParticleSystem = new PDParticleSystem(psConfig, psTexture);
-				ps.x = explosionPos.x;
-				ps.y = explosionPos.y;
-				
+				ps.x = a.userData.graphic.x;
+				ps.y = a.userData.graphic.y;
+
 				stage.addChild(ps);
 				Starling.juggler.add(ps);
 				
@@ -111,7 +113,7 @@ package
 			}
 			
 			
-			public static function updateGraphicsGlobal( body:Body, player:Objects, wh:Vec2 ):void
+			public static function updateGraphicsGlobal( body:Body, player:Objects, wh:Vec2):void
 			{
 				var graphic:Image = body.userData.graphic;
 				//graphic.x = body.position.x;
@@ -124,17 +126,17 @@ package
 					graphic.y = body.position.y + (wh.y / 2) - player.getBody().position.y;
 					graphic.x = body.position.x + (wh.x / 2) - player.getBody().position.x;
 				}
-				
+
 				graphic.rotation = body.rotation;
 			}
 			
 			public static function UpdateWorldGlobal( evt:Event, mySpace:Space,
-								player:Objects, bg:GameBackground , func:Function):void
+								player:Objects, bg:GameBackground , func:Function, stage:Stage):void
 			{
 				
 				mySpace.step( 1 / 60 );		
 				mySpace.bodies.foreach( func );
-				
+
 				bg.bgPosition(player.getBody().position);
 			}
 		
