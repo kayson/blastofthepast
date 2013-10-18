@@ -36,12 +36,11 @@ package objects
 
 		private var _speed:Number = 0;
 		
-		public function Objects(type:String,mySpace:Space,cbType:CbType,position:Vec2,wh:Vec2 )
+		public function Objects(type:String,mySpace:Space,position:Vec2,wh:Vec2 )
 		{
 			super();
 			//Koppla till de lokala variablerna
 			_mySpace 	= mySpace;
-			_cbType		= cbType;
 			_position	= position;
 			_WidthHeight= wh;
 
@@ -85,7 +84,7 @@ package objects
 			
 			_objectBody.shapes.add( new Circle(_WidthHeight.x));
 			_objectBody.setShapeFilters(new InteractionFilter(1));
-			_objectBody.cbTypes.add(_cbType);
+			_objectBody.cbTypes.add(globalFunctions.other);
 			
 			_objectBody.position.setxy(_position.x, _position.y);
 			_objectBody.setShapeMaterials( Material.rubber() );
@@ -122,7 +121,7 @@ package objects
 			
 			_objectBody.setShapeFilters(new InteractionFilter(2));
 			
-			_objectBody.cbTypes.add(_cbType);
+			_objectBody.cbTypes.add(globalFunctions.enemyCb);
 			
 			_objectImage.x = _objectBody.position.x;
 			_objectImage.y = _objectBody.position.y;
@@ -143,7 +142,7 @@ package objects
 			
 			_objectBody.shapes.add( new Polygon(Polygon.box(_WidthHeight.x, _WidthHeight.y)));
 			_objectBody.setShapeFilters(new InteractionFilter(1,~1));
-			_objectBody.cbTypes.add(_cbType);
+			_objectBody.cbTypes.add(globalFunctions.projectile);
 			
 			_objectBody.position.setxy(_position.x, _position.y);
 			_objectBody.setShapeMaterials( Material.rubber() );
@@ -175,7 +174,7 @@ package objects
 			
 			_objectBody.shapes.add( new Polygon(Polygon.box(_WidthHeight.x, _WidthHeight.y)));
 			_objectBody.setShapeFilters(new InteractionFilter(2));
-			_objectBody.cbTypes.add(_cbType);
+			_objectBody.cbTypes.add(globalFunctions.other);
 				
 			_objectBody.position.setxy(_position.x, _position.y);
 			_objectBody.setShapeMaterials( Material.steel() );
@@ -210,7 +209,7 @@ package objects
 			
 			_objectBody.setShapeFilters(new InteractionFilter(2));
 			
-			_objectBody.cbTypes.add(_cbType);
+			_objectBody.cbTypes.add(globalFunctions.other);
 			
 			_objectImage.x = _objectBody.position.x;
 			_objectImage.y = _objectBody.position.y;

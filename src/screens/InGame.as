@@ -95,7 +95,7 @@ package screens
 			this.addChild(bg);
 			
 			//The player
-			player = new Objects("Player",mySpace,other,
+			player = new Objects("Player",mySpace,
 				Vec2.weak(screenWidth / 2, screenHeight / 2),
 				Vec2.weak(16,32)); //16 = radie, 32 = scalevalue. (Behövs fixas)	
 			addChild(player);
@@ -105,7 +105,7 @@ package screens
 			{
 				for( var j:int = -3; j < 4; j++ )
 				{
-					box = new Objects("Box",mySpace,other,
+					box = new Objects("Box",mySpace,
 						Vec2.weak((screenWidth / 2) - (j * 8), (screenHeight - 100) - (i * 8)),
 						Vec2.weak(8,8));	
 					addChild(box);
@@ -113,24 +113,24 @@ package screens
 			}
 			
 			//The enemy
-			enemy = new Objects("Enemy",mySpace,enemyCb,
+			enemy = new Objects("Enemy",mySpace,
 				Vec2.weak((2.5 * screenWidth)/ 3, screenHeight - 30),
 				Vec2.weak(144,120));
 			stage.addChild(enemy);
 							
 			//The level building blocks. (STATIC objects)  -----------------------------------
 			
-			floor = new Objects("Stone",mySpace,other,
+			floor = new Objects("Stone",mySpace,
 					Vec2.weak(screenWidth / 2, screenHeight - 20),
 					Vec2.weak(960,128));	
 			addChild(floor);
 			
-			floor = new Objects("Stone",mySpace,other,
+			floor = new Objects("Stone",mySpace,
 				Vec2.weak(screenWidth, screenHeight / 2),
 				Vec2.weak(128,960));	
 			addChild(floor);
 			
-			floor = new Objects("Stone",mySpace,other,
+			floor = new Objects("Stone",mySpace,
 				Vec2.weak(0, screenHeight / 2),
 				Vec2.weak(128,960));	
 			addChild(floor);
@@ -146,17 +146,17 @@ package screens
 		
 		private function touch(e:TouchEvent):void
 		{
-			globalFunctions.touchGlobal(e, stage,player,mySpace,projectile);
+			globalFunctions.touchGlobal(e, stage,player,mySpace);
 		}
 		
 		private function hasCollided(cb:InteractionCallback):void {
 			
-			globalFunctions.hasCollidedGlobal(cb, mySpace,other, stage);
+			globalFunctions.hasCollidedGlobal(cb, mySpace, stage);
 		}
 		
 		private function enemyHit(cb:InteractionCallback):void {
 			
-			globalFunctions.enemyHitGlobal(cb, mySpace,other, stage);
+			globalFunctions.enemyHitGlobal(cb, mySpace, stage);
 		}
 
 		private function updateGraphics( body:Body ):void

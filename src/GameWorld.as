@@ -4,8 +4,8 @@ package
 	import events.NavigationEvent;
 	
 	import screens.InGame;
-	import screens.lvl2;
 	import screens.Welcome;
+	import screens.lvl2;
 	
 	import starling.display.Sprite;
 	import starling.events.Event;
@@ -15,7 +15,7 @@ package
 	{
 
 		private var screenWelcome:Welcome;
-		private var screenInGame:lvl2;
+		private var screenInGame:InGame;
 
 	
 
@@ -32,7 +32,7 @@ package
 			this.addEventListener(events.NavigationEvent.CHANGE_SCREEN, onChangeScreen);
 			
 
-			screenInGame = new lvl2();
+			screenInGame = new InGame();
 			screenInGame.disposeTemporarily();
 			this.addChild(screenInGame);
 
