@@ -123,7 +123,7 @@ package
 						stage.addChild(ps2);
 						Starling.juggler.add(ps2);
 						
-						ps2.start(2);
+						ps2.start(1);
 					}
 					
 				}
@@ -166,7 +166,7 @@ package
 				stage.addChild(ps2);
 				Starling.juggler.add(ps2);
 				
-				ps2.start(2);
+				ps2.start(1);
 				
 				stage.removeChild(b.userData.graphic.parent);
 				mySpace.bodies.remove(b);
