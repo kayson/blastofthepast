@@ -146,7 +146,7 @@ package screens
 			
 			//Level-buildingblocks
 			stoneBlock = new Objects("Stone",mySpace,
-				Vec2.weak(screenWidth * 2 / 2, screenHeight / 2),
+				Vec2.weak(screenWidth * 2 / 3, screenHeight / 2),
 				Vec2.weak(128,960));	
 			addChild(stoneBlock);
 			

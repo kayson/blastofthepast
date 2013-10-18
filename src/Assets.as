@@ -1,6 +1,8 @@
 package
 {
 	import flash.display.Bitmap;
+	import flash.media.Sound;
+	import flash.media.SoundTransform;
 	import flash.utils.Dictionary;
 	
 	import starling.textures.Texture;
@@ -58,11 +60,18 @@ package
 		[Embed(source="../particles/enemydeath/texture.png")]
 		public static const EnemyDeathParticle:Class;
 		
+		//Sound
 		
-		
-		
+		[Embed(source="../sound/shoot.mp3")]
+		private static const shootSound:Class;
+		public static const shoot:Sound = new shootSound();;
 		
 		private static var gameTextures:Dictionary = new Dictionary();
+		
+		public function Assets():void
+		{
+			shoot.play(0,0, new SoundTransform(0));	
+		}
 			
 		public static function getTexture(name:String):Texture
 		{
