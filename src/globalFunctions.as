@@ -68,7 +68,7 @@ package
 						fireball.getBody().rotation = shootDir.angle;
 						fireball.getBody().applyImpulse(shootDir);
 						
-						//Assets.shoot.play();
+						Assets.shoot.play();
 					}
 				}
 			}
