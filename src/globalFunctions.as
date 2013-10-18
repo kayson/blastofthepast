@@ -13,9 +13,10 @@ package
 	import objects.GameBackground;
 	import objects.Objects;
 	
-	import screens.InGame;
+	import screens.lvl1;
 	
 	import starling.core.Starling;
+	import starling.display.*;
 	import starling.display.Image;
 	import starling.display.Stage;
 	import starling.events.Event;
@@ -23,7 +24,8 @@ package
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
 	import starling.extensions.PDParticleSystem;
-	import starling.textures.Texture;
+	import starling.textures.Texture;	
+
 
 	public class globalFunctions extends Sprite
 	{
@@ -66,6 +68,8 @@ package
 						stage.addChild(fireball);
 						fireball.getBody().rotation = shootDir.angle;
 						fireball.getBody().applyImpulse(shootDir);
+						
+						Assets.shoot.play();
 					}
 				}
 			}
@@ -82,7 +86,7 @@ package
 				var ps:PDParticleSystem = new PDParticleSystem(psConfig, psTexture);
 				ps.x = a.userData.graphic.x;
 				ps.y = a.userData.graphic.y;
-				
+
 				stage.addChild(ps);
 				Starling.juggler.add(ps);
 				
@@ -170,7 +174,7 @@ package
 			}
 			
 			
-			public static function updateGraphicsGlobal( body:Body, player:Objects, wh:Vec2 ):void
+			public static function updateGraphicsGlobal( body:Body, player:Objects, wh:Vec2):void
 			{
 				var graphic:Image = body.userData.graphic;
 				//graphic.x = body.position.x;
@@ -183,7 +187,7 @@ package
 					graphic.y = body.position.y + (wh.y / 2) - player.getBody().position.y;
 					graphic.x = body.position.x + (wh.x / 2) - player.getBody().position.x;
 				}
-				
+
 				graphic.rotation = body.rotation;
 			}
 			
@@ -193,7 +197,7 @@ package
 				
 				mySpace.step( 1 / 60 );		
 				mySpace.bodies.foreach( func );
-				
+
 				bg.bgPosition(player.getBody().position);
 			}
 		
