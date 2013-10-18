@@ -41,9 +41,6 @@ package screens
 		private var screenWidth:Number;
 		private var screenHeight:Number;
 		private var fireBallImage:Image;
-		private var projectile:CbType = new CbType();
-		private var other:CbType = new CbType();
-		private var enemyCb:CbType = new CbType();
 		private var xDir:Number = 0;
 		private var yDir:Number = 0;
 		
@@ -74,8 +71,8 @@ package screens
 			
 			addEventListener( TouchEvent.TOUCH, touch);
 			
-			mySpace.listeners.add(new InteractionListener(CbEvent.BEGIN, InteractionType.COLLISION, projectile, other, hasCollided));
-			mySpace.listeners.add(new InteractionListener(CbEvent.BEGIN, InteractionType.COLLISION, projectile, enemyCb, enemyHit));
+			mySpace.listeners.add(new InteractionListener(CbEvent.BEGIN, InteractionType.COLLISION, globalFunctions.projectile, globalFunctions.other, hasCollided));
+			mySpace.listeners.add(new InteractionListener(CbEvent.BEGIN, InteractionType.COLLISION, globalFunctions.projectile, globalFunctions.enemyCb, enemyHit));
 		}
 		
 		private function InitSpace():void

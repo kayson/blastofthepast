@@ -16,7 +16,6 @@ package
 	import screens.lvl1;
 	
 	import starling.core.Starling;
-	import starling.display.*;
 	import starling.display.Image;
 	import starling.display.Stage;
 	import starling.events.Event;
@@ -69,7 +68,7 @@ package
 						fireball.getBody().rotation = shootDir.angle;
 						fireball.getBody().applyImpulse(shootDir);
 						
-						Assets.shoot.play();
+						//Assets.shoot.play();
 					}
 				}
 			}
