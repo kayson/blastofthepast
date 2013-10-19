@@ -131,6 +131,7 @@ package
 						ps2.start(1);
 					}
 					
+					
 				}
 				
 				lvlInterf.removeObjectFromInstance(a.userData.graphic.parent);
@@ -202,6 +203,8 @@ package
 				
 				mySpace.step( 1 / 60 );		
 				mySpace.bodies.foreach( func );
+				
+				
 
 				bg.bgPosition(player.getBody().position);
 			}

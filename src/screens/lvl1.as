@@ -135,7 +135,7 @@ package screens
 				Vec2.weak(128,960));	
 			addChild(floor);
 			
-			//The menubutton
+			//The menubuttonlan
 			toMenu = new Button(Assets.getTexture("buttonPlay"));
 			toMenu.scaleX = 0.2;
 			toMenu.scaleY = 0.2;
@@ -184,7 +184,6 @@ package screens
 		public function disposeTemporarily():void
 		{
 			this.visible = false;
-		
 			removeEventListener(Event.ENTER_FRAME, UpdateWorld );
 			
 			if(this)
@@ -199,7 +198,6 @@ package screens
 			{
 				//stage.removeChildren();
 			}
-			
 		}
 		
 		public function initialize():void

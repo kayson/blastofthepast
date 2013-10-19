@@ -32,6 +32,7 @@ package screens
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
 	import starling.display.DisplayObject;
+	import starling.display.Button;
 	
 	
 	
@@ -52,6 +53,7 @@ package screens
 		private var goal:Objects;
 		private var enemy:Objects;
 		private var box:Objects;
+		private var toMenu:Button;
 		
 		
 		private var r:Number = 0;
@@ -165,7 +167,24 @@ package screens
 				Vec2.weak(128,960));	
 			addChild(stoneBlock);
 			
+			//The menubutton
+			toMenu = new Button(Assets.getTexture("buttonPlay"));
+			toMenu.scaleX = 0.2;
+			toMenu.scaleY = 0.2;
+			toMenu.x = 100;
+			toMenu.y = 100;
+			this.addChild(toMenu);
+			
+			this.addEventListener(Event.TRIGGERED, onMainMenuClick);
 		}
+		
+		private function onMainMenuClick(event:Event):void
+		{
+			trace("button to mainmenu");
+			this.disposeTemporarily();
+			this.dispatchEvent(new NavigationEvent(NavigationEvent.CHANGE_SCREEN,
+				{id: "Menu"}, true));	
+		}	
 		
 		
 		private function UpdateWorld( evt:Event ):void
@@ -199,6 +218,19 @@ package screens
 		{
 			this.visible = false;
 			removeEventListener(Event.ENTER_FRAME, UpdateWorld );
+			
+			if(this)
+			{
+				this.removeChildren();
+			}
+			if(mySpace)
+			{
+				mySpace.clear();
+			}
+			if(stage)
+			{
+				//stage.removeChildren();
+			}
 		}
 		
 		public function initialize():void
