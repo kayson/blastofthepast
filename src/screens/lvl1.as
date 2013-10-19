@@ -1,9 +1,11 @@
 package screens
 {
-	import events.NavigationEvent;
-	
 	import flash.display.Bitmap;
+	import flash.events.TimerEvent;
 	import flash.geom.Rectangle;
+	import flash.utils.Timer;
+	
+	import events.NavigationEvent;
 	
 	import nape.callbacks.CbEvent;
 	import nape.callbacks.CbType;
@@ -26,6 +28,7 @@ package screens
 	import starling.core.Starling;
 	import starling.display.BlendMode;
 	import starling.display.Button;
+	import starling.display.DisplayObject;
 	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.events.Event;
@@ -33,8 +36,11 @@ package screens
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
 	import starling.extensions.PDParticleSystem;
+	import starling.text.TextField;
 	import starling.textures.Texture;
-	import starling.display.DisplayObject;
+	import starling.utils.HAlign;
+	import starling.utils.VAlign;
+	
 	
 	public class lvl1 extends Sprite implements LevelInterface
 	{
@@ -56,7 +62,10 @@ package screens
 		
 
 		private var r:Number = 0;
-
+		
+		private var timerTxt:TextField;
+		private var seconds:int = 0;
+		private var timer:Timer = new Timer(1000);
 				
 		public function lvl1()
 		{
@@ -144,6 +153,21 @@ package screens
 			this.addChild(toMenu);
 			
 			this.addEventListener(Event.TRIGGERED, onMainMenuClick);
+			
+			
+			
+			
+			//Text
+			timerTxt = new TextField(180, 30, "Time: 0 seconds", "Arial", 15, 0x000000, true);
+			timerTxt.autoScale = true;
+			timerTxt.pivotX = timerTxt.width/2;
+			timerTxt.x = 170;
+			timerTxt.y = 0;
+			timerTxt.hAlign = HAlign.LEFT;
+			timerTxt.vAlign = VAlign.CENTER;
+			addChild(timerTxt);
+			
+			
 		}
 		
 		private function onMainMenuClick(event:Event):void
@@ -207,6 +231,15 @@ package screens
 			InitBodies();
 			this.visible = true;
 			addEventListener( Event.ENTER_FRAME, UpdateWorld );
+			
+			timer.addEventListener(TimerEvent.TIMER, updateClock);
+			timer.start();
+		}
+		
+		public function updateClock(e:TimerEvent):void
+		{
+			seconds++;
+			timerTxt.text = "Time: "+seconds.toString()+" seconds";
 		}
 		
 		public function addObjectToInstance(obj:DisplayObject):void

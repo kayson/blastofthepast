@@ -1,9 +1,10 @@
 package
 {
-	import events.NavigationEvent;
-	
 	import flash.display.Screen;
 	import flash.display.Sprite;
+	import flash.net.drm.AddToDeviceGroupSetting;
+	
+	import events.NavigationEvent;
 	
 	import flashx.textLayout.tlf_internal;
 	
@@ -43,6 +44,8 @@ package
 			public static var other:CbType = new CbType();
 			public static var enemyCb:CbType = new CbType();
 			
+			
+						
 			public static function performAction():void {
 				
 			}
@@ -85,17 +88,24 @@ package
 				var a:Body = cb.int1 as Body;
 				var explosionPos:Vec2 = a.position;				
 				
+				lvlInterf.removeObjectFromInstance(a.userData.graphic.parent);
+				mySpace.bodies.remove(a);
+				
 				var psConfig:XML = XML(new Assets.FireConfig());
 				var psTexture:Texture = Texture.fromBitmap(new Assets.FireParticle());
 				
 				var ps:PDParticleSystem = new PDParticleSystem(psConfig, psTexture);
-				ps.x = a.userData.graphic.x;
-				ps.y = a.userData.graphic.y;
-
+				
+				ps.emitterX = a.userData.graphic.x;
+				ps.emitterY = a.userData.graphic.y;
+				
 				lvlInterf.addObjectToInstance(ps);
 				Starling.juggler.add(ps);
 				
 				ps.start(0.2);
+				ps.advanceTime(0.2);
+				
+				
 				
 				
 				for(var i:int = 0; i < mySpace.liveBodies.length; i++)
