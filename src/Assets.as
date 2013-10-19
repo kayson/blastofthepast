@@ -17,6 +17,9 @@ package
 		[Embed(source="../images/play.png")]
 		public static const buttonPlay:Class;
 		
+		[Embed(source="../images/goal.png")] 
+		public static const goalRaw:Class;
+		
 		[Embed(source="../images/CircleBadGuy.png")] 
 		public static const circleBadGuyRaw:Class;
 		

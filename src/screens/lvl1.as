@@ -1,9 +1,9 @@
 package screens
 {
+	import events.NavigationEvent;
+	
 	import flash.display.Bitmap;
 	import flash.geom.Rectangle;
-	
-	import events.NavigationEvent;
 	
 	import nape.callbacks.CbEvent;
 	import nape.callbacks.CbType;
@@ -25,6 +25,7 @@ package screens
 	
 	import starling.core.Starling;
 	import starling.display.BlendMode;
+	import starling.display.Button;
 	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.events.Event;
@@ -33,8 +34,9 @@ package screens
 	import starling.events.TouchPhase;
 	import starling.extensions.PDParticleSystem;
 	import starling.textures.Texture;
+	import starling.display.DisplayObject;
 	
-	public class lvl1 extends Sprite
+	public class lvl1 extends Sprite implements LevelInterface
 	{
 		
 		private var mySpace:Space;
@@ -50,6 +52,7 @@ package screens
 		private var player:Objects;
 		private var enemy:Objects;
 		private var box:Objects;
+		private var toMenu:Button;
 		
 
 		private var r:Number = 0;
@@ -67,7 +70,7 @@ package screens
 			this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			
 			InitSpace();
-			InitBodies();
+			
 			
 			addEventListener( TouchEvent.TOUCH, touch);
 			
@@ -75,7 +78,7 @@ package screens
 			mySpace.listeners.add(new InteractionListener(CbEvent.BEGIN, InteractionType.COLLISION, globalFunctions.projectile, globalFunctions.enemyCb, enemyHit));
 		}
 		
-		private function InitSpace():void
+		public function InitSpace():void
 		{
 			var worldGravity:Vec2 = Vec2.weak(0,600);
 			mySpace = new Space( worldGravity );			
@@ -89,7 +92,7 @@ package screens
 		{	
 			//Parallax background baby!
 			bg = new GameBackground();
-			this.addChild(bg);
+			addChild(bg);
 			
 			//The player
 			player = new Objects("Player",mySpace,
@@ -113,7 +116,7 @@ package screens
 			enemy = new Objects("Enemy",mySpace,
 				Vec2.weak((2.5 * screenWidth)/ 3, screenHeight - 30),
 				Vec2.weak(144,120));
-			stage.addChild(enemy);
+			addChild(enemy);
 							
 			//The level building blocks. (STATIC objects)  -----------------------------------
 			
@@ -131,9 +134,25 @@ package screens
 				Vec2.weak(0, screenHeight / 2),
 				Vec2.weak(128,960));	
 			addChild(floor);
-		
+			
+			//The menubutton
+			toMenu = new Button(Assets.getTexture("buttonPlay"));
+			toMenu.scaleX = 0.2;
+			toMenu.scaleY = 0.2;
+			toMenu.x = 100;
+			toMenu.y = 100;
+			this.addChild(toMenu);
+			
+			this.addEventListener(Event.TRIGGERED, onMainMenuClick);
 		}
 		
+		private function onMainMenuClick(event:Event):void
+		{
+			trace("button to mainmenu");
+			this.disposeTemporarily();
+			this.dispatchEvent(new NavigationEvent(NavigationEvent.CHANGE_SCREEN,
+								{id: "Menu"}, true));	
+		}		
 		
 		private function UpdateWorld( evt:Event ):void
 		{
@@ -143,17 +162,17 @@ package screens
 		
 		private function touch(e:TouchEvent):void
 		{
-			globalFunctions.touchGlobal(e, stage,player,mySpace);
+			globalFunctions.touchGlobal(e, stage,player,mySpace, this);
 		}
 		
 		private function hasCollided(cb:InteractionCallback):void {
 			
-			globalFunctions.hasCollidedGlobal(cb, mySpace, stage);
+			globalFunctions.hasCollidedGlobal(cb, mySpace, stage, this);
 		}
 		
 		private function enemyHit(cb:InteractionCallback):void {
 			
-			globalFunctions.enemyHitGlobal(cb, mySpace, stage);
+			globalFunctions.enemyHitGlobal(cb, mySpace, stage, this);
 		}
 
 		private function updateGraphics( body:Body ):void
@@ -165,13 +184,39 @@ package screens
 		public function disposeTemporarily():void
 		{
 			this.visible = false;
+		
 			removeEventListener(Event.ENTER_FRAME, UpdateWorld );
+			
+			if(this)
+			{
+				this.removeChildren();
+			}
+			if(mySpace)
+			{
+				mySpace.clear();
+			}
+			if(stage)
+			{
+				//stage.removeChildren();
+			}
+			
 		}
 		
 		public function initialize():void
 		{
+			InitBodies();
 			this.visible = true;
 			addEventListener( Event.ENTER_FRAME, UpdateWorld );
+		}
+		
+		public function addObjectToInstance(obj:DisplayObject):void
+		{
+			this.addChild(obj);
+		}
+		
+		public function removeObjectFromInstance(obj:DisplayObject):void
+		{
+			this.removeChild(obj);
 		}
 	}
 }

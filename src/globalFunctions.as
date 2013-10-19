@@ -1,7 +1,11 @@
 package
 {
+	import events.NavigationEvent;
+	
 	import flash.display.Screen;
 	import flash.display.Sprite;
+	
+	import flashx.textLayout.tlf_internal;
 	
 	import nape.callbacks.CbType;
 	import nape.callbacks.InteractionCallback;
@@ -13,9 +17,11 @@ package
 	import objects.GameBackground;
 	import objects.Objects;
 	
+	import screens.LevelInterface;
 	import screens.lvl1;
 	
 	import starling.core.Starling;
+	import starling.display.Button;
 	import starling.display.Image;
 	import starling.display.Stage;
 	import starling.events.Event;
@@ -23,7 +29,7 @@ package
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
 	import starling.extensions.PDParticleSystem;
-	import starling.textures.Texture;	
+	import starling.textures.Texture;
 
 
 	public class globalFunctions extends Sprite
@@ -42,7 +48,7 @@ package
 			}
 			
 			public static function touchGlobal(e:TouchEvent, stage:Stage,
-								player:Objects, mySpace:Space):void
+								player:Objects, mySpace:Space, lvlInterf:LevelInterface):void
 			{
 				var touch:Touch = e.getTouch(stage);
 				if( touch )
@@ -58,13 +64,13 @@ package
 						if(shootDir.length != 0)
 							shootDir = shootDir.normalise();
 						
-						shootDir.x *= 10;
-						shootDir.y *= 10;
+						shootDir.x *= 100;
+						shootDir.y *= 100;
 
 						var fireball:Objects = new Objects("Fireball",mySpace,
 							Vec2.weak(player.getBody().position.x, player.getBody().position.y),
 							Vec2.weak(8,8));	
-						stage.addChild(fireball);
+						lvlInterf.addObjectToInstance(fireball);
 						fireball.getBody().rotation = shootDir.angle;
 						fireball.getBody().applyImpulse(shootDir);
 						
@@ -74,7 +80,7 @@ package
 			}
 			
 			public static function hasCollidedGlobal(cb:InteractionCallback, 
-									mySpace:Space, stage:Stage):void {
+									mySpace:Space, stage:Stage, lvlInterf:LevelInterface):void {
 				
 				var a:Body = cb.int1 as Body;
 				var explosionPos:Vec2 = a.position;				
@@ -86,7 +92,7 @@ package
 				ps.x = a.userData.graphic.x;
 				ps.y = a.userData.graphic.y;
 
-				stage.addChild(ps);
+				lvlInterf.addObjectToInstance(ps);
 				Starling.juggler.add(ps);
 				
 				ps.start(0.2);
@@ -100,13 +106,13 @@ package
 					if(b.cbTypes.has(other) && impulseVector.length < 300)
 					{
 						var impulseForce:Number = Math.log((300-impulseVector.length)/80 + 1)*80;
-						var impulse:Vec2 = impulseVector.mul(impulseForce/impulseVector.length);
+						var impulse:Vec2 = impulseVector.mul(impulseForce/impulseVector.length * 2);
 						b.applyImpulse(impulse);
 						
 					}
 					else if(b.cbTypes.has(enemyCb) && impulseVector.length < 300)
 					{
-						stage.removeChild(b.userData.graphic.parent);
+						lvlInterf.removeObjectFromInstance(b.userData.graphic.parent);
 						mySpace.bodies.remove(b);
 						
 						var psConfig2:XML = XML(new Assets.EnemyDeathConfig());
@@ -119,7 +125,7 @@ package
 						ps2.scaleX = 0.8;
 						ps2.scaleY = 0.8;
 						
-						stage.addChild(ps2);
+						lvlInterf.addObjectToInstance(ps2);
 						Starling.juggler.add(ps2);
 						
 						ps2.start(1);
@@ -127,17 +133,17 @@ package
 					
 				}
 				
-				stage.removeChild(a.userData.graphic.parent);
+				lvlInterf.removeObjectFromInstance(a.userData.graphic.parent);
 				mySpace.bodies.remove(a);
 			}
 			
 			public static function enemyHitGlobal(cb:InteractionCallback, 
-													 mySpace:Space, stage:Stage):void {
+													 mySpace:Space, stage:Stage, lvlInterf:LevelInterface):void {
 				
 				var a:Body = cb.int1 as Body;	
 				var b:Body = cb.int2 as Body;
 
-				stage.removeChild(a.userData.graphic.parent);
+				lvlInterf.removeObjectFromInstance(a.userData.graphic.parent);
 				mySpace.bodies.remove(a);
 				
 				var psConfig:XML = XML(new Assets.FireConfig());
@@ -147,7 +153,7 @@ package
 				ps.x = a.userData.graphic.x;
 				ps.y = a.userData.graphic.y;
 				
-				stage.addChild(ps);
+				lvlInterf.addObjectToInstance(ps);
 				Starling.juggler.add(ps);
 				
 				ps.start(0.2);
@@ -162,12 +168,12 @@ package
 				ps2.scaleX = 0.8;
 				ps2.scaleY = 0.8;
 				
-				stage.addChild(ps2);
+				lvlInterf.addObjectToInstance(ps2);
 				Starling.juggler.add(ps2);
 				
 				ps2.start(1);
 				
-				stage.removeChild(b.userData.graphic.parent);
+				lvlInterf.removeObjectFromInstance(b.userData.graphic.parent);
 				mySpace.bodies.remove(b);
 
 			}
@@ -198,6 +204,15 @@ package
 				mySpace.bodies.foreach( func );
 
 				bg.bgPosition(player.getBody().position);
+			}
+			
+			public static function onMainMenuClickGlobal(event:Event, dispatchFuncEvent:Function):void
+			{
+				var buttonClicked:Button = event.target as Button;
+				if(buttonClicked)	
+				{
+					dispatchFuncEvent(new NavigationEvent(NavigationEvent.CHANGE_SCREEN, {id: "lvl1"}, true));
+				}
 			}
 		
 		

@@ -1,9 +1,9 @@
 package screens
 {
+	import events.NavigationEvent;
+	
 	import flash.display.Bitmap;
 	import flash.geom.Rectangle;
-	
-	import events.NavigationEvent;
 	
 	import nape.callbacks.CbEvent;
 	import nape.callbacks.CbType;
@@ -31,10 +31,11 @@ package screens
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
+	import starling.display.DisplayObject;
 	
 	
 	
-	public class lvl2 extends Sprite
+	public class lvl2 extends Sprite implements LevelInterface
 	{
 		
 		private var mySpace:Space;
@@ -48,6 +49,7 @@ package screens
 		private var stoneBlock:Objects;
 		private var fireball:Objects;
 		private var player:Objects;
+		private var goal:Objects;
 		private var enemy:Objects;
 		private var box:Objects;
 		
@@ -75,7 +77,7 @@ package screens
 			mySpace.listeners.add(new InteractionListener(CbEvent.BEGIN, InteractionType.COLLISION, globalFunctions.projectile, globalFunctions.enemyCb, enemyHit));
 		}
 		
-		private function InitSpace():void
+		public function InitSpace():void
 		{
 			var worldGravity:Vec2 = Vec2.weak(0,600);
 			mySpace = new Space( worldGravity );			
@@ -97,6 +99,12 @@ package screens
 				Vec2.weak(16,32)); //16 = radie, 32 = scalevalue. (Behövs fixas)	
 			addChild(player);
 			
+			//The goal
+			goal = new Objects("Goal", mySpace,
+				Vec2.weak(screenWidth * 2 - 256 , screenHeight - 256),
+				Vec2.weak(32,32));
+			addChild(goal);
+			
 			//Add boxes
 			for( var i:int = 0; i < 6; i++ )
 			{
@@ -113,13 +121,13 @@ package screens
 			enemy = new Objects("Enemy",mySpace,
 				Vec2.weak((2.5 * screenWidth)/ 3, screenHeight - 30),
 				Vec2.weak(144,120));
-			stage.addChild(enemy);
+			//stage.addChild(enemy);
 			
 			//The level building blocks. (STATIC objects)  -----------------------------------
 			
 			//Floor
 			stoneBlock = new Objects("Stone",mySpace,
-				Vec2.weak(screenWidth / 2, screenHeight - 20),
+				Vec2.weak(screenWidth, screenHeight - 20),
 				Vec2.weak(960 * 2,128));	
 			addChild(stoneBlock);
 			
@@ -143,13 +151,13 @@ package screens
 			
 			//Level-buildingblocks
 			stoneBlock = new Objects("Stone",mySpace,
-				Vec2.weak(screenWidth * 2 / 3, screenHeight / 2),
-				Vec2.weak(128,960));	
+				Vec2.weak(screenWidth * 2 / 3, screenHeight - 128),
+				Vec2.weak(128,256));	
 			addChild(stoneBlock);
 			
 			stoneBlock = new Objects("Stone",mySpace,
-				Vec2.weak(screenWidth * 2 / 1.4, screenHeight / 2),
-				Vec2.weak(128,960));	
+				Vec2.weak(screenWidth * 2 / 2, screenHeight / 2),
+				Vec2.weak(128,256));	
 			addChild(stoneBlock);
 			
 			stoneBlock = new Objects("Stone",mySpace,
@@ -168,17 +176,17 @@ package screens
 		
 		private function touch(e:TouchEvent):void
 		{
-			globalFunctions.touchGlobal(e, stage,player,mySpace);
+			globalFunctions.touchGlobal(e, stage,player,mySpace, this);
 		}
 		
 		private function hasCollided(cb:InteractionCallback):void {
 			
-			globalFunctions.hasCollidedGlobal(cb, mySpace, stage);
+			globalFunctions.hasCollidedGlobal(cb, mySpace, stage,  this);
 		}
 		
 		private function enemyHit(cb:InteractionCallback):void {
 			
-			globalFunctions.enemyHitGlobal(cb, mySpace, stage);
+			globalFunctions.enemyHitGlobal(cb, mySpace, stage, this);
 		}
 		
 		private function updateGraphics( body:Body ):void
@@ -197,6 +205,16 @@ package screens
 		{
 			this.visible = true;
 			addEventListener( Event.ENTER_FRAME, UpdateWorld );
+		}
+		
+		public function addObjectToInstance(obj:DisplayObject):void
+		{
+			this.addChild(obj);
+		}
+		
+		public function removeObjectFromInstance(obj:DisplayObject):void
+		{
+			this.removeChild(obj);
 		}
 	}
 }

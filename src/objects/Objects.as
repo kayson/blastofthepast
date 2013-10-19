@@ -66,8 +66,43 @@ package objects
 					trace("Player created ");
 					this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStagePlayer);
 					break;
+				case "Goal": //Skulle vara bra med en singleton
+					trace("Goal created ");
+					this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStageGoal);
+					break;
+				
 			}
 				
+		}
+		
+		private function onAddedToStageGoal(event:Event):void
+		{
+			this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStageGoal);
+			
+			_objectImage = new Image(Assets.getTexture((("goalRaw"))));
+			_objectImage.pivotX = _objectImage.width / 2;
+			_objectImage.pivotY = _objectImage.height / 2;
+			_objectImage.scaleX = _WidthHeight.x / _objectImage.width;
+			_objectImage.scaleY = _WidthHeight.y / _objectImage.height;
+			
+			_objectBody = new Body( BodyType.STATIC );
+			
+			_objectBody.shapes.add( new Polygon(Polygon.box(_WidthHeight.x, _WidthHeight.y)));
+			_objectBody.setShapeFilters(new InteractionFilter(2));
+			_objectBody.cbTypes.add(globalFunctions.other);
+			
+			_objectBody.position.setxy(_position.x, _position.y);
+			_objectBody.setShapeMaterials( Material.steel() );
+			_objectBody.userData.graphic = _objectImage;
+			
+			_objectBody.space = _mySpace;
+			
+			_objectImage.x = _objectBody.position.x;
+			_objectImage.y = _objectBody.position.y;
+			
+			addChild(_objectImage);
+			
+			
 		}
 		
 		private function onAddedToStagePlayer(event:Event):void

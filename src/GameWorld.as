@@ -33,13 +33,9 @@ package
 			this.addEventListener(events.NavigationEvent.CHANGE_SCREEN, onChangeScreen);
 			
 
-			screenLvl1 = new lvl1();
-			screenLvl1.disposeTemporarily();
-			this.addChild(screenLvl1);
 			
-			screenLvl2 = new lvl2();
-			screenLvl2.disposeTemporarily();
-			this.addChild(screenLvl2);
+			
+			
 
 			
 			screenWelcome = new Welcome();
@@ -52,12 +48,28 @@ package
 		{
 			switch (event.params.id)
 			{
+				case "Menu":
+					trace("kanel");
+					screenWelcome = new Welcome();
+					this.addChild(screenWelcome);
 
+					//screenWelcome.disposeTemporarily();
+					screenWelcome.initialize();
+					break;
 				case "lvl1":
+					
+					screenLvl1 = new lvl1();
+					screenLvl1.disposeTemporarily();
+					this.addChild(screenLvl1);
+					
 					screenWelcome.disposeTemporarily();
 					screenLvl1.initialize();
 					break;
 				case "lvl2":
+					screenLvl2 = new lvl2();
+					screenLvl2.disposeTemporarily();
+					this.addChild(screenLvl2);
+					
 					screenWelcome.disposeTemporarily();
 					screenLvl2.initialize();
 					break;
