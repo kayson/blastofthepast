@@ -2,7 +2,9 @@ package
 {
 	import flash.display.Screen;
 	import flash.display.Sprite;
+	import flash.events.TimerEvent;
 	import flash.net.drm.AddToDeviceGroupSetting;
+	import flash.utils.Timer;
 	
 	import events.NavigationEvent;
 	
@@ -30,6 +32,7 @@ package
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
 	import starling.extensions.PDParticleSystem;
+	import starling.extensions.ParticleDesignerPS;
 	import starling.textures.Texture;
 
 
@@ -44,17 +47,25 @@ package
 			public static var other:CbType = new CbType();
 			public static var enemyCb:CbType = new CbType();
 			
+			private static var shootAble:Boolean = true;
+			private static var timer:Timer = new Timer(800);
 			
-						
+			private static var particleVec:Vector.<PDParticleSystem> = new Vector.<PDParticleSystem>();
+			
 			public static function performAction():void {
 				
+			}
+			
+			public static function updateClock(e:TimerEvent):void
+			{
+				shootAble = true;
 			}
 			
 			public static function touchGlobal(e:TouchEvent, stage:Stage,
 								player:Objects, mySpace:Space, lvlInterf:LevelInterface):void
 			{
 				var touch:Touch = e.getTouch(stage);
-				if( touch )
+				if( touch && shootAble )
 				{
 					if(touch.phase == TouchPhase.BEGAN)//on finger down
 					{
@@ -78,7 +89,12 @@ package
 						fireball.getBody().applyImpulse(shootDir);
 						
 						Assets.shoot.play();
+						
+						timer.addEventListener(TimerEvent.TIMER, updateClock);
+						timer.start();
+						shootAble = false;
 					}
+					
 				}
 			}
 			
@@ -95,7 +111,7 @@ package
 				var psTexture:Texture = Texture.fromBitmap(new Assets.FireParticle());
 				
 				var ps:PDParticleSystem = new PDParticleSystem(psConfig, psTexture);
-				
+				particleVec.push(ps);
 				ps.emitterX = a.userData.graphic.x;
 				ps.emitterY = a.userData.graphic.y;
 				
@@ -201,8 +217,8 @@ package
 				{
 					graphic.y = body.position.y + (wh.y / 2) - player.getBody().position.y;
 					graphic.x = body.position.x + (wh.x / 2) - player.getBody().position.x;
-				}
-
+				}			
+				
 				graphic.rotation = body.rotation;
 			}
 			
@@ -214,6 +230,22 @@ package
 				mySpace.bodies.foreach( func );
 
 				bg.bgPosition(player.getBody().position);
+				
+				// DETTA FUNKAR INTE ÄNNU !!!!!!!!!!!
+				var ps:PDParticleSystem;
+				for(var i:int=0; i<particleVec.length; i++)
+				{
+					ps = particleVec[i];
+					if(ps.numParticles == 0)
+					{
+						ps.stop();
+						particleVec.splice(i, 1);
+						Starling.juggler.remove(ps);
+						//removeChild(ps, true);
+					}
+					ps.emitterX += (960 / 2) - player.getBody().position.x;
+					ps.emitterY += (640 / 2) - player.getBody().position.y;
+				}
 			}
 			
 			public static function onMainMenuClickGlobal(event:Event, dispatchFuncEvent:Function):void
