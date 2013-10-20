@@ -44,6 +44,9 @@ package
 			public static var other:CbType = new CbType();
 			public static var enemyCb:CbType = new CbType();
 			
+			//Vec
+			//private var explosions:Vector.<Explosion>;
+			
 			
 						
 			public static function performAction():void {
