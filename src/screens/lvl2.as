@@ -123,7 +123,7 @@ package screens
 			enemy = new Objects("Enemy",mySpace,
 				Vec2.weak((2.5 * screenWidth)/ 3, screenHeight - 30),
 				Vec2.weak(144,120));
-			//stage.addChild(enemy);
+			addChild(enemy);
 			
 			//The level building blocks. (STATIC objects)  -----------------------------------
 			
@@ -131,6 +131,12 @@ package screens
 			stoneBlock = new Objects("Stone",mySpace,
 				Vec2.weak(screenWidth, screenHeight - 20),
 				Vec2.weak(960 * 2,128));	
+			addChild(stoneBlock);
+			
+			//Roof
+			stoneBlock = new Objects("Stone",mySpace,
+				Vec2.weak(screenWidth, 0),
+				Vec2.weak(960 *2 ,128));	
 			addChild(stoneBlock);
 			
 			//Right wall
@@ -145,11 +151,7 @@ package screens
 				Vec2.weak(128,960));	
 			addChild(stoneBlock);
 			
-			//Roof
-			stoneBlock = new Objects("Stone",mySpace,
-				Vec2.weak(0, screenHeight / 2),
-				Vec2.weak(128,960));	
-			addChild(stoneBlock);
+			
 			
 			//Level-buildingblocks
 			stoneBlock = new Objects("Stone",mySpace,

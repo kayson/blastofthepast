@@ -59,21 +59,41 @@ package objects
 		
 		public function bgPosition(position:Vec2):void
 		{
-
-			bgLayer1.y = (640 / 2 - position.y) * bgLayer1.parallax;
-			bgLayer1.x = (960 / 2 - position.x) * bgLayer1.parallax;
-			//if (bgLayer1.x < -stage.stageWidth) bgLayer1.x = 0;
 			
-			bgLayer2.y = (640 / 2 - position.y) * bgLayer2.parallax;
-			bgLayer2.x = (960 / 2 - position.x) * bgLayer2.parallax;
-			//if (bgLayer2.x < -stage.stageWidth) bgLayer2.x = 0;
+			if((960 - position.y) > 960/2)
+			{
+				bgLayer1.y = (640 / 2 - position.y) * bgLayer1.parallax;
+				bgLayer1.x = (960 / 2 - position.x) * bgLayer1.parallax;
+				//if (bgLayer1.x < -stage.stageWidth) bgLayer1.x = 0;
+				
+				bgLayer2.y = (640 / 2 - position.y) * bgLayer2.parallax;
+				bgLayer2.x = (960 / 2 - position.x) * bgLayer2.parallax;
+				//if (bgLayer2.x < -stage.stageWidth) bgLayer2.x = 0;
+				
+				bgLayer3.y = (640 / 2 - position.y) * bgLayer3.parallax;
+				bgLayer3.x = (960 / 2 - position.x) * bgLayer3.parallax;
+				//if (bgLayer3.x < -stage.stageWidth) bgLayer3.x = 0;
+				
+				bgLayer4.y = (640 / 2 - position.y) * bgLayer4.parallax;
+				bgLayer4.x = (960 / 2 - position.x) * bgLayer4.parallax;	
+			}else
+			{
+				bgLayer1.y = (640 / 2 - position.y) * bgLayer1.parallax;
+				bgLayer1.x = (960 / 2 - position.x) * bgLayer1.parallax;
+				//if (bgLayer1.x < -stage.stageWidth) bgLayer1.x = 0;
+				
+				bgLayer2.y = (640 / 2 - position.y) * bgLayer2.parallax;
+				bgLayer2.x = (960 / 2 - position.x) * bgLayer2.parallax;
+				//if (bgLayer2.x < -stage.stageWidth) bgLayer2.x = 0;
+				
+				bgLayer3.y = (640 / 2 - position.y) * bgLayer3.parallax;
+				bgLayer3.x = (960 / 2 - position.x) * bgLayer3.parallax;
+				//if (bgLayer3.x < -stage.stageWidth) bgLayer3.x = 0;
+				
+				bgLayer4.y = (640 / 2 - position.y) * bgLayer4.parallax;
+				bgLayer4.x = (960 / 2 - position.x) * bgLayer4.parallax;
+			}
 			
-			bgLayer3.y = (640 / 2 - position.y) * bgLayer3.parallax;
-			bgLayer3.x = (960 / 2 - position.x) * bgLayer3.parallax;
-			//if (bgLayer3.x < -stage.stageWidth) bgLayer3.x = 0;
-			
-			bgLayer4.y = (640 / 2 - position.y) * bgLayer4.parallax;
-			bgLayer4.x = (960 / 2 - position.x) * bgLayer4.parallax;
 			//if ((bgLayer4.x - position.x) < 800 ) bgLayer4.x = position.x;
 			
 		}
