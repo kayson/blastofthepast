@@ -222,11 +222,19 @@ package
 				//Man kan lägga in ett krav som kollar 
 				//mot golv och väggar och så
 				//Avsluta funktionen.
-				if(body != player.getBody())
+				if(body != player.getBody() && (wh.y - player.getBody().position.y) > wh.y/2)
 				{
 					graphic.y = body.position.y + (wh.y / 2) - player.getBody().position.y;
 					graphic.x = body.position.x + (wh.x / 2) - player.getBody().position.x;
-				}			
+				}else if(body != player.getBody())
+				{
+					graphic.y = body.position.y;
+					graphic.x = body.position.x + (wh.x / 2) - player.getBody().position.x;
+				}else if((wh.y - player.getBody().position.y) < wh.y/2)
+				{
+					graphic.y = body.position.y;
+					//graphic.x = body.position.x;
+				}
 				
 				graphic.rotation = body.rotation;
 			}
