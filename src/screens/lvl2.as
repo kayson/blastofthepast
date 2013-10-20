@@ -1,9 +1,9 @@
 package screens
 {
-	import events.NavigationEvent;
-	
 	import flash.display.Bitmap;
 	import flash.geom.Rectangle;
+	
+	import events.NavigationEvent;
 	
 	import nape.callbacks.CbEvent;
 	import nape.callbacks.CbType;
@@ -25,14 +25,14 @@ package screens
 	
 	import starling.core.Starling;
 	import starling.display.BlendMode;
+	import starling.display.Button;
+	import starling.display.DisplayObject;
 	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.events.Event;
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
-	import starling.display.DisplayObject;
-	import starling.display.Button;
 	
 	
 	
@@ -77,7 +77,9 @@ package screens
 			
 			mySpace.listeners.add(new InteractionListener(CbEvent.BEGIN, InteractionType.COLLISION, globalFunctions.projectile, globalFunctions.other, hasCollided));
 			mySpace.listeners.add(new InteractionListener(CbEvent.BEGIN, InteractionType.COLLISION, globalFunctions.projectile, globalFunctions.enemyCb, enemyHit));
+			mySpace.listeners.add(new InteractionListener(CbEvent.BEGIN, InteractionType.COLLISION, globalFunctions.player, globalFunctions.goal, playerInGoal));
 		}
+	
 		
 		public function InitSpace():void
 		{
@@ -198,14 +200,21 @@ package screens
 			globalFunctions.touchGlobal(e, stage,player,mySpace, this);
 		}
 		
-		private function hasCollided(cb:InteractionCallback):void {
+		private function hasCollided(cb:InteractionCallback):void 
+		{
 			
 			globalFunctions.hasCollidedGlobal(cb, mySpace, stage,  this);
 		}
 		
-		private function enemyHit(cb:InteractionCallback):void {
+		private function enemyHit(cb:InteractionCallback):void
+		{
 			
 			globalFunctions.enemyHitGlobal(cb, mySpace, stage, this);
+		}
+		
+		private function playerInGoal(cb:InteractionCallback):void
+		{
+			globalFunctions.playerInGoal(cb, mySpace, stage, this);
 		}
 		
 		private function updateGraphics( body:Body ):void

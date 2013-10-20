@@ -1,12 +1,12 @@
 package
 {
-	import events.NavigationEvent;
-	
 	import flash.display.Screen;
 	import flash.display.Sprite;
 	import flash.events.TimerEvent;
 	import flash.net.drm.AddToDeviceGroupSetting;
 	import flash.utils.Timer;
+	
+	import events.NavigationEvent;
 	
 	import flashx.textLayout.tlf_internal;
 	
@@ -22,6 +22,7 @@ package
 	
 	import screens.LevelInterface;
 	import screens.lvl1;
+	import screens.lvl2;
 	
 	import starling.core.Starling;
 	import starling.display.Button;
@@ -45,7 +46,9 @@ package
 			// CBTYPES!!!
 			public static var projectile:CbType = new CbType();
 			public static var other:CbType = new CbType();
+			public static var player:CbType = new CbType();
 			public static var enemyCb:CbType = new CbType();
+			public static var goal:CbType = new CbType();
 
 			private static var shootAble:Boolean = true;
 			private static var timer:Timer = new Timer(800);
@@ -129,7 +132,7 @@ package
 					var b:Body = mySpace.liveBodies.at(i);
 					var bodyPos:Vec2 = b.position;
 					var impulseVector:Vec2 = new Vec2(bodyPos.x-explosionPos.x, bodyPos.y-explosionPos.y);
-					if(b.cbTypes.has(other) && impulseVector.length < 300)
+					if(b.cbTypes.has(player) || b.cbTypes.has(other) && impulseVector.length < 300)
 					{
 						var impulseForce:Number = Math.log((300-impulseVector.length)/80 + 1)*80;
 						var impulse:Vec2 = impulseVector.mul(impulseForce/impulseVector.length * 2);
@@ -205,6 +208,11 @@ package
 
 			}
 			
+			public static function playerInGoal(cb:InteractionCallback, 
+												  mySpace:Space, stage:Stage, lvlInterf:LevelInterface):void {
+				
+				// GÖRA VAD NÄR MAN ÄR I MÅL?					
+			}
 			
 			public static function updateGraphicsGlobal( body:Body, player:Objects, wh:Vec2):void
 			{

@@ -89,7 +89,7 @@ package objects
 			
 			_objectBody.shapes.add( new Polygon(Polygon.box(_WidthHeight.x, _WidthHeight.y)));
 			_objectBody.setShapeFilters(new InteractionFilter(2));
-			_objectBody.cbTypes.add(globalFunctions.other);
+			_objectBody.cbTypes.add(globalFunctions.goal);
 			
 			_objectBody.position.setxy(_position.x, _position.y);
 			_objectBody.setShapeMaterials( Material.steel() );
@@ -119,7 +119,7 @@ package objects
 			
 			_objectBody.shapes.add( new Circle(_WidthHeight.x));
 			_objectBody.setShapeFilters(new InteractionFilter(1));
-			_objectBody.cbTypes.add(globalFunctions.other);
+			_objectBody.cbTypes.add(globalFunctions.player);
 			
 			_objectBody.position.setxy(_position.x, _position.y);
 			_objectBody.setShapeMaterials( Material.rubber() );
