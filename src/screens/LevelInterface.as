@@ -26,5 +26,6 @@ package screens
 				//function addObjectToInstance(obj:Objects):void;
 				function removeObjectFromInstance(obj:DisplayObject):void;
 				function addObjectToInstance(obj:DisplayObject):void;
+				function getPlayer():Objects;
 	}
 }

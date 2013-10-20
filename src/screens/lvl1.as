@@ -129,16 +129,25 @@ package screens
 							
 			//The level building blocks. (STATIC objects)  -----------------------------------
 			
+			//FLOOR
 			floor = new Objects("Stone",mySpace,
 					Vec2.weak(screenWidth / 2, screenHeight - 20),
 					Vec2.weak(960,128));	
 			addChild(floor);
 			
+			//Roof
+			floor = new Objects("Stone",mySpace,
+				Vec2.weak(screenWidth / 2, 0),
+				Vec2.weak(960,128));	
+			addChild(floor);
+			
+			//Right wall
 			floor = new Objects("Stone",mySpace,
 				Vec2.weak(screenWidth, screenHeight / 2),
 				Vec2.weak(128,960));	
 			addChild(floor);
 			
+			//Left wall
 			floor = new Objects("Stone",mySpace,
 				Vec2.weak(0, screenHeight / 2),
 				Vec2.weak(128,960));	
@@ -166,7 +175,6 @@ package screens
 			timerTxt.hAlign = HAlign.LEFT;
 			timerTxt.vAlign = VAlign.CENTER;
 			addChild(timerTxt);
-			
 			
 		}
 		
@@ -248,6 +256,11 @@ package screens
 		public function removeObjectFromInstance(obj:DisplayObject):void
 		{
 			this.removeChild(obj);
+		}
+		
+		public function getPlayer():Objects
+		{
+			return player;
 		}
 	}
 }

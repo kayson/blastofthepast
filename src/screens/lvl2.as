@@ -248,5 +248,10 @@ package screens
 		{
 			this.removeChild(obj);
 		}
+		
+		public function getPlayer():Objects
+		{
+			return player;
+		}
 	}
 }

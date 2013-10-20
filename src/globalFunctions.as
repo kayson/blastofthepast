@@ -1,10 +1,12 @@
 package
 {
+	import events.NavigationEvent;
+	
 	import flash.display.Screen;
 	import flash.display.Sprite;
+	import flash.events.TimerEvent;
 	import flash.net.drm.AddToDeviceGroupSetting;
-	
-	import events.NavigationEvent;
+	import flash.utils.Timer;
 	
 	import flashx.textLayout.tlf_internal;
 	
@@ -30,6 +32,7 @@ package
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
 	import starling.extensions.PDParticleSystem;
+	import starling.extensions.ParticleDesignerPS;
 	import starling.textures.Texture;
 
 
@@ -43,21 +46,27 @@ package
 			public static var projectile:CbType = new CbType();
 			public static var other:CbType = new CbType();
 			public static var enemyCb:CbType = new CbType();
+
+			private static var shootAble:Boolean = true;
+			private static var timer:Timer = new Timer(800);
 			
-			//Vec
-			//private var explosions:Vector.<Explosion>;
+			private static var particleVec:Vector.<PDParticleSystem> = new Vector.<PDParticleSystem>();
+
 			
-			
-						
 			public static function performAction():void {
 				
+			}
+			
+			public static function updateClock(e:TimerEvent):void
+			{
+				shootAble = true;
 			}
 			
 			public static function touchGlobal(e:TouchEvent, stage:Stage,
 								player:Objects, mySpace:Space, lvlInterf:LevelInterface):void
 			{
 				var touch:Touch = e.getTouch(stage);
-				if( touch )
+				if( touch && shootAble )
 				{
 					if(touch.phase == TouchPhase.BEGAN)//on finger down
 					{
@@ -81,7 +90,12 @@ package
 						fireball.getBody().applyImpulse(shootDir);
 						
 						Assets.shoot.play();
+						
+						timer.addEventListener(TimerEvent.TIMER, updateClock);
+						timer.start();
+						shootAble = false;
 					}
+					
 				}
 			}
 			
@@ -98,18 +112,17 @@ package
 				var psTexture:Texture = Texture.fromBitmap(new Assets.FireParticle());
 				
 				var ps:PDParticleSystem = new PDParticleSystem(psConfig, psTexture);
-				
+				particleVec.push(ps);
 				ps.emitterX = a.userData.graphic.x;
 				ps.emitterY = a.userData.graphic.y;
+				ps.name = String(lvlInterf.getPlayer().getBody().position.x) + " " +
+					String(lvlInterf.getPlayer().getBody().position.y);
 				
 				lvlInterf.addObjectToInstance(ps);
 				Starling.juggler.add(ps);
 				
 				ps.start(0.2);
 				ps.advanceTime(0.2);
-				
-				
-				
 				
 				for(var i:int = 0; i < mySpace.liveBodies.length; i++)
 				{		
@@ -205,8 +218,8 @@ package
 				{
 					graphic.y = body.position.y + (wh.y / 2) - player.getBody().position.y;
 					graphic.x = body.position.x + (wh.x / 2) - player.getBody().position.x;
-				}
-
+				}			
+				
 				graphic.rotation = body.rotation;
 			}
 			
@@ -220,6 +233,33 @@ package
 				
 
 				bg.bgPosition(player.getBody().position);
+				
+				// DETTA FUNKAR SÅ JÄVLA BRA !!!!!!!!!!!
+				var ps:PDParticleSystem;
+				for(var i:int=0; i<particleVec.length; i++)
+				{
+					ps = particleVec[i];
+					if(ps.numParticles == 0)
+					{
+						ps.stop();
+						particleVec.splice(i, 1);
+						Starling.juggler.remove(ps);
+						//removeChild(ps, true);
+					}
+					
+					var arr:Array = ps.name.split(" ");
+					trace("Player creation pos: " + arr[0] + " " + arr[1]);
+					//trace("Player pos: " + player.getBody().position.x);
+					//trace("Final diff: " + (int(ps.name) - player.getBody().position.x)) ;
+					var diffX:Number = (int(arr[0]) - player.getBody().position.x);
+					var diffY:Number = (int(arr[1]) - player.getBody().position.y);
+					
+					ps.x = diffX;
+					ps.y = diffY;
+					
+					//ps.emitterX += (960 / 2) - player.getBody().position.x;
+					//ps.emitterY += (640 / 2) - player.getBody().position.y;
+				}
 			}
 			
 			public static function onMainMenuClickGlobal(event:Event, dispatchFuncEvent:Function):void
