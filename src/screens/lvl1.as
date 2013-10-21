@@ -117,17 +117,17 @@ package screens
 				Vec2.weak(32,32));
 			addChild(goal);
 			
-			/*//Add boxes
-			for( var i:int = 0; i < 6; i++ )
+			//Add boxes
+			for( var i:int = 0; i < 20; i++ )
 			{
-				for( var j:int = -3; j < 4; j++ )
+				for( var j:int = -1; j < 1; j++ )
 				{
 					box = new Objects("Box",mySpace,
-						Vec2.weak(600 - (j * 8), (screenHeight - 200) - (i * 8)),
+						Vec2.weak(600 - (j * 16), (screenHeight - 200) - (i * 16)),
 						Vec2.weak(16,16));	
 					addChild(box);
 				}
-			}*/
+			}
 				
 			//The level building blocks. (STATIC objects)  -----------------------------------
 			
