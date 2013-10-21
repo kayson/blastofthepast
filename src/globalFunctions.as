@@ -1,12 +1,12 @@
 package
 {
+	import events.NavigationEvent;
+	
 	import flash.display.Screen;
 	import flash.display.Sprite;
 	import flash.events.TimerEvent;
 	import flash.net.drm.AddToDeviceGroupSetting;
 	import flash.utils.Timer;
-	
-	import events.NavigationEvent;
 	
 	import flashx.textLayout.tlf_internal;
 	
@@ -108,8 +108,8 @@ package
 				var a:Body = cb.int1 as Body;
 				var explosionPos:Vec2 = a.position;				
 				
-				lvlInterf.removeObjectFromInstance(a.userData.graphic.parent);
-				mySpace.bodies.remove(a);
+				//lvlInterf.removeObjectFromInstance(a.userData.graphic.parent);
+				//mySpace.bodies.remove(a);
 				
 				var psConfig:XML = XML(new Assets.FireConfig());
 				var psTexture:Texture = Texture.fromBitmap(new Assets.FireParticle());
@@ -211,7 +211,7 @@ package
 			public static function playerInGoal(cb:InteractionCallback, 
 												  mySpace:Space, stage:Stage, lvlInterf:LevelInterface):void {
 				
-				// GÖRA VAD NÄR MAN ÄR I MÅL?					
+				lvlInterf.onMainMenuClick();		
 			}
 			
 			public static function updateGraphicsGlobal( body:Body, player:Objects, wh:Vec2):void
@@ -222,7 +222,14 @@ package
 				//Man kan lägga in ett krav som kollar 
 				//mot golv och väggar och så
 				//Avsluta funktionen.
-				if(body != player.getBody() && (wh.y - player.getBody().position.y) > wh.y/2)
+				if(body != player.getBody())
+				{
+					graphic.y = body.position.y + (wh.y / 2) - player.getBody().position.y;
+					graphic.x = body.position.x + (wh.x / 2) - player.getBody().position.x;
+					
+				}
+				//Fixar så golvet hänger med, men funkar inte riktigt än.
+				/*if(body != player.getBody() && (wh.y - player.getBody().position.y) > wh.y/2)
 				{
 					graphic.y = body.position.y + (wh.y / 2) - player.getBody().position.y;
 					graphic.x = body.position.x + (wh.x / 2) - player.getBody().position.x;
@@ -234,7 +241,7 @@ package
 				{
 					graphic.y = body.position.y;
 					//graphic.x = body.position.x;
-				}
+				}*/
 				
 				graphic.rotation = body.rotation;
 			}
@@ -264,7 +271,7 @@ package
 					}
 					
 					var arr:Array = ps.name.split(" ");
-					trace("Player creation pos: " + arr[0] + " " + arr[1]);
+					//trace("Player creation pos: " + arr[0] + " " + arr[1]);
 					//trace("Player pos: " + player.getBody().position.x);
 					//trace("Final diff: " + (int(ps.name) - player.getBody().position.x)) ;
 					var diffX:Number = (int(arr[0]) - player.getBody().position.x);

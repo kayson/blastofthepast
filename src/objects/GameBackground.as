@@ -28,15 +28,15 @@ package objects
 			this.addChild(bgLayer1);
 			
 			bgLayer2 = new BgLayer(2);
-			bgLayer2.parallax = 1.3;
+			bgLayer2.parallax = 1.1;
 			this.addChild(bgLayer2);
 			
 			bgLayer3 = new BgLayer(3);
-			bgLayer3.parallax = 1.3;
+			bgLayer3.parallax = 1.15;
 			this.addChild(bgLayer3);
 			
 			bgLayer4 = new BgLayer(4);
-			bgLayer4.parallax = 1.3;
+			bgLayer4.parallax = 1.2;
 			this.addChild(bgLayer4);
 			
 			//this.addEventListener(Event.ENTER_FRAME, onEnterFrame);
@@ -59,9 +59,9 @@ package objects
 		
 		public function bgPosition(position:Vec2):void
 		{
-			
-			if((960 - position.y) > 960/2)
-			{
+
+			/*if((640 - position.y) > 640/2)
+			{*/
 				bgLayer1.y = (640 / 2 - position.y) * bgLayer1.parallax;
 				bgLayer1.x = (960 / 2 - position.x) * bgLayer1.parallax;
 				//if (bgLayer1.x < -stage.stageWidth) bgLayer1.x = 0;
@@ -75,8 +75,9 @@ package objects
 				//if (bgLayer3.x < -stage.stageWidth) bgLayer3.x = 0;
 				
 				bgLayer4.y = (640 / 2 - position.y) * bgLayer4.parallax;
-				bgLayer4.x = (960 / 2 - position.x) * bgLayer4.parallax;	
-			}else
+				bgLayer4.x = (960 / 2 - position.x) * bgLayer4.parallax;
+				
+			/*}else
 			{
 				bgLayer1.y = (640 / 2 - position.y) * bgLayer1.parallax;
 				bgLayer1.x = (960 / 2 - position.x) * bgLayer1.parallax;
@@ -92,9 +93,8 @@ package objects
 				
 				bgLayer4.y = (640 / 2 - position.y) * bgLayer4.parallax;
 				bgLayer4.x = (960 / 2 - position.x) * bgLayer4.parallax;
-			}
+			}*/
 			
-			//if ((bgLayer4.x - position.x) < 800 ) bgLayer4.x = position.x;
 			
 		}
 		

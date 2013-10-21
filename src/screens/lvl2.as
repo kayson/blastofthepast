@@ -182,7 +182,7 @@ package screens
 			this.addEventListener(Event.TRIGGERED, onMainMenuClick);
 		}
 		
-		private function onMainMenuClick(event:Event):void
+		public function onMainMenuClick():void
 		{
 			trace("button to mainmenu");
 			this.disposeTemporarily();

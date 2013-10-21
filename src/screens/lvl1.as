@@ -60,7 +60,6 @@ package screens
 		private var box:Objects;
 		private var toMenu:Button;
 		private var goal:Objects;
-		
 
 		private var r:Number = 0;
 		
@@ -86,6 +85,8 @@ package screens
 			
 			mySpace.listeners.add(new InteractionListener(CbEvent.BEGIN, InteractionType.COLLISION, globalFunctions.projectile, globalFunctions.other, hasCollided));
 			mySpace.listeners.add(new InteractionListener(CbEvent.BEGIN, InteractionType.COLLISION, globalFunctions.projectile, globalFunctions.enemyCb, enemyHit));
+			mySpace.listeners.add(new InteractionListener(CbEvent.BEGIN, InteractionType.COLLISION, globalFunctions.player, globalFunctions.goal, playerInGoal));
+			
 		}
 		
 		public function InitSpace():void
@@ -115,6 +116,18 @@ package screens
 				Vec2.weak(screenWidth - 150 , screenHeight - 150),
 				Vec2.weak(32,32));
 			addChild(goal);
+			
+			/*//Add boxes
+			for( var i:int = 0; i < 6; i++ )
+			{
+				for( var j:int = -3; j < 4; j++ )
+				{
+					box = new Objects("Box",mySpace,
+						Vec2.weak(600 - (j * 8), (screenHeight - 200) - (i * 8)),
+						Vec2.weak(16,16));	
+					addChild(box);
+				}
+			}*/
 				
 			//The level building blocks. (STATIC objects)  -----------------------------------
 			
@@ -124,10 +137,22 @@ package screens
 				Vec2.weak(128,150));	
 			addChild(stoneBlock);
 			
+			//Right wall
+			stoneBlock = new Objects("Stone",mySpace,
+				Vec2.weak(screenWidth, screenHeight / 2),
+				Vec2.weak(128,640));	
+			addChild(stoneBlock);
+			
+			//Left wall
+			stoneBlock = new Objects("Stone",mySpace,
+				Vec2.weak(0, screenHeight / 2),
+				Vec2.weak(128,640));	
+			addChild(stoneBlock);
+			
 			//FLOOR
 			stoneBlock = new Objects("Stone",mySpace,
-					Vec2.weak(screenWidth / 2, screenHeight - 20),
-					Vec2.weak(960,128));	
+					Vec2.weak(screenWidth / 2, screenHeight + 128),
+					Vec2.weak(960,256 + 128));	
 			addChild(stoneBlock);
 			
 			//Roof
@@ -136,17 +161,7 @@ package screens
 				Vec2.weak(960,128));	
 			addChild(stoneBlock);
 			
-			//Right wall
-			stoneBlock = new Objects("Stone",mySpace,
-				Vec2.weak(screenWidth, screenHeight / 2),
-				Vec2.weak(128,960));	
-			addChild(stoneBlock);
 			
-			//Left wall
-			stoneBlock = new Objects("Stone",mySpace,
-				Vec2.weak(0, screenHeight / 2),
-				Vec2.weak(128,960));	
-			addChild(stoneBlock);
 			
 		
 			
@@ -172,12 +187,12 @@ package screens
 			
 		}
 		
-		private function onMainMenuClick(event:Event):void
+		public function onMainMenuClick():void
 		{
 			trace("button to mainmenu");
 			this.disposeTemporarily();
 			this.dispatchEvent(new NavigationEvent(NavigationEvent.CHANGE_SCREEN,
-								{id: "Menu"}, true));	
+				{id: "Menu"}, true));	
 		}		
 		
 		private function UpdateWorld( evt:Event ):void
@@ -199,6 +214,11 @@ package screens
 		private function enemyHit(cb:InteractionCallback):void {
 			
 			globalFunctions.enemyHitGlobal(cb, mySpace, stage, this);
+		}
+		
+		private function playerInGoal(cb:InteractionCallback):void
+		{
+			globalFunctions.playerInGoal(cb, mySpace, stage, this);
 		}
 
 		private function updateGraphics( body:Body ):void
