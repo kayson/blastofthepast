@@ -82,8 +82,8 @@ package
 						if(shootDir.length != 0)
 							shootDir = shootDir.normalise();
 						
-						shootDir.x *= 100;
-						shootDir.y *= 100;
+						shootDir.x *= 50;
+						shootDir.y *= 50;
 
 						var fireball:Objects = new Objects("Fireball",mySpace,
 							Vec2.weak(player.getBody().position.x, player.getBody().position.y),
@@ -132,11 +132,11 @@ package
 					var b:Body = mySpace.liveBodies.at(i);
 					var bodyPos:Vec2 = b.position;
 					var impulseVector:Vec2 = new Vec2(bodyPos.x-explosionPos.x, bodyPos.y-explosionPos.y);
-					if(impulseVector.length < 300 && impulseVector.length > 0)
+					if(impulseVector.length < 100 && impulseVector.length > 0)
 					{
 						if(b.cbTypes.has(player) || b.cbTypes.has(other))
 						{
-							var impulseForce:Number = Math.log((300-impulseVector.length)/80 + 1)*80;
+							var impulseForce:Number = Math.log((100-impulseVector.length)/80 + 1)*200;
 							if(impulseForce > 0)
 							{
 								var impulse:Vec2 = impulseVector.mul(impulseForce/impulseVector.length * 2);
