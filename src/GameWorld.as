@@ -31,13 +31,7 @@ package
 			trace("starling framework initialized!");
 			
 			this.addEventListener(events.NavigationEvent.CHANGE_SCREEN, onChangeScreen);
-			
-
-			
-			
-			
-
-			
+		
 			screenWelcome = new Welcome();
 			this.addChild(screenWelcome);
 			screenWelcome.initialize();
@@ -49,7 +43,7 @@ package
 			switch (event.params.id)
 			{
 				case "Menu":
-					trace("kanel");
+					
 					screenWelcome = new Welcome();
 					this.addChild(screenWelcome);
 

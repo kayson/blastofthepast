@@ -139,14 +139,14 @@ package screens
 			
 			//Right wall
 			stoneBlock = new Objects("Stone",mySpace,
-				Vec2.weak(screenWidth, screenHeight / 2),
-				Vec2.weak(128,640));	
+				Vec2.weak(screenWidth + 128, screenHeight / 2),
+				Vec2.weak(256 + 128,1300));	
 			addChild(stoneBlock);
 			
 			//Left wall
 			stoneBlock = new Objects("Stone",mySpace,
-				Vec2.weak(0, screenHeight / 2),
-				Vec2.weak(128,640));	
+				Vec2.weak(-128, screenHeight / 2),
+				Vec2.weak(256 + 128,1300));	
 			addChild(stoneBlock);
 			
 			//FLOOR
@@ -157,14 +157,10 @@ package screens
 			
 			//Roof
 			stoneBlock = new Objects("Stone",mySpace,
-				Vec2.weak(screenWidth / 2, 0),
-				Vec2.weak(960,128));	
+				Vec2.weak(screenWidth / 2, -128),
+				Vec2.weak(960,256 + 128));	
 			addChild(stoneBlock);
-			
-			
-			
-		
-			
+				
 			//The menubuttonlan
 			toMenu = new Button(Assets.getTexture("buttonPlay"));
 			toMenu.scaleX = 0.2;

@@ -150,7 +150,7 @@ package objects
 			
 			_objectBody.shapes.add( new Polygon(Polygon.box(_WidthHeight.x, _WidthHeight.y)));
 			_objectBody.position.setxy( _position.x, _position.y );
-			_objectBody.setShapeMaterials( Material.steel() );
+			_objectBody.setShapeMaterials( Material.wood() );
 			_objectBody.userData.graphic = _objectImage;
 			_objectBody.space = _mySpace;
 			

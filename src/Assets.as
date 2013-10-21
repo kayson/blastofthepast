@@ -32,7 +32,7 @@ package
 		[Embed(source="../images/enemy.png")]
 		private static const enemyRaw:Class;
 		
-		[Embed(source="../images/stone.jpg")] 
+		[Embed(source="../images/stone2.jpg")] 
 		private static const stoneBlock:Class;
 		
 		//Background layers
