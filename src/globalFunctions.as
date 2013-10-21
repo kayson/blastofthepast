@@ -132,32 +132,38 @@ package
 					var b:Body = mySpace.liveBodies.at(i);
 					var bodyPos:Vec2 = b.position;
 					var impulseVector:Vec2 = new Vec2(bodyPos.x-explosionPos.x, bodyPos.y-explosionPos.y);
-					if(b.cbTypes.has(player) || b.cbTypes.has(other) && impulseVector.length < 300)
+					if(impulseVector.length < 300 && impulseVector.length > 0)
 					{
-						var impulseForce:Number = Math.log((300-impulseVector.length)/80 + 1)*80;
-						var impulse:Vec2 = impulseVector.mul(impulseForce/impulseVector.length * 2);
-						b.applyImpulse(impulse);
-						
-					}
-					else if(b.cbTypes.has(enemyCb) && impulseVector.length < 300)
-					{
-						lvlInterf.removeObjectFromInstance(b.userData.graphic.parent);
-						mySpace.bodies.remove(b);
-						
-						var psConfig2:XML = XML(new Assets.EnemyDeathConfig());
-						var psTexture2:Texture = Texture.fromBitmap(new Assets.EnemyDeathParticle());
-						
-						var ps2:PDParticleSystem = new PDParticleSystem(psConfig2, psTexture2);
-						ps2.x = b.userData.graphic.x;
-						ps2.y = b.userData.graphic.y;
-						
-						ps2.scaleX = 0.8;
-						ps2.scaleY = 0.8;
-						
-						lvlInterf.addObjectToInstance(ps2);
-						Starling.juggler.add(ps2);
-						
-						ps2.start(1);
+						if(b.cbTypes.has(player) || b.cbTypes.has(other))
+						{
+							var impulseForce:Number = Math.log((300-impulseVector.length)/80 + 1)*80;
+							if(impulseForce > 0)
+							{
+								var impulse:Vec2 = impulseVector.mul(impulseForce/impulseVector.length * 2);
+								b.applyImpulse(impulse);
+							}
+							
+						}
+						else if(b.cbTypes.has(enemyCb))
+						{
+							lvlInterf.removeObjectFromInstance(b.userData.graphic.parent);
+							mySpace.bodies.remove(b);
+							
+							var psConfig2:XML = XML(new Assets.EnemyDeathConfig());
+							var psTexture2:Texture = Texture.fromBitmap(new Assets.EnemyDeathParticle());
+							
+							var ps2:PDParticleSystem = new PDParticleSystem(psConfig2, psTexture2);
+							ps2.x = b.userData.graphic.x;
+							ps2.y = b.userData.graphic.y;
+							
+							ps2.scaleX = 0.8;
+							ps2.scaleY = 0.8;
+							
+							lvlInterf.addObjectToInstance(ps2);
+							Starling.juggler.add(ps2);
+							
+							ps2.start(1);
+						}
 					}
 					
 					
