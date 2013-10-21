@@ -46,9 +46,18 @@ package screens
 	{				
 		public function lvl1()
 		{
+			
 			super();
-			this.addEventListener(starling.events.Event.ADDED_TO_STAGE, onAddedToStage);
+			
+			addEventListener(starling.events.Event.ADDED_TO_STAGE, onAddedToStage);
+			
 			InitBodies();
+			
+		}
+		
+		private function onAddedToStage2(event:Event):void
+		{
+			
 		}
 		
 					

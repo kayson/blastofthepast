@@ -53,6 +53,7 @@ package
 				case "lvl1":
 					
 					screenLvl1 = new lvl1();
+					
 					screenLvl1.disposeTemporarily();
 					this.addChild(screenLvl1);
 					

@@ -46,7 +46,9 @@ package screens
 		
 		public function Level()
 		{
-			
+			trace("In constructor of superlevel   ----------------------");
+			InitSpace();
+			//addEventListener(starling.events.Event.ADDED_TO_STAGE, onAddedToStage);
 		}
 		
 		private function InitSpace():void
@@ -58,11 +60,13 @@ package screens
 			screenHeight = 640;//Starling.current.nativeStage.fullScreenHeight;
 		}
 		
-		public function onAddedToStage(event:Event):void
+		protected  function  onAddedToStage(event:Event):void
 		{
+			trace("In onAddedToStage in superlevel ----------------------");
 			this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			
-			InitSpace();
+			//InitSpace();
+			
 			
 			
 			addEventListener( TouchEvent.TOUCH, touch);
