@@ -2,27 +2,21 @@ package
 {
 	import events.NavigationEvent;
 	
-	import flash.display.Screen;
 	import flash.display.Sprite;
 	import flash.events.TimerEvent;
-	import flash.net.drm.AddToDeviceGroupSetting;
 	import flash.utils.Timer;
 	
-	import flashx.textLayout.tlf_internal;
 	
 	import nape.callbacks.CbType;
 	import nape.callbacks.InteractionCallback;
 	import nape.geom.Vec2;
 	import nape.phys.Body;
-	import nape.shape.Circle;
 	import nape.space.Space;
 	
 	import objects.GameBackground;
 	import objects.Objects;
 	
 	import screens.LevelInterface;
-	import screens.lvl1;
-	import screens.lvl2;
 	
 	import starling.core.Starling;
 	import starling.display.Button;
@@ -33,7 +27,6 @@ package
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
 	import starling.extensions.PDParticleSystem;
-	import starling.extensions.ParticleDesignerPS;
 	import starling.textures.Texture;
 
 
@@ -87,12 +80,11 @@ package
 
 						var fireball:Objects = new Objects("Fireball",mySpace,
 							Vec2.weak(player.getBody().position.x, player.getBody().position.y),
-							Vec2.weak(8,8));	
+							Vec2.weak(8,8));
 						lvlInterf.addObjectToInstance(fireball);
 						fireball.getBody().rotation = shootDir.angle;
 						fireball.getBody().applyImpulse(shootDir);
 						
-						Assets.shoot.play();
 						
 						timer.addEventListener(TimerEvent.TIMER, updateClock);
 						timer.start();
@@ -124,15 +116,17 @@ package
 				lvlInterf.addObjectToInstance(ps);
 				Starling.juggler.add(ps);
 				
-				ps.start(0.2);
-				ps.advanceTime(0.2);
+				ps.start(0.5);
+				ps.advanceTime(0.1);
+				
+				Assets.shoot.play();
 				
 				for(var i:int = 0; i < mySpace.liveBodies.length; i++)
 				{		
 					var b:Body = mySpace.liveBodies.at(i);
 					var bodyPos:Vec2 = b.position;
 					var impulseVector:Vec2 = new Vec2(bodyPos.x-explosionPos.x, bodyPos.y-explosionPos.y);
-					if(impulseVector.length < 100 && impulseVector.length > 0)
+					if(impulseVector.length < 200 && impulseVector.length > 0)
 					{
 						if(b.cbTypes.has(player) || b.cbTypes.has(other))
 						{
@@ -153,16 +147,21 @@ package
 							var psTexture2:Texture = Texture.fromBitmap(new Assets.EnemyDeathParticle());
 							
 							var ps2:PDParticleSystem = new PDParticleSystem(psConfig2, psTexture2);
-							ps2.x = b.userData.graphic.x;
-							ps2.y = b.userData.graphic.y;
+							ps2.emitterX = b.userData.graphic.x;
+							ps2.emitterY = b.userData.graphic.y;
 							
 							ps2.scaleX = 0.8;
-							ps2.scaleY = 0.8;
+							
+							particleVec.push(ps2);
+
+							ps2.name = String(lvlInterf.getPlayer().getBody().position.x) + " " +
+								String(lvlInterf.getPlayer().getBody().position.y);
 							
 							lvlInterf.addObjectToInstance(ps2);
 							Starling.juggler.add(ps2);
 							
-							ps2.start(1);
+							ps2.start(0.5);
+							ps2.advanceTime(0.1);
 						}
 					}
 					
@@ -186,28 +185,39 @@ package
 				var psTexture:Texture = Texture.fromBitmap(new Assets.FireParticle());
 				
 				var ps:PDParticleSystem = new PDParticleSystem(psConfig, psTexture);
-				ps.x = a.userData.graphic.x;
-				ps.y = a.userData.graphic.y;
+				particleVec.push(ps);
+				ps.emitterX = a.userData.graphic.x;
+				ps.emitterY = a.userData.graphic.y;
+				ps.name = String(lvlInterf.getPlayer().getBody().position.x) + " " +
+					String(lvlInterf.getPlayer().getBody().position.y);
 				
 				lvlInterf.addObjectToInstance(ps);
 				Starling.juggler.add(ps);
 				
-				ps.start(0.2);
+				ps.start(0.5);
+				ps.advanceTime(0.1);
+				
+				Assets.shoot.play();
 				
 				var psConfig2:XML = XML(new Assets.EnemyDeathConfig());
 				var psTexture2:Texture = Texture.fromBitmap(new Assets.EnemyDeathParticle());
-				
+					
 				var ps2:PDParticleSystem = new PDParticleSystem(psConfig2, psTexture2);
-				ps2.x = b.userData.graphic.x;
-				ps2.y = b.userData.graphic.y;
+				ps2.emitterX = b.userData.graphic.x;
+				ps2.emitterY = b.userData.graphic.y;
 				
 				ps2.scaleX = 0.8;
-				ps2.scaleY = 0.8;
+				
+				particleVec.push(ps2);
+				
+				ps2.name = String(lvlInterf.getPlayer().getBody().position.x) + " " +
+					String(lvlInterf.getPlayer().getBody().position.y);
 				
 				lvlInterf.addObjectToInstance(ps2);
 				Starling.juggler.add(ps2);
 				
-				ps2.start(1);
+				ps2.start(0.5);
+				ps2.advanceTime(0.1);
 				
 				lvlInterf.removeObjectFromInstance(b.userData.graphic.parent);
 				mySpace.bodies.remove(b);

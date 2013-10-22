@@ -63,6 +63,13 @@ package
 		[Embed(source="../particles/enemydeath/texture.png")]
 		public static const EnemyDeathParticle:Class;
 		
+		//Fonts
+		[Embed(source="../media/cronospro.fnt", mimeType="application/octet-stream")]
+		public static const FontXml:Class;
+		
+		[Embed(source = "../media/cronospro_0.png")]
+		public static const FontTexture:Class;
+		
 		//Sound
 		
 		[Embed(source="../sound/shoot.mp3")]
