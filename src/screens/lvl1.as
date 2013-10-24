@@ -124,7 +124,16 @@ package screens
 			//Parallax background baby!
 			bg = new GameBackground();
 			addChild(bg);
-
+			
+			
+			var water:Polygon = new Polygon(Polygon.rect(0, screenHeight / 2 + 200, 960, 600));
+			water.fluidEnabled = true;
+			water.fluidProperties.density = 3;
+			water.fluidProperties.viscosity = 5;
+			water.body = new Body(BodyType.STATIC);
+			water.body.space = mySpace;
+			
+			
 			//The player
 			player = new Objects("Player",mySpace,
 				Vec2.weak(screenWidth / 2, screenHeight / 2),
@@ -181,23 +190,6 @@ package screens
 				Vec2.weak(960,256 + 128));	
 			addChild(stoneBlock);
 				
-			var water:Polygon = new Polygon(Polygon.rect(0, 400, 600, 150));
-			water.fluidEnabled = true;
-			water.fluidProperties.density = 3;
-			water.fluidProperties.viscosity = 5;
-			water.body = new Body(BodyType.STATIC);
-			water.body.space = mySpace;
-			
-//			var water_body:Body = new Body(BodyType.STATIC);
-//			water_body.position.setxy(screenWidth / 2,screenHeight/ 2);
-//			var water_shape:Shape = new Circle(500);
-//			water_shape.fluidEnabled = true;
-//			water_shape.fluidProperties.density = 0; //zero density is allowed for fluids, which simply means there will be no buoyancy force.
-//			water_shape.fluidProperties.viscosity = 20; //use a very high viscosity to attempt to 'catch' prey objects.
-//			water_body.shapes.add(water_shape);
-//			water_body.space = mySpace;
-//			water_body.angularVel = 1; //make it swirl! (note this is a static object, so the object itself will not be rotating)
-			
 			//The menubuttonlan
 			toMenu = new Button(Assets.getTexture("buttonPlay"));
 			toMenu.scaleX = 0.2;
