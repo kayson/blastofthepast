@@ -181,6 +181,7 @@ package objects
 			
 			_objectBody.position.setxy(_position.x, _position.y);
 			_objectBody.setShapeMaterials( Material.rubber() );
+			_objectBody.isBullet = true;
 			_objectBody.userData.graphic = _objectImage;
 			_objectBody.gravMass = 0.0;
 			

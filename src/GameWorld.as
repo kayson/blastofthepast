@@ -2,10 +2,10 @@ package
 {
 
 	import events.NavigationEvent;
-	
-	import screens.lvl1;
+
 	import screens.Welcome;
 	import screens.lvl2;
+	import screens.lvl1;
 	
 	import starling.display.Sprite;
 	import starling.events.Event;
