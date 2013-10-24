@@ -53,13 +53,7 @@ package screens
 			
 			InitBodies();
 			
-		}
-		
-		private function onAddedToStage2(event:Event):void
-		{
-			
-		}
-		
+		}	
 					
 		private function InitBodies():void
 		{	

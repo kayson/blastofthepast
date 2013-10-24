@@ -259,8 +259,6 @@ package
 				mySpace.step( 1 / 60 );		
 				mySpace.bodies.foreach( func );
 				
-				
-
 				bg.bgPosition(player.getBody().position);
 				
 				// DETTA FUNKAR SÅ JÄVLA BRA !!!!!!!!!!!
