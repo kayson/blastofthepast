@@ -31,12 +31,14 @@ package screens
 	import starling.display.Button;
 	import starling.display.DisplayObject;
 	import starling.display.Image;
+	import starling.display.Quad;
 	import starling.display.Sprite;
 	import starling.events.Event;
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
 	import starling.extensions.PDParticleSystem;
+	import starling.filters.BlurFilter;
 	import starling.text.BitmapFont;
 	import starling.text.TextField;
 	import starling.textures.Texture;
@@ -50,6 +52,7 @@ package screens
 		public var screenWidth:Number;
 		public var screenHeight:Number;
 		public var player:Objects;
+		public var water:Objects;
 		public var stoneBlock:Objects;
 		public var enemy:Objects;
 		public var box:Objects;
@@ -123,15 +126,7 @@ package screens
 		{	
 			//Parallax background baby!
 			bg = new GameBackground();
-			addChild(bg);
-			
-			
-			var water:Polygon = new Polygon(Polygon.rect(0, screenHeight / 2 + 200, 960, 600));
-			water.fluidEnabled = true;
-			water.fluidProperties.density = 3;
-			water.fluidProperties.viscosity = 5;
-			water.body = new Body(BodyType.STATIC);
-			water.body.space = mySpace;
+			addChild(bg);		
 			
 			
 			//The player
@@ -158,6 +153,16 @@ package screens
 				}
 			}
 				
+			stoneBlock = new Objects("Stone",mySpace,
+				Vec2.weak(20, screenHeight / 2 + 310),
+				Vec2.weak(256,256));	
+			addChild(stoneBlock);
+			
+			water = new Objects("Water",mySpace,
+				Vec2.weak(300, screenHeight / 2 + 420),
+				Vec2.weak(500,500));	
+			addChild(water);
+			
 			//The level building blocks. (STATIC objects)  -----------------------------------
 			
 			//Middle pillar
