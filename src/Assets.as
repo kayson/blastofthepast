@@ -35,6 +35,11 @@ package
 		[Embed(source="../images/stone2.jpg")] 
 		private static const stoneBlock:Class;
 		
+		[Embed(source="../images/water.png")] 
+		private static const waterRaw:Class;
+		
+		
+		
 		//Background layers
 		
 		[Embed(source="../images/bgLayer1.jpg")]

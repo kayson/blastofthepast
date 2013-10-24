@@ -15,10 +15,14 @@ package objects
 	import nape.shape.Polygon;
 	import nape.space.Space;
 	
+	import starling.display.BlendMode;
 	import starling.display.Image;
+	import starling.display.Quad;
 	import starling.display.Sprite;
 	import starling.events.Event;
 	import starling.events.Touch;
+	import starling.filters.BlurFilter;
+	import starling.utils.Color;
 
 	
 	public class Objects extends Sprite
@@ -69,6 +73,10 @@ package objects
 				case "Goal": //Skulle vara bra med en singleton
 					trace("Goal created ");
 					this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStageGoal);
+					break;
+				case "Water":
+					trace("Water created ");
+					this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStageWater);
 					break;
 				
 			}
@@ -215,7 +223,7 @@ package objects
 			_objectBody.position.setxy(_position.x, _position.y);
 			_objectBody.setShapeMaterials( Material.steel() );
 			_objectBody.userData.graphic = _objectImage;
-
+			
 			_objectBody.space = _mySpace;
 
 			_objectImage.x = _objectBody.position.x;
@@ -251,6 +259,39 @@ package objects
 			_objectImage.y = _objectBody.position.y;
 			addChild(_objectImage);
 		
+		}
+		
+		private function onAddedToStageWater(event:Event):void
+		{
+			this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStageWater);
+			
+			//_objectBody = new Body( BodyType.STATIC );
+			_objectImage =  new Image(Assets.getTexture((("waterRaw"))));
+			
+			_objectImage.pivotX = _objectImage.width / 2;
+			_objectImage.pivotY = _objectImage.height / 2;
+			_objectImage.scaleX = _WidthHeight.x / _objectImage.width;
+			_objectImage.scaleY = _WidthHeight.y / _objectImage.height;
+			
+			var water:Polygon = new Polygon(Polygon.box( _WidthHeight.x, _WidthHeight.y));
+			water.fluidEnabled = true;
+			water.fluidProperties.density = 3;
+			water.fluidProperties.viscosity = 5;
+			water.body = new Body(BodyType.STATIC);
+			water.body.position.setxy(_position.x,_position.y);
+			water.body.userData.graphic = _objectImage;
+			water.body.space = _mySpace;		
+			
+			_objectBody = water.body;
+			
+			_objectImage.x = _position.x;
+			_objectImage.y = _position.y;
+			_objectImage.alpha = 0.8;
+			//_objectImage.color = Color.WHITE;
+			_objectImage.filter = new BlurFilter(0.5,0.5,0.5);
+			addChild(_objectImage);
+			
+					
 		}
 		
 		public function getBody():Body
