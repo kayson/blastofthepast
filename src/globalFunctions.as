@@ -119,7 +119,7 @@ package
 				ps.start(0.5);
 				ps.advanceTime(0.1);
 				
-				Assets.shoot.play();
+				//Assets.shoot.play();
 				
 				for(var i:int = 0; i < mySpace.liveBodies.length; i++)
 				{		
