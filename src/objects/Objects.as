@@ -247,7 +247,7 @@ package objects
 			_objectImage.y = _objectBody.position.y;
 			addChild(_objectImage);
 			
-			var animation:Tween = new Tween(_objectImage, 15);
+			var animation:Tween = new Tween(_objectBody, 15);
 			animation.repeatCount = int.MAX_VALUE;
 			animation.animate("rotation", 180);
 			Starling.juggler.add(animation);
