@@ -44,7 +44,7 @@ package
 			public static var goal:CbType = new CbType();
 
 			private static var shootAble:Boolean = true;
-			public static var timer:Timer = new Timer(800);
+			public static var timer:Timer = new Timer(8,100);
 					
 			private static var psConfig:XML;
 			private static var psTexture:Texture;
@@ -56,11 +56,17 @@ package
 				
 			}
 			
-			public static function updateClock(e:TimerEvent):void
+			public static function onTick(e:TimerEvent):void
 			{
-				shootAble = true;
-				timer.stop();
-				timer.removeEventListener(TimerEvent.TIMER, updateClock);
+				
+			}
+			
+			public static function onComplete(e:TimerEvent):void
+			{
+					shootAble = true;
+					timer.stop();
+					timer.removeEventListener(TimerEvent.TIMER, onTick);
+					timer.removeEventListener(TimerEvent.TIMER_COMPLETE, onComplete);
 			}
 			
 			public static function touchGlobal(e:TouchEvent, stage:Stage,
@@ -90,7 +96,8 @@ package
 						fireball.getBody().rotation = shootDir.angle;
 						fireball.getBody().applyImpulse(shootDir);
 												
-						timer.addEventListener(TimerEvent.TIMER, updateClock);
+						timer.addEventListener(TimerEvent.TIMER, onTick);
+						timer.addEventListener(TimerEvent.TIMER_COMPLETE, onComplete);
 						timer.start();
 						shootAble = false;
 					}
