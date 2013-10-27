@@ -44,7 +44,7 @@ package
 			public static var goal:CbType = new CbType();
 
 			private static var shootAble:Boolean = true;
-			private static var timer:Timer = new Timer(800);
+			public static var timer:Timer = new Timer(800);
 					
 			private static var psConfig:XML;
 			private static var psTexture:Texture;
@@ -59,6 +59,8 @@ package
 			public static function updateClock(e:TimerEvent):void
 			{
 				shootAble = true;
+				timer.stop();
+				timer.removeEventListener(TimerEvent.TIMER, updateClock);
 			}
 			
 			public static function touchGlobal(e:TouchEvent, stage:Stage,
@@ -261,6 +263,9 @@ package
 					graphic.y = body.position.y;
 					//graphic.x = body.position.x;
 				}*/
+				
+				//timer.currentCount
+				
 				
 				graphic.rotation = body.rotation;
 			}

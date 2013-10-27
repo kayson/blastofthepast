@@ -1,45 +1,24 @@
 package screens
 {
-	import flash.display.Bitmap;
-	import flash.events.TimerEvent;
-	import flash.geom.Rectangle;
-	import flash.utils.Timer;
-	
 	import events.NavigationEvent;
 	
 	import nape.callbacks.CbEvent;
-	import nape.callbacks.CbType;
 	import nape.callbacks.InteractionCallback;
 	import nape.callbacks.InteractionListener;
 	import nape.callbacks.InteractionType;
-	import nape.dynamics.InteractionFilter;
 	import nape.geom.Vec2;
 	import nape.phys.Body;
-	import nape.phys.BodyList;
-	import nape.phys.BodyType;
-	import nape.phys.Material;
-	import nape.shape.Circle;
-	import nape.shape.Polygon;
 	import nape.space.Space;
 	
 	import objects.GameBackground;
 	import objects.Objects;
 	
-	import starling.core.Starling;
-	import starling.display.BlendMode;
 	import starling.display.Button;
 	import starling.display.DisplayObject;
 	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.events.Event;
-	import starling.events.Touch;
 	import starling.events.TouchEvent;
-	import starling.events.TouchPhase;
-	import starling.text.BitmapFont;
-	import starling.text.TextField;
-	import starling.textures.Texture;
-	import starling.utils.HAlign;
-	import starling.utils.VAlign;
 	
 	
 	
@@ -61,11 +40,6 @@ package screens
 		private var enemy:Objects;
 		private var box:Objects;
 		private var toMenu:Button;
-		
-		private var timerTxt:TextField;
-		private var seconds:int = 0;
-		private var timer:Timer = new Timer(1000);
-		
 		
 		
 		public function lvl2()
@@ -200,13 +174,6 @@ package screens
 		}	
 		
 		
-		
-		public function updateClock(e:TimerEvent):void
-		{
-			seconds++;
-			timerTxt.text = "Time: "+seconds.toString()+" seconds";
-		}
-		
 		private function UpdateWorld( evt:Event ):void
 		{
 			globalFunctions.UpdateWorldGlobal(evt, mySpace,player, bg,updateGraphics);
@@ -262,24 +229,10 @@ package screens
 		
 		public function initialize():void
 		{
-			//Text
-			var texture:Texture = Texture.fromBitmap(new Assets.FontTexture());
-			var xml:XML = XML(new Assets.FontXml());
-			TextField.registerBitmapFont(new BitmapFont(texture, xml));
-			
-			timerTxt = new TextField(180, 30, "Time: 0 seconds", "Cronos Pro", 30, 0xFFFFFF);
-			timerTxt.pivotX = timerTxt.width/2;
-			timerTxt.x = 170;
-			timerTxt.y = 0;
-			timerTxt.hAlign = HAlign.LEFT;
-			timerTxt.vAlign = VAlign.CENTER;
-			addChild(timerTxt);
-			
+
 			this.visible = true;
 			addEventListener( Event.ENTER_FRAME, UpdateWorld );
-			
-			timer.addEventListener(TimerEvent.TIMER, updateClock);
-			timer.start();
+
 		}
 		public function addObjectToInstance(obj:DisplayObject):void
 		{

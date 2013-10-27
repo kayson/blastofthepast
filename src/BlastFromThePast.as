@@ -22,7 +22,6 @@ package
 			stats = new Stats();
 			this.addChild(stats);
 			
-			
 			Starling.multitouchEnabled = true;
 			
 			stage.frameRate = 60;
