@@ -14,6 +14,9 @@ package screens
 		
 		private var playLvl1:Button;
 		private var playLvl2:Button;
+		private var playLvl3:Button;
+		private var playLvl4:Button;
+		private var playLvl5:Button;
 		
 		public function Welcome()
 		{
@@ -34,19 +37,40 @@ package screens
 			bg.blendMode = BlendMode.NONE;
 			this.addChild(bg);
 			
-			playLvl1 = new Button(Assets.getTexture("buttonPlay"));
+			playLvl1 = new Button(Assets.getTexture("buttonLvl1"));
 			playLvl1.scaleX = 0.2;
 			playLvl1.scaleY = 0.2;
 			playLvl1.x = 100;
 			playLvl1.y = 100;
 			this.addChild(playLvl1);
 			
-			playLvl2 = new Button(Assets.getTexture("buttonPlay"));
+			playLvl2 = new Button(Assets.getTexture("buttonLvl2"));
 			playLvl2.scaleX = 0.2;
 			playLvl2.scaleY = 0.2;
 			playLvl2.x = 200;
 			playLvl2.y = 100;
 			this.addChild(playLvl2);
+			
+			playLvl3 = new Button(Assets.getTexture("buttonLvl3"));
+			playLvl3.scaleX = 0.2;
+			playLvl3.scaleY = 0.2;
+			playLvl3.x = 300;
+			playLvl3.y = 100;
+			this.addChild(playLvl3);
+			
+			playLvl4 = new Button(Assets.getTexture("buttonLvl4"));
+			playLvl4.scaleX = 0.2;
+			playLvl4.scaleY = 0.2;
+			playLvl4.x = 400;
+			playLvl4.y = 100;
+			this.addChild(playLvl4);
+			
+			playLvl5 = new Button(Assets.getTexture("buttonLvl5"));
+			playLvl5.scaleX = 0.2;
+			playLvl5.scaleY = 0.2;
+			playLvl5.x = 500;
+			playLvl5.y = 100;
+			this.addChild(playLvl5);
 			
 			this.addEventListener(Event.TRIGGERED, onMainMenuClick);
 		}
@@ -66,6 +90,23 @@ package screens
 					this.dispatchEvent(new NavigationEvent(NavigationEvent.CHANGE_SCREEN, {id: "lvl2"}, true));
 					trace(buttonClicked == playLvl2);
 					trace("lvl2 initialized");
+					break;
+				case playLvl3:
+					this.dispatchEvent(new NavigationEvent(NavigationEvent.CHANGE_SCREEN, {id: "lvl3"}, true));
+					trace(buttonClicked == playLvl3);
+					trace("lvl3 initialized");
+					break;
+				
+				case playLvl4:
+					this.dispatchEvent(new NavigationEvent(NavigationEvent.CHANGE_SCREEN, {id: "lvl4"}, true));
+					trace(buttonClicked == playLvl4);
+					trace("lvl4 initialized");
+					break;
+				
+				case playLvl5:
+					this.dispatchEvent(new NavigationEvent(NavigationEvent.CHANGE_SCREEN, {id: "lvl5"}, true));
+					trace(buttonClicked == playLvl5);
+					trace("lvl5 initialized");
 					break;
 			}
 			

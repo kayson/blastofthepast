@@ -1,11 +1,11 @@
 package screens
 {
+	import events.NavigationEvent;
+	
 	import flash.display.Bitmap;
 	import flash.events.TimerEvent;
 	import flash.geom.Rectangle;
 	import flash.utils.Timer;
-	
-	import events.NavigationEvent;
 	
 	import nape.callbacks.CbEvent;
 	import nape.callbacks.CbType;
@@ -46,26 +46,26 @@ package screens
 	import starling.utils.VAlign;
 	
 	
-	public class lvl1 extends Sprite implements LevelInterface
+	public class lvl3 extends Sprite implements LevelInterface
 	{			
-		private var mySpace:Space;
-		private var screenWidth:Number;
-		private var screenHeight:Number;
-		private var player:Objects;
-		private var water:Objects;
-		private var stoneBlock:Objects;
-		private var enemy:Objects;
-		private var box:Objects;
-		private var toMenu:Button;
-		private var goal:Objects;
+		public var mySpace:Space;
+		public var screenWidth:Number;
+		public var screenHeight:Number;
+		public var player:Objects;
+		public var water:Objects;
+		public var stoneBlock:Objects;
+		public var enemy:Objects;
+		public var box:Objects;
+		public var toMenu:Button;
+		public var goal:Objects;
 		
-		private var bg:GameBackground;
+		public var bg:GameBackground;
 		
 		private var timerTxt:TextField;
 		private var seconds:int = 0;
 		private var timer:Timer = new Timer(1000);
 		
-		public function lvl1()
+		public function lvl3()
 		{
 			
 			super();
@@ -123,19 +123,22 @@ package screens
 
 		private function InitBodies():void
 		{	
+			var tempValue:Number = 300;
+			
 			//Parallax background baby!
-			//bg = new GameBackground();
-			///addChild(bg);		
+			bg = new GameBackground();
+			addChild(bg);		
+			
 			
 			//The player
 			player = new Objects("Player",mySpace,
 				Vec2.weak(screenWidth / 2, screenHeight / 2),
-				Vec2.weak(16,32)); //16 = radie, 32 = scalevalue. (Behövs fixas)	
+				Vec2.weak(16,32)); //16 = radie, 32 = scalevalue. (Behövs fixas)
 			addChild(player);
 			
 			//The goal
 			goal = new Objects("Goal", mySpace,
-				Vec2.weak(screenWidth - 150 ,  150),
+				Vec2.weak(screenWidth - 150 + tempValue, screenHeight - 150),
 				Vec2.weak(32,32));
 			addChild(goal);
 			
@@ -152,44 +155,48 @@ package screens
 			}
 				
 			stoneBlock = new Objects("Stone",mySpace,
-				Vec2.weak(20, screenHeight / 2 + 310),
+				Vec2.weak(20 + tempValue, screenHeight / 2 + 310),
 				Vec2.weak(256,256));	
 			addChild(stoneBlock);
 			
+			/*
 			water = new Objects("Water",mySpace,
 				Vec2.weak(300, screenHeight / 2 + 420),
 				Vec2.weak(500,500));	
 			addChild(water);
+			*/
 			
 			//The level building blocks. (STATIC objects)  -----------------------------------
 			
+			
+			
 			//Middle pillar
 			stoneBlock = new Objects("Stone",mySpace,
-				Vec2.weak(600, screenHeight - 100),
+				Vec2.weak(600 + tempValue, screenHeight - 100),
 				Vec2.weak(128,150));	
 			addChild(stoneBlock);
 			
 			//Right wall
 			stoneBlock = new Objects("Stone",mySpace,
-				Vec2.weak(screenWidth + 128, screenHeight / 2),
+				Vec2.weak(screenWidth + 128 + tempValue, screenHeight / 2),
 				Vec2.weak(256 + 128,1300));	
 			addChild(stoneBlock);
 			
 			//Left wall
 			stoneBlock = new Objects("Stone",mySpace,
-				Vec2.weak(-128, screenHeight / 2),
+				Vec2.weak(-128 + tempValue, screenHeight / 2),
 				Vec2.weak(256 + 128,1300));	
 			addChild(stoneBlock);
 			
 			//FLOOR
 			stoneBlock = new Objects("Stone",mySpace,
-					Vec2.weak(screenWidth / 2, screenHeight + 128),
+					Vec2.weak(screenWidth / 2 + tempValue, screenHeight + 128),
 					Vec2.weak(960,256 + 128));	
 			addChild(stoneBlock);
 			
 			//Roof
 			stoneBlock = new Objects("Stone",mySpace,
-				Vec2.weak(screenWidth / 2, -128),
+				Vec2.weak(screenWidth / 2 + tempValue, -128),
 				Vec2.weak(960,256 + 128));	
 			addChild(stoneBlock);
 				
@@ -200,7 +207,6 @@ package screens
 			toMenu.x = 100;
 			toMenu.y = 100;
 			this.addChild(toMenu);
-			
 			
 			this.addEventListener(Event.TRIGGERED, onMainMenuClick);			
 			

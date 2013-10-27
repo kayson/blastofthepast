@@ -15,8 +15,10 @@ package objects
 	import nape.shape.Polygon;
 	import nape.space.Space;
 	
+	import starling.core.Starling;
 	import starling.display.BlendMode;
 	import starling.display.Image;
+	import starling.display.MovieClip;
 	import starling.display.Quad;
 	import starling.display.Sprite;
 	import starling.events.Event;
@@ -35,6 +37,7 @@ package objects
 		private var _WidthHeight:Vec2;
 		private var _objectBody:Body;
 		private var _objectImage:Image;
+		private var _objectsMovieClip:MovieClip;
 		
 		//private var _type:String;
 
@@ -117,11 +120,12 @@ package objects
 		{
 			this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStagePlayer);
 
-			_objectImage = new Image(Assets.getTexture((("circleBadGuyRaw"))));
-			_objectImage.pivotX = _objectImage.width / 2;
-			_objectImage.pivotY = _objectImage.height / 2;
-			_objectImage.scaleX = _WidthHeight.y / _objectImage.width;
-			_objectImage.scaleY = _WidthHeight.y / _objectImage.height;
+			_objectsMovieClip = new MovieClip(Assets.getAtlas().getTextures("Tween 1"), 30);
+			
+			_objectsMovieClip.pivotX = _objectsMovieClip.width / 2;
+			_objectsMovieClip.pivotY = _objectsMovieClip.height / 2;
+			_objectsMovieClip.scaleX = _WidthHeight.y / _objectsMovieClip.width;
+			_objectsMovieClip.scaleY = _WidthHeight.y / _objectsMovieClip.height;
 			
 			_objectBody = new Body( BodyType.DYNAMIC );
 			
@@ -131,15 +135,17 @@ package objects
 			
 			_objectBody.position.setxy(_position.x, _position.y);
 			_objectBody.setShapeMaterials( Material.rubber() );
-			_objectBody.userData.graphic = _objectImage;
+			_objectBody.userData.graphic = _objectsMovieClip;
 			_objectBody.mass = 0.5;
 			
 			_objectBody.space = _mySpace;
 			
-			_objectImage.x = _objectBody.position.x;
-			_objectImage.y = _objectBody.position.y;
+			_objectsMovieClip.x = _objectBody.position.x;
+			_objectsMovieClip.y = _objectBody.position.y;
 			
-			addChild(_objectImage);
+			
+			starling.core.Starling.juggler.add(_objectsMovieClip);
+			addChild(_objectsMovieClip);
 			
 		}
 		
@@ -303,6 +309,11 @@ package objects
 		public function getImage():Image
 		{
 			return _objectImage;
+		}
+		
+		public function getMovieClip():MovieClip
+		{
+			return _objectsMovieClip;
 		}
 	}
 }

@@ -38,6 +38,22 @@ package
 		[Embed(source="../images/water.png")] 
 		private static const waterRaw:Class;
 		
+		//Levelnumbers
+		[Embed(source="../images/levelnumbers/1.png")]
+		public static const buttonLvl1:Class;
+		
+		[Embed(source="../images/levelnumbers/2.png")]
+		public static const buttonLvl2:Class;
+		
+		[Embed(source="../images/levelnumbers/3.png")]
+		public static const buttonLvl3:Class;
+		
+		[Embed(source="../images/levelnumbers/4.png")]
+		public static const buttonLvl4:Class;
+		
+		[Embed(source="../images/levelnumbers/5.png")]
+		public static const buttonLvl5:Class;
+		
 		
 		
 		//Background layers
@@ -85,6 +101,7 @@ package
 		
 		public function Assets():void
 		{
+			//Pga av bugg i flash måste ljudet spelas en gång.
 			shoot.play(0,0, new SoundTransform(0));	
 		}
 			
@@ -96,6 +113,26 @@ package
 				gameTextures[name] = Texture.fromBitmap(bitmap);
 			}
 			return gameTextures[name];
+		}
+		
+		//SPRITESHEETSGREJER
+		private static var gameTextureAtlas:TextureAtlas;
+		
+		[Embed(source="../images/andersillu/flash/player_test_spritesheet.png")]
+		public static const AtlasTextureGame:Class;
+		
+		[Embed(source="../images/andersillu/flash/player_test_spritesheet.xml", mimeType="application/octet-stream")]
+		public static const AtlasXmlGame:Class;
+		
+		public static function getAtlas():TextureAtlas
+		{
+			if (gameTextureAtlas == null)
+			{
+				var texture:Texture = getTexture("AtlasTextureGame");
+				var xml:XML = XML(new AtlasXmlGame());
+				gameTextureAtlas = new TextureAtlas(texture, xml);
+			}
+			return gameTextureAtlas;
 		}
 
 	}

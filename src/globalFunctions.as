@@ -122,7 +122,7 @@ package
 				ps.start(0.5);
 				ps.advanceTime(0.1);
 				
-				//Assets.shoot.play();
+				Assets.shoot.play();
 				
 				for(var i:int = 0; i < mySpace.liveBodies.length; i++)
 				{		
@@ -270,11 +270,10 @@ package
 			{
 				
 				mySpace.step( 1 / 60 );		
-				mySpace.bodies.foreach( func );
-							
-				
+				mySpace.bodies.foreach( func );			
 
 				//bg.bgPosition(player.getBody().position);
+
 				
 				// DETTA FUNKAR SÅ JÄVLA BRA !!!!!!!!!!!
 				//var length:int = particleVec.length;
