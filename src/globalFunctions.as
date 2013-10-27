@@ -186,52 +186,7 @@ package
 			public static function enemyHitGlobal(cb:InteractionCallback, 
 													 mySpace:Space, stage:Stage, lvlInterf:LevelInterface):void {
 				
-				var a:Body = cb.int1 as Body;	
-				var b:Body = cb.int2 as Body;
-
-				lvlInterf.removeObjectFromInstance(a.userData.graphic.parent);
-				mySpace.bodies.remove(a);
-				
-				psConfig = XML(new Assets.FireConfig());
-				psTexture = Texture.fromBitmap(new Assets.FireParticle());
-				
-				ps = new PDParticleSystem(psConfig, psTexture);
-				particleVec.push(ps);
-				ps.emitterX = a.userData.graphic.x;
-				ps.emitterY = a.userData.graphic.y;
-				ps.name = String(lvlInterf.getPlayer().getBody().position.x) + " " +
-					String(lvlInterf.getPlayer().getBody().position.y);
-				
-				lvlInterf.addObjectToInstance(ps);
-				Starling.juggler.add(ps);
-				
-				ps.start(0.5);
-				ps.advanceTime(0.1);
-				
-				Assets.shoot.play();
-				
-				psConfig = XML(new Assets.EnemyDeathConfig());
-				psTexture = Texture.fromBitmap(new Assets.EnemyDeathParticle());
-					
-				ps = new PDParticleSystem(psConfig, psTexture);
-				ps.emitterX = b.userData.graphic.x;
-				ps.emitterY = b.userData.graphic.y;
-				
-				ps.scaleX = 0.8;
-				
-				particleVec.push(ps);
-				
-				ps.name = String(lvlInterf.getPlayer().getBody().position.x) + " " +
-					String(lvlInterf.getPlayer().getBody().position.y);
-				
-				lvlInterf.addObjectToInstance(ps);
-				Starling.juggler.add(ps);
-				
-				ps.start(0.5);
-				ps.advanceTime(0.1);
-				
-				lvlInterf.removeObjectFromInstance(b.userData.graphic.parent);
-				mySpace.bodies.remove(b);
+				lvlInterf.onMainMenuClick();
 
 			}
 			

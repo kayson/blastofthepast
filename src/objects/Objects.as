@@ -17,6 +17,7 @@ package objects
 	import nape.shape.Polygon;
 	import nape.space.Space;
 	
+	import starling.animation.Tween;
 	import starling.core.Starling;
 	import starling.display.BlendMode;
 	import starling.display.Image;
@@ -26,7 +27,9 @@ package objects
 	import starling.events.Event;
 	import starling.events.Touch;
 	import starling.filters.BlurFilter;
+	import starling.textures.Texture;
 	import starling.utils.Color;
+	
 
 	
 	public class Objects extends Sprite
@@ -227,15 +230,14 @@ package objects
 			_objectImage.pivotY = _objectImage.height / 2;
 			_objectImage.scaleX = _WidthHeight.y / _objectImage.width;
 			_objectImage.scaleY = _WidthHeight.y / _objectImage.height;
-			
-			
-			_objectBody = new Body( BodyType.DYNAMIC );
-			
-			_objectBody.shapes.add( new Polygon(Polygon.box(_WidthHeight.x, _WidthHeight.y)));
-			_objectBody.position.setxy( _position.x, _position.y );
-			_objectBody.setShapeMaterials( Material.wood() );
-			_objectBody.userData.graphic = _objectImage;
+						
+			_objectBody = PhysicsData.createBody("enemy");
+			_objectBody.type = BodyType.KINEMATIC;
 			_objectBody.space = _mySpace;
+			
+			_objectBody.position.setxy( _position.x, _position.y );
+			_objectBody.setShapeMaterials( Material.steel()	 );
+			_objectBody.userData.graphic = _objectImage;
 			
 			_objectBody.setShapeFilters(new InteractionFilter(2));
 			
@@ -244,6 +246,13 @@ package objects
 			_objectImage.x = _objectBody.position.x;
 			_objectImage.y = _objectBody.position.y;
 			addChild(_objectImage);
+			
+			var animation:Tween = new Tween(_objectImage, 15);
+			animation.repeatCount = int.MAX_VALUE;
+			animation.animate("rotation", 180);
+			Starling.juggler.add(animation);
+			
+			
 		}
 		
 		private function onAddedToStageFireball(event:Event):void
@@ -274,6 +283,7 @@ package objects
 			_objectImage.y = _objectBody.position.y;
 			
 			addChild(_objectImage);
+					
 			
 		}
 		

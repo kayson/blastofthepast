@@ -66,7 +66,7 @@ package screens
 			addEventListener( TouchEvent.TOUCH, touch);
 			
 			mySpace.listeners.add(new InteractionListener(CbEvent.BEGIN, InteractionType.COLLISION, globalFunctions.projectile, globalFunctions.other, hasCollided));
-			mySpace.listeners.add(new InteractionListener(CbEvent.BEGIN, InteractionType.COLLISION, globalFunctions.projectile, globalFunctions.enemyCb, enemyHit));
+			mySpace.listeners.add(new InteractionListener(CbEvent.BEGIN, InteractionType.COLLISION, globalFunctions.player, globalFunctions.enemyCb, enemyHit));
 			mySpace.listeners.add(new InteractionListener(CbEvent.BEGIN, InteractionType.COLLISION, globalFunctions.player, globalFunctions.goal, playerInGoal));
 			
 		}
@@ -104,6 +104,12 @@ package screens
 				Vec2.weak(screenWidth / 2, screenHeight / 2),
 				Vec2.weak(16,32)); //16 = radie, 32 = scalevalue. (Behövs fixas)	
 			addChild(player);
+			
+			
+			enemy = new Objects("Enemy",mySpace,
+				Vec2.weak(350 ,  350),
+				Vec2.weak(128,128));	
+			addChild(enemy);
 			
 			//The goal
 			goal = new Objects("Goal", mySpace,
