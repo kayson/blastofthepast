@@ -39,6 +39,15 @@ package objects
 		private var _objectImage:Image;
 		private var _objectsMovieClip:MovieClip;
 		
+		private var animationState:int;
+		private var _playerIdleMovie:MovieClip;
+		private var _playerShootMovie:MovieClip;
+		private var _playerInairMovie:MovieClip;
+		private var movieVector:Vector.<MovieClip>;
+		private static const IDLE_MOVIE:int = 0;
+		private static const IN_AIR_MOVIE:int = 1;
+		private static const SHOOT_MOVIE:int = 2;
+		
 		//private var _type:String;
 
 		private var _speed:Number = 0;
@@ -120,12 +129,20 @@ package objects
 		{
 			this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStagePlayer);
 
-			_objectsMovieClip = new MovieClip(Assets.getAtlas().getTextures("Tween 1"), 30);
+			_playerIdleMovie = new MovieClip(Assets.getAtlas().getTextures("Tween 1"), 1);
+			animationState = IDLE_MOVIE;
 			
-			_objectsMovieClip.pivotX = _objectsMovieClip.width / 2;
-			_objectsMovieClip.pivotY = _objectsMovieClip.height / 2;
-			_objectsMovieClip.scaleX = _WidthHeight.y / _objectsMovieClip.width;
-			_objectsMovieClip.scaleY = _WidthHeight.y / _objectsMovieClip.height;
+			_playerInairMovie = new MovieClip(Assets.getAtlas().getTextures("Tween 1"), 30);
+			
+			_playerIdleMovie.pivotX = _playerIdleMovie.width / 2;
+			_playerIdleMovie.pivotY = _playerIdleMovie.height / 2;
+			_playerIdleMovie.scaleX = _WidthHeight.y / _playerIdleMovie.width;
+			_playerIdleMovie.scaleY = _WidthHeight.y / _playerIdleMovie.height;
+			
+			_playerInairMovie.pivotX = _playerInairMovie.width / 2;
+			_playerInairMovie.pivotY = _playerInairMovie.height / 2;
+			_playerInairMovie.scaleX = _WidthHeight.y / _playerInairMovie.width;
+			_playerInairMovie.scaleY = _WidthHeight.y / _playerInairMovie.height;
 			
 			_objectBody = new Body( BodyType.DYNAMIC );
 			
@@ -135,17 +152,55 @@ package objects
 			
 			_objectBody.position.setxy(_position.x, _position.y);
 			_objectBody.setShapeMaterials( Material.rubber() );
-			_objectBody.userData.graphic = _objectsMovieClip;
+			_objectBody.userData.graphic = _playerIdleMovie;
 			_objectBody.mass = 0.5;
 			
 			_objectBody.space = _mySpace;
 			
-			_objectsMovieClip.x = _objectBody.position.x;
-			_objectsMovieClip.y = _objectBody.position.y;
+			_playerIdleMovie.x = _objectBody.position.x;
+			_playerIdleMovie.y = _objectBody.position.y;
 			
+			movieVector = new Vector.<MovieClip>();
+			movieVector[IDLE_MOVIE] = _playerIdleMovie;
+			movieVector[IN_AIR_MOVIE] = _playerInairMovie;
+
+			addChild(_playerIdleMovie);
 			
-			starling.core.Starling.juggler.add(_objectsMovieClip);
-			addChild(_objectsMovieClip);
+			this.addEventListener(Event.ENTER_FRAME, playerStateCheck);
+		}
+		
+		private function playerStateCheck():void
+		{
+			var newAnimationState:int = -1;	
+			
+			// TODO Auto Generated method stub
+			if(_objectBody.velocity.x > 0.1 || _objectBody.velocity.y > 0.1 )
+			{
+				newAnimationState = IN_AIR_MOVIE;
+			}else
+			{
+				newAnimationState = IDLE_MOVIE;
+			}
+			
+			if((newAnimationState != animationState))
+			{
+				movieVector[newAnimationState].x = movieVector[animationState].x;
+				movieVector[newAnimationState].y = movieVector[animationState].y;
+				movieVector[newAnimationState].rotation = movieVector[animationState].rotation;
+				movieVector[newAnimationState].pivotX = movieVector[animationState].pivotX;
+				movieVector[newAnimationState].pivotY = movieVector[animationState].pivotY;
+				//movieVector[newAnimationState]. = movieVector[animationState].pivotY;
+				movieVector[animationState].loop = true;
+				
+				
+				removeChild(movieVector[animationState]);
+				Starling.juggler.remove(movieVector[animationState]);
+				
+				animationState = newAnimationState;
+				addChild(movieVector[animationState]);
+				Starling.juggler.add(movieVector[animationState]);										
+			}
+			
 			
 		}
 		

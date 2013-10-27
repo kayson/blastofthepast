@@ -85,7 +85,7 @@ package screens
 		
 		protected  function  onAddedToStage(event:Event):void
 		{
-			trace("In onAddedToStage in superlevel ----------------------");
+			
 			this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			
 			InitSpace();
