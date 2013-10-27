@@ -1,69 +1,41 @@
 package screens
-{
-	import flash.display.Bitmap;
-	import flash.events.TimerEvent;
-	import flash.geom.Rectangle;
-	import flash.utils.Timer;
-	
+{	
 	import events.NavigationEvent;
 	
 	import nape.callbacks.CbEvent;
-	import nape.callbacks.CbType;
 	import nape.callbacks.InteractionCallback;
 	import nape.callbacks.InteractionListener;
 	import nape.callbacks.InteractionType;
-	import nape.dynamics.InteractionFilter;
 	import nape.geom.Vec2;
 	import nape.phys.Body;
-	import nape.phys.BodyList;
-	import nape.phys.BodyType;
-	import nape.phys.Material;
-	import nape.shape.Circle;
-	import nape.shape.Polygon;
-	import nape.shape.Shape;
 	import nape.space.Space;
 	
 	import objects.GameBackground;
 	import objects.Objects;
 	
-	import starling.core.Starling;
-	import starling.display.BlendMode;
 	import starling.display.Button;
 	import starling.display.DisplayObject;
-	import starling.display.Image;
-	import starling.display.Quad;
 	import starling.display.Sprite;
 	import starling.events.Event;
-	import starling.events.Touch;
 	import starling.events.TouchEvent;
-	import starling.events.TouchPhase;
-	import starling.extensions.PDParticleSystem;
-	import starling.filters.BlurFilter;
-	import starling.text.BitmapFont;
-	import starling.text.TextField;
-	import starling.textures.Texture;
-	import starling.utils.HAlign;
-	import starling.utils.VAlign;
+
 	
 	
 	public class lvl1 extends Sprite implements LevelInterface
 	{			
-		public var mySpace:Space;
-		public var screenWidth:Number;
-		public var screenHeight:Number;
-		public var player:Objects;
-		public var water:Objects;
-		public var stoneBlock:Objects;
-		public var enemy:Objects;
-		public var box:Objects;
-		public var toMenu:Button;
-		public var goal:Objects;
+		private var mySpace:Space;
+		private var screenWidth:Number;
+		private var screenHeight:Number;
+		private var player:Objects;
+		private var water:Objects;
+		private var stoneBlock:Objects;
+		private var enemy:Objects;
+		private var box:Objects;
+		private var toMenu:Button;
+		private var goal:Objects;
 		
-		public var bg:GameBackground;
+		private var bg:GameBackground;
 		
-		private var timerTxt:TextField;
-		private var seconds:int = 0;
-		private var timer:Timer = new Timer(1000);
 		
 		public function lvl1()
 		{
@@ -124,9 +96,8 @@ package screens
 		private function InitBodies():void
 		{	
 			//Parallax background baby!
-			bg = new GameBackground();
-			addChild(bg);		
-			
+			//bg = new GameBackground();
+			///addChild(bg);		
 			
 			//The player
 			player = new Objects("Player",mySpace,
@@ -136,7 +107,7 @@ package screens
 			
 			//The goal
 			goal = new Objects("Goal", mySpace,
-				Vec2.weak(screenWidth - 150 , screenHeight - 150),
+				Vec2.weak(screenWidth - 150 ,  150),
 				Vec2.weak(32,32));
 			addChild(goal);
 			
@@ -151,7 +122,7 @@ package screens
 					addChild(box);
 				}
 			}
-				
+			
 			stoneBlock = new Objects("Stone",mySpace,
 				Vec2.weak(20, screenHeight / 2 + 310),
 				Vec2.weak(256,256));	
@@ -202,6 +173,7 @@ package screens
 			toMenu.y = 100;
 			this.addChild(toMenu);
 			
+			
 			this.addEventListener(Event.TRIGGERED, onMainMenuClick);			
 			
 		}
@@ -245,32 +217,13 @@ package screens
 			}
 		}
 		
+			
 		public function initialize():void
 		{
-			//Text
-			var texture:Texture = Texture.fromBitmap(new Assets.FontTexture());
-			var xml:XML = XML(new Assets.FontXml());
-			TextField.registerBitmapFont(new BitmapFont(texture, xml));
-			
-			timerTxt = new TextField(180, 30, "Time: 0 seconds", "Cronos Pro", 30, 0xFFFFFF);
-			timerTxt.pivotX = timerTxt.width/2;
-			timerTxt.x = 170;
-			timerTxt.y = 0;
-			timerTxt.hAlign = HAlign.LEFT;
-			timerTxt.vAlign = VAlign.CENTER;
-			addChild(timerTxt);
 			
 			this.visible = true;
 			addEventListener( Event.ENTER_FRAME, UpdateWorld );
 			
-			timer.addEventListener(TimerEvent.TIMER, updateClock);
-			timer.start();
-		}
-		
-		public function updateClock(e:TimerEvent):void
-		{
-			seconds++;
-			timerTxt.text = "Time: "+seconds.toString()+" seconds";
 		}
 		
 		public function addObjectToInstance(obj:DisplayObject):void

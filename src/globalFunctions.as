@@ -1,11 +1,11 @@
 package
 {
-	import events.NavigationEvent;
-	
 	import flash.display.Sprite;
 	import flash.events.TimerEvent;
+	import flash.text.StaticText;
 	import flash.utils.Timer;
 	
+	import events.NavigationEvent;
 	
 	import nape.callbacks.CbType;
 	import nape.callbacks.InteractionCallback;
@@ -44,8 +44,11 @@ package
 			public static var goal:CbType = new CbType();
 
 			private static var shootAble:Boolean = true;
-			private static var timer:Timer = new Timer(800);
-			
+			public static var timer:Timer = new Timer(800);
+					
+			private static var psConfig:XML;
+			private static var psTexture:Texture;
+			private static var ps:PDParticleSystem;
 			private static var particleVec:Vector.<PDParticleSystem> = new Vector.<PDParticleSystem>();
 
 			
@@ -56,6 +59,8 @@ package
 			public static function updateClock(e:TimerEvent):void
 			{
 				shootAble = true;
+				timer.stop();
+				timer.removeEventListener(TimerEvent.TIMER, updateClock);
 			}
 			
 			public static function touchGlobal(e:TouchEvent, stage:Stage,
@@ -70,7 +75,7 @@ package
 						yDir = touch.globalY;		
 					}else if(touch.phase == TouchPhase.ENDED) //on finger up
 					{	
-						var shootDir:Vec2 = Vec2.get(-1*(touch.globalX-xDir),-1*(touch.globalY-yDir));
+						var shootDir:Vec2 = Vec2.get((touch.globalX-xDir),(touch.globalY-yDir));
 					
 						if(shootDir.length != 0)
 							shootDir = shootDir.normalise();
@@ -103,8 +108,8 @@ package
 				//lvlInterf.removeObjectFromInstance(a.userData.graphic.parent);
 				//mySpace.bodies.remove(a);
 				
-				var psConfig:XML = XML(new Assets.FireConfig());
-				var psTexture:Texture = Texture.fromBitmap(new Assets.FireParticle());
+				psConfig = XML(new Assets.FireConfig());
+				psTexture = Texture.fromBitmap(new Assets.FireParticle());
 				
 				var ps:PDParticleSystem = new PDParticleSystem(psConfig, psTexture);
 				particleVec.push(ps);
@@ -143,25 +148,25 @@ package
 							lvlInterf.removeObjectFromInstance(b.userData.graphic.parent);
 							mySpace.bodies.remove(b);
 							
-							var psConfig2:XML = XML(new Assets.EnemyDeathConfig());
-							var psTexture2:Texture = Texture.fromBitmap(new Assets.EnemyDeathParticle());
+							psConfig = XML(new Assets.EnemyDeathConfig());
+							psTexture = Texture.fromBitmap(new Assets.EnemyDeathParticle());
 							
-							var ps2:PDParticleSystem = new PDParticleSystem(psConfig2, psTexture2);
-							ps2.emitterX = b.userData.graphic.x;
-							ps2.emitterY = b.userData.graphic.y;
+							ps = new PDParticleSystem(psConfig, psTexture);
+							ps.emitterX = b.userData.graphic.x;
+							ps.emitterY = b.userData.graphic.y;
 							
-							ps2.scaleX = 0.8;
+							ps.scaleX = 0.8;
 							
-							particleVec.push(ps2);
+							particleVec.push(ps);
 
-							ps2.name = String(lvlInterf.getPlayer().getBody().position.x) + " " +
+							ps.name = String(lvlInterf.getPlayer().getBody().position.x) + " " +
 								String(lvlInterf.getPlayer().getBody().position.y);
 							
-							lvlInterf.addObjectToInstance(ps2);
-							Starling.juggler.add(ps2);
+							lvlInterf.addObjectToInstance(ps);
+							Starling.juggler.add(ps);
 							
-							ps2.start(0.5);
-							ps2.advanceTime(0.1);
+							ps.start(0.5);
+							ps.advanceTime(0.1);
 						}
 					}
 					
@@ -181,10 +186,10 @@ package
 				lvlInterf.removeObjectFromInstance(a.userData.graphic.parent);
 				mySpace.bodies.remove(a);
 				
-				var psConfig:XML = XML(new Assets.FireConfig());
-				var psTexture:Texture = Texture.fromBitmap(new Assets.FireParticle());
+				psConfig = XML(new Assets.FireConfig());
+				psTexture = Texture.fromBitmap(new Assets.FireParticle());
 				
-				var ps:PDParticleSystem = new PDParticleSystem(psConfig, psTexture);
+				ps = new PDParticleSystem(psConfig, psTexture);
 				particleVec.push(ps);
 				ps.emitterX = a.userData.graphic.x;
 				ps.emitterY = a.userData.graphic.y;
@@ -199,25 +204,25 @@ package
 				
 				Assets.shoot.play();
 				
-				var psConfig2:XML = XML(new Assets.EnemyDeathConfig());
-				var psTexture2:Texture = Texture.fromBitmap(new Assets.EnemyDeathParticle());
+				psConfig = XML(new Assets.EnemyDeathConfig());
+				psTexture = Texture.fromBitmap(new Assets.EnemyDeathParticle());
 					
-				var ps2:PDParticleSystem = new PDParticleSystem(psConfig2, psTexture2);
-				ps2.emitterX = b.userData.graphic.x;
-				ps2.emitterY = b.userData.graphic.y;
+				ps = new PDParticleSystem(psConfig, psTexture);
+				ps.emitterX = b.userData.graphic.x;
+				ps.emitterY = b.userData.graphic.y;
 				
-				ps2.scaleX = 0.8;
+				ps.scaleX = 0.8;
 				
-				particleVec.push(ps2);
+				particleVec.push(ps);
 				
-				ps2.name = String(lvlInterf.getPlayer().getBody().position.x) + " " +
+				ps.name = String(lvlInterf.getPlayer().getBody().position.x) + " " +
 					String(lvlInterf.getPlayer().getBody().position.y);
 				
-				lvlInterf.addObjectToInstance(ps2);
-				Starling.juggler.add(ps2);
+				lvlInterf.addObjectToInstance(ps);
+				Starling.juggler.add(ps);
 				
-				ps2.start(0.5);
-				ps2.advanceTime(0.1);
+				ps.start(0.5);
+				ps.advanceTime(0.1);
 				
 				lvlInterf.removeObjectFromInstance(b.userData.graphic.parent);
 				mySpace.bodies.remove(b);
@@ -259,6 +264,9 @@ package
 					//graphic.x = body.position.x;
 				}*/
 				
+				//timer.currentCount
+				
+				
 				graphic.rotation = body.rotation;
 			}
 			
@@ -267,12 +275,16 @@ package
 			{
 				
 				mySpace.step( 1 / 60 );		
-				mySpace.bodies.foreach( func );
-				
-				bg.bgPosition(player.getBody().position);
+				mySpace.bodies.foreach( func );			
+
+				//bg.bgPosition(player.getBody().position);
+
 				
 				// DETTA FUNKAR SÅ JÄVLA BRA !!!!!!!!!!!
-				var ps:PDParticleSystem;
+				//var length:int = particleVec.length;
+				var arr:Array;
+				var diffX:Number;
+				var diffY:Number
 				for(var i:int=0; i<particleVec.length; i++)
 				{
 					ps = particleVec[i];
@@ -284,12 +296,12 @@ package
 						//removeChild(ps, true);
 					}
 					
-					var arr:Array = ps.name.split(" ");
+					arr = ps.name.split(" ");
 					//trace("Player creation pos: " + arr[0] + " " + arr[1]);
 					//trace("Player pos: " + player.getBody().position.x);
 					//trace("Final diff: " + (int(ps.name) - player.getBody().position.x)) ;
-					var diffX:Number = (int(arr[0]) - player.getBody().position.x);
-					var diffY:Number = (int(arr[1]) - player.getBody().position.y);
+					diffX = (int(arr[0]) - player.getBody().position.x);
+					diffY = (int(arr[1]) - player.getBody().position.y);
 					
 					ps.x = diffX;
 					ps.y = diffY;
