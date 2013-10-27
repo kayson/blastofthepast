@@ -1,5 +1,7 @@
 package objects
 {
+	import mx.core.mx_internal;
+	
 	import nape.callbacks.CbEvent;
 	import nape.callbacks.CbType;
 	import nape.callbacks.InteractionCallback;
@@ -129,7 +131,7 @@ package objects
 		{
 			this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStagePlayer);
 
-			_playerIdleMovie = new MovieClip(Assets.getAtlas().getTextures("Tween 1"), 1);
+			_playerIdleMovie = new MovieClip(Assets.getAtlas().getTextures("Tween 1 instance 10000"), 1);
 			animationState = IDLE_MOVIE;
 			
 			_playerInairMovie = new MovieClip(Assets.getAtlas().getTextures("Tween 1"), 30);
@@ -139,10 +141,12 @@ package objects
 			_playerIdleMovie.scaleX = _WidthHeight.y / _playerIdleMovie.width;
 			_playerIdleMovie.scaleY = _WidthHeight.y / _playerIdleMovie.height;
 			
+			
 			_playerInairMovie.pivotX = _playerInairMovie.width / 2;
 			_playerInairMovie.pivotY = _playerInairMovie.height / 2;
 			_playerInairMovie.scaleX = _WidthHeight.y / _playerInairMovie.width;
 			_playerInairMovie.scaleY = _WidthHeight.y / _playerInairMovie.height;
+			
 			
 			_objectBody = new Body( BodyType.DYNAMIC );
 			
@@ -163,7 +167,8 @@ package objects
 			movieVector = new Vector.<MovieClip>();
 			movieVector[IDLE_MOVIE] = _playerIdleMovie;
 			movieVector[IN_AIR_MOVIE] = _playerInairMovie;
-
+			
+			Starling.juggler.add(_playerIdleMovie);
 			addChild(_playerIdleMovie);
 			
 			this.addEventListener(Event.ENTER_FRAME, playerStateCheck);
@@ -174,7 +179,7 @@ package objects
 			var newAnimationState:int = -1;	
 			
 			// TODO Auto Generated method stub
-			if(_objectBody.velocity.x > 0.1 || _objectBody.velocity.y > 0.1 )
+			if(this._objectBody.velocity.x > 0.3 || this._objectBody.velocity.y > 0.3 )
 			{
 				newAnimationState = IN_AIR_MOVIE;
 			}else
@@ -182,15 +187,20 @@ package objects
 				newAnimationState = IDLE_MOVIE;
 			}
 			
-			if((newAnimationState != animationState))
+			//trace(movieVector[animationState].currentFrame == (movieVector[animationState].numFrames - 1));
+			
+			if((newAnimationState != animationState) && 
+				(movieVector[animationState].currentFrame == (movieVector[animationState].numFrames - 1)))
 			{
+				
+				this.getBody().userData.graphic = movieVector[newAnimationState];
 				movieVector[newAnimationState].x = movieVector[animationState].x;
 				movieVector[newAnimationState].y = movieVector[animationState].y;
-				movieVector[newAnimationState].rotation = movieVector[animationState].rotation;
-				movieVector[newAnimationState].pivotX = movieVector[animationState].pivotX;
-				movieVector[newAnimationState].pivotY = movieVector[animationState].pivotY;
-				//movieVector[newAnimationState]. = movieVector[animationState].pivotY;
-				movieVector[animationState].loop = true;
+				trace(movieVector[animationState].rotation);
+				//movieVector[newAnimationState].rotation = movieVector[animationState].rotation;
+				//movieVector[newAnimationState].pivotX = movieVector[animationState].pivotX;
+				//movieVector[newAnimationState].pivotY = movieVector[animationState].pivotY;
+				//movieVector[newAnimationState].c = movieVector[animationState].root;
 				
 				
 				removeChild(movieVector[animationState]);
@@ -198,9 +208,13 @@ package objects
 				
 				animationState = newAnimationState;
 				addChild(movieVector[animationState]);
-				Starling.juggler.add(movieVector[animationState]);										
+				Starling.juggler.add(movieVector[animationState]);
+				
 			}
 			
+			//trace("currentFrame: " + movieVector[animationState].currentFrame); 
+			//trace("totalFrames: " + (movieVector[animationState].numFrames - 1));
+					
 			
 		}
 		
