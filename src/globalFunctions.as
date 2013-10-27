@@ -44,7 +44,7 @@ package
 			public static var goal:CbType = new CbType();
 
 			private static var shootAble:Boolean = true;
-			public static var timer:Timer = new Timer(8,100);
+			public static var timer:Timer = new Timer(20,40);
 					
 			private static var psConfig:XML;
 			private static var psTexture:Texture;
