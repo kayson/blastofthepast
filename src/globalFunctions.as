@@ -89,8 +89,7 @@ package
 						lvlInterf.addObjectToInstance(fireball);
 						fireball.getBody().rotation = shootDir.angle;
 						fireball.getBody().applyImpulse(shootDir);
-						
-						
+												
 						timer.addEventListener(TimerEvent.TIMER, updateClock);
 						timer.start();
 						shootAble = false;
