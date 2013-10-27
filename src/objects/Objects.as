@@ -196,8 +196,8 @@ package objects
 				this.getBody().userData.graphic = movieVector[newAnimationState];
 				movieVector[newAnimationState].x = movieVector[animationState].x;
 				movieVector[newAnimationState].y = movieVector[animationState].y;
-				trace(movieVector[animationState].rotation);
-				//movieVector[newAnimationState].rotation = movieVector[animationState].rotation;
+				//trace(movieVector[animationState].rotation);
+				movieVector[newAnimationState].rotation = movieVector[animationState].rotation;
 				//movieVector[newAnimationState].pivotX = movieVector[animationState].pivotX;
 				//movieVector[newAnimationState].pivotY = movieVector[animationState].pivotY;
 				//movieVector[newAnimationState].c = movieVector[animationState].root;
