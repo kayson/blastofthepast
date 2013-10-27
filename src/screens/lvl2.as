@@ -114,45 +114,45 @@ package screens
 			
 			//The goal
 			goal = new Objects("Goal", mySpace,
-				Vec2.weak(screenWidth * 2 - 256 , screenHeight - 256),
+				Vec2.weak(screenWidth * 2.5 - 256 , -100),
 				Vec2.weak(32,32));
 			addChild(goal);
 			
 			//Add boxes
-			for( var i:int = 0; i < 6; i++ )
-			{
-				for( var j:int = -3; j < 4; j++ )
-				{
-					box = new Objects("Box",mySpace,
-						Vec2.weak((screenWidth / 2) - (j * 8), (screenHeight - 100) - (i * 8)),
-						Vec2.weak(8,8));	
-					addChild(box);
-				}
-			}
+//			for( var i:int = 0; i < 6; i++ )
+//			{
+//				for( var j:int = -3; j < 4; j++ )
+//				{
+//					box = new Objects("Box",mySpace,
+//						Vec2.weak((screenWidth / 2) - (j * 8), (screenHeight - 100) - (i * 8)),
+//						Vec2.weak(8,8));	
+//					addChild(box);
+//				}
+//			}
 			
 			//The enemy
-			enemy = new Objects("Enemy",mySpace,
-				Vec2.weak((2.5 * screenWidth)/ 3, screenHeight - 30),
-				Vec2.weak(144,120));
-			addChild(enemy);
+//			enemy = new Objects("Enemy",mySpace,
+//				Vec2.weak((2.5 * screenWidth)/ 3, screenHeight - 30),
+//				Vec2.weak(144,120));
+//			addChild(enemy);
 			
 			//The level building blocks. (STATIC objects)  -----------------------------------
 			
 			//Floor
 			stoneBlock = new Objects("Stone",mySpace,
 				Vec2.weak(screenWidth, screenHeight - 20),
-				Vec2.weak(960 * 2,128));	
+				Vec2.weak(960 * 3,128));	
 			addChild(stoneBlock);
 			
 			//Roof
 			stoneBlock = new Objects("Stone",mySpace,
-				Vec2.weak(screenWidth, 0),
-				Vec2.weak(960 *2 ,128));	
+				Vec2.weak(screenWidth, -200),
+				Vec2.weak(960 * 3 ,128));	
 			addChild(stoneBlock);
 			
 			//Right wall
 			stoneBlock = new Objects("Stone",mySpace,
-				Vec2.weak(screenWidth * 2, screenHeight / 2),
+				Vec2.weak(screenWidth * 2.5, screenHeight / 2),
 				Vec2.weak(128,960));	
 			addChild(stoneBlock);
 			
@@ -167,17 +167,17 @@ package screens
 			//Level-buildingblocks
 			stoneBlock = new Objects("Stone",mySpace,
 				Vec2.weak(screenWidth * 2 / 3, screenHeight - 128),
-				Vec2.weak(128,256));	
+				Vec2.weak(128,128));	
 			addChild(stoneBlock);
 			
 			stoneBlock = new Objects("Stone",mySpace,
-				Vec2.weak(screenWidth * 2 / 2, screenHeight / 2),
-				Vec2.weak(128,256));	
+				Vec2.weak(screenWidth * 1, screenHeight / 2 - 80),
+				Vec2.weak(128,128));	
 			addChild(stoneBlock);
 			
 			stoneBlock = new Objects("Stone",mySpace,
-				Vec2.weak(screenWidth * 2 / 1, screenHeight / 2),
-				Vec2.weak(128,960));	
+				Vec2.weak(screenWidth * 1.7, screenHeight / 2 - 200),
+				Vec2.weak(128,128));	
 			addChild(stoneBlock);
 			
 			//The menubutton

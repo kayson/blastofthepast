@@ -228,7 +228,7 @@ package objects
 
 			_objectImage.x = _objectBody.position.x;
 			_objectImage.y = _objectBody.position.y;
-
+			_objectImage.blendMode = BlendMode.NONE;
 			addChild(_objectImage);
 
 		}
@@ -250,6 +250,7 @@ package objects
 			_objectBody.setShapeMaterials( Material.wood() );
 			_objectBody.userData.graphic = _objectImage;
 			_objectBody.space = _mySpace;
+			_objectBody.mass = 0.5;
 			
 			_objectBody.setShapeFilters(new InteractionFilter(2));
 			

@@ -2,6 +2,7 @@ package screens
 {
 	import events.NavigationEvent;
 	
+	import starling.display.BlendMode;
 	import starling.display.Button;
 	import starling.display.Image;
 	import starling.display.Sprite;
@@ -30,6 +31,7 @@ package screens
 		private function drawScreen():void
 		{
 			bg = new Image(Assets.getTexture("BgWelcome"));
+			bg.blendMode = BlendMode.NONE;
 			this.addChild(bg);
 			
 			playLvl1 = new Button(Assets.getTexture("buttonPlay"));

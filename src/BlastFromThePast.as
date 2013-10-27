@@ -8,7 +8,7 @@ package
 	
 	import starling.core.Starling;
 	
-	[SWF(frameRate="60")]
+	[SWF(frameRate="60",backgroundColor="#000000")]
 	
 	public class BlastFromThePast extends Sprite
 	{
@@ -29,7 +29,7 @@ package
 		
 			myStarling = new Starling(GameWorld, stage, new Rectangle(0,0,960,640));
 			myStarling.simulateMultitouch = true;
-			myStarling.antiAliasing = 1;
+			//myStarling.antiAliasing = 1;
 			myStarling.start();
 			super();
 			

@@ -48,18 +48,18 @@ package screens
 	
 	public class lvl1 extends Sprite implements LevelInterface
 	{			
-		public var mySpace:Space;
-		public var screenWidth:Number;
-		public var screenHeight:Number;
-		public var player:Objects;
-		public var water:Objects;
-		public var stoneBlock:Objects;
-		public var enemy:Objects;
-		public var box:Objects;
-		public var toMenu:Button;
-		public var goal:Objects;
+		private var mySpace:Space;
+		private var screenWidth:Number;
+		private var screenHeight:Number;
+		private var player:Objects;
+		private var water:Objects;
+		private var stoneBlock:Objects;
+		private var enemy:Objects;
+		private var box:Objects;
+		private var toMenu:Button;
+		private var goal:Objects;
 		
-		public var bg:GameBackground;
+		private var bg:GameBackground;
 		
 		private var timerTxt:TextField;
 		private var seconds:int = 0;
@@ -125,9 +125,8 @@ package screens
 		private function InitBodies():void
 		{	
 			//Parallax background baby!
-			bg = new GameBackground();
-			addChild(bg);		
-			
+			//bg = new GameBackground();
+			///addChild(bg);		
 			
 			//The player
 			player = new Objects("Player",mySpace,
@@ -137,7 +136,7 @@ package screens
 			
 			//The goal
 			goal = new Objects("Goal", mySpace,
-				Vec2.weak(screenWidth - 150 , screenHeight - 150),
+				Vec2.weak(screenWidth - 150 ,  150),
 				Vec2.weak(32,32));
 			addChild(goal);
 			
@@ -202,6 +201,7 @@ package screens
 			toMenu.x = 100;
 			toMenu.y = 100;
 			this.addChild(toMenu);
+			
 			
 			this.addEventListener(Event.TRIGGERED, onMainMenuClick);			
 			
