@@ -4,8 +4,12 @@ package
 	import events.NavigationEvent;
 
 	import screens.Welcome;
-	import screens.lvl2;
 	import screens.lvl1;
+	import screens.lvl2;
+	import screens.lvl3;
+	import screens.lvl4;
+	import screens.lvl5;
+	
 	
 	import starling.display.Sprite;
 	import starling.events.Event;
@@ -17,6 +21,9 @@ package
 		private var screenWelcome:Welcome;
 		private var screenLvl1:lvl1;
 		private var screenLvl2:lvl2;
+		private var screenLvl3:lvl3;
+		private var screenLvl4:lvl4;
+		private var screenLvl5:lvl5;
 
 	
 
@@ -67,6 +74,33 @@ package
 					
 					screenWelcome.disposeTemporarily();
 					screenLvl2.initialize();
+					break;
+				
+				case "lvl3":
+					screenLvl3 = new lvl3();
+					screenLvl3.disposeTemporarily();
+					this.addChild(screenLvl3);
+					
+					screenWelcome.disposeTemporarily();
+					screenLvl3.initialize();
+					break;
+				
+				case "lvl4":
+					screenLvl4 = new lvl4();
+					screenLvl4.disposeTemporarily();
+					this.addChild(screenLvl4);
+					
+					screenWelcome.disposeTemporarily();
+					screenLvl4.initialize();
+					break;
+				
+				case "lvl5":
+					screenLvl5 = new lvl5();
+					screenLvl5.disposeTemporarily();
+					this.addChild(screenLvl5);
+					
+					screenWelcome.disposeTemporarily();
+					screenLvl5.initialize();
 					break;
 
 			}
