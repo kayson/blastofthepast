@@ -122,10 +122,10 @@ package
 		//SPRITESHEETSGREJER
 		private static var gameTextureAtlas:TextureAtlas;
 		
-		[Embed(source="../images/andersillu/flash/player_test_spritesheet.png")]
+		[Embed(source="../images/andersillu/flash/player_panda_sprite_idle.png")]
 		public static const AtlasTextureGame:Class;
 		
-		[Embed(source="../images/andersillu/flash/player_test_spritesheet.xml", mimeType="application/octet-stream")]
+		[Embed(source="../images/andersillu/flash/player_panda_sprite_idle.xml", mimeType="application/octet-stream")]
 		public static const AtlasXmlGame:Class;
 		
 		public static function getAtlas():TextureAtlas

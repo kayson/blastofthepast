@@ -103,7 +103,7 @@ package screens
 			//The player
 			player = new Objects("Player",mySpace,
 				Vec2.weak(screenWidth / 2, screenHeight / 2),
-				Vec2.weak(16,32)); //16 = radie, 32 = scalevalue. (Behövs fixas)
+				Vec2.weak(50,100)); //16 = radie, 32 = scalevalue. (Behövs fixas)
 			addChild(player);
 			
 			//The goal
