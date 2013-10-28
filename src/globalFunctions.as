@@ -83,23 +83,25 @@ package
 					{	
 						var shootDir:Vec2 = Vec2.get((touch.globalX-xDir),(touch.globalY-yDir));
 					
-						if(shootDir.length != 0)
+						if(shootDir.length > 0.1)
+						{
 							shootDir = shootDir.normalise();
-						
-						shootDir.x *= 50;
-						shootDir.y *= 50;
-
-						var fireball:Objects = new Objects("Fireball",mySpace,
-							Vec2.weak(player.getBody().position.x, player.getBody().position.y),
-							Vec2.weak(8,8));
-						lvlInterf.addObjectToInstance(fireball);
-						fireball.getBody().rotation = shootDir.angle;
-						fireball.getBody().applyImpulse(shootDir);
-												
-						timer.addEventListener(TimerEvent.TIMER, onTick);
-						timer.addEventListener(TimerEvent.TIMER_COMPLETE, onComplete);
-						timer.start();
-						shootAble = false;
+							
+							shootDir.x *= 5000;
+							shootDir.y *= 5000;
+		
+							var fireball:Objects = new Objects("Fireball",mySpace,
+								Vec2.weak(player.getBody().position.x, player.getBody().position.y),
+								Vec2.weak(8,8));
+							lvlInterf.addObjectToInstance(fireball);
+							fireball.getBody().rotation = shootDir.angle;
+							fireball.getBody().applyImpulse(shootDir);
+													
+							timer.addEventListener(TimerEvent.TIMER, onTick);
+							timer.addEventListener(TimerEvent.TIMER_COMPLETE, onComplete);
+							timer.start();
+							shootAble = false;
+						}
 					}
 					
 				}
@@ -132,6 +134,8 @@ package
 				
 				Assets.shoot.play();
 				
+				var impulseForce:Number;
+				var impulse:Vec2;
 				for(var i:int = 0; i < mySpace.liveBodies.length; i++)
 				{		
 					var b:Body = mySpace.liveBodies.at(i);
@@ -141,38 +145,13 @@ package
 					{
 						if(b.cbTypes.has(player) || b.cbTypes.has(other))
 						{
-							var impulseForce:Number = Math.log((100-impulseVector.length)/80 + 1)*200;
+							impulseForce = Math.log((100-impulseVector.length)/80 + 1)*200;
 							if(impulseForce > 0)
 							{
-								var impulse:Vec2 = impulseVector.mul(impulseForce/impulseVector.length * 2);
+								impulse = impulseVector.mul(impulseForce/impulseVector.length * 2);
 								b.applyImpulse(impulse);
 							}
 							
-						}
-						else if(b.cbTypes.has(enemyCb))
-						{
-							lvlInterf.removeObjectFromInstance(b.userData.graphic.parent);
-							mySpace.bodies.remove(b);
-							
-							psConfig = XML(new Assets.EnemyDeathConfig());
-							psTexture = Texture.fromBitmap(new Assets.EnemyDeathParticle());
-							
-							ps = new PDParticleSystem(psConfig, psTexture);
-							ps.emitterX = b.userData.graphic.x;
-							ps.emitterY = b.userData.graphic.y;
-							
-							ps.scaleX = 0.8;
-							
-							particleVec.push(ps);
-
-							ps.name = String(lvlInterf.getPlayer().getBody().position.x) + " " +
-								String(lvlInterf.getPlayer().getBody().position.y);
-							
-							lvlInterf.addObjectToInstance(ps);
-							Starling.juggler.add(ps);
-							
-							ps.start(0.5);
-							ps.advanceTime(0.1);
 						}
 					}
 					

@@ -1,16 +1,11 @@
 package objects
 {
-	import mx.core.mx_internal;
-	
-	import nape.callbacks.CbEvent;
 	import nape.callbacks.CbType;
-	import nape.callbacks.InteractionCallback;
-	import nape.callbacks.InteractionListener;
-	import nape.callbacks.InteractionType;
+	import nape.constraint.Constraint;
+	import nape.constraint.PivotJoint;
 	import nape.dynamics.InteractionFilter;
 	import nape.geom.Vec2;
 	import nape.phys.Body;
-	import nape.phys.BodyList;
 	import nape.phys.BodyType;
 	import nape.phys.Material;
 	import nape.shape.Circle;
@@ -22,13 +17,9 @@ package objects
 	import starling.display.BlendMode;
 	import starling.display.Image;
 	import starling.display.MovieClip;
-	import starling.display.Quad;
 	import starling.display.Sprite;
 	import starling.events.Event;
-	import starling.events.Touch;
 	import starling.filters.BlurFilter;
-	import starling.textures.Texture;
-	import starling.utils.Color;
 	
 
 	
@@ -223,7 +214,7 @@ package objects
 		
 		private function onAddedToStageEnemy(event:Event):void
 		{
-			this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStagePlayer);
+			this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStageEnemy);
 			
 			_objectImage = new Image(Assets.getTexture("enemyRaw"));
 			_objectImage.pivotX = _objectImage.width / 2;
@@ -232,9 +223,10 @@ package objects
 			_objectImage.scaleY = _WidthHeight.y / _objectImage.height;
 						
 			_objectBody = PhysicsData.createBody("enemy");
-			_objectBody.type = BodyType.KINEMATIC;
+			_objectBody.type = BodyType.DYNAMIC;
 			_objectBody.space = _mySpace;
-			
+			_objectBody.mass = 5;
+			_objectBody.gravMass = 20;
 			_objectBody.position.setxy( _position.x, _position.y );
 			_objectBody.setShapeMaterials( Material.steel()	 );
 			_objectBody.userData.graphic = _objectImage;
@@ -242,22 +234,31 @@ package objects
 			_objectBody.setShapeFilters(new InteractionFilter(2));
 			
 			_objectBody.cbTypes.add(globalFunctions.enemyCb);
+			_objectBody.cbTypes.add(globalFunctions.other);
 			
 			_objectImage.x = _objectBody.position.x;
 			_objectImage.y = _objectBody.position.y;
 			addChild(_objectImage);
 			
-			var animation:Tween = new Tween(_objectBody, 15);
+			var animation:Tween = new Tween(_objectImage, 15);
 			animation.repeatCount = int.MAX_VALUE;
 			animation.animate("rotation", 180);
 			Starling.juggler.add(animation);
+												
+			Assets.saw.play(0,int.MAX_VALUE);
+			var anchor:Vec2 = Vec2.get(_objectBody.position.x, _objectBody.position.y - 400);		
 			
-			
+			var pivotJoint:Constraint = new PivotJoint(_objectBody, _mySpace.world, _objectBody.worldPointToLocal(anchor), anchor);
+			pivotJoint.space = _mySpace;
+			pivotJoint.stiff = false;
+			pivotJoint.frequency = 20;
+			pivotJoint.damping = 1;
+						
 		}
 		
 		private function onAddedToStageFireball(event:Event):void
 		{
-			this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStagePlayer);
+			this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStageFireball);
 			
 			_objectImage = new Image(Assets.getTexture((("fireBallRaw"))));
 			_objectImage.pivotX = _objectImage.width / 2;
@@ -267,7 +268,7 @@ package objects
 			
 			_objectBody = new Body( BodyType.DYNAMIC );
 			
-			_objectBody.shapes.add( new Polygon(Polygon.box(_WidthHeight.x, _WidthHeight.y)));
+			_objectBody.shapes.add( new Circle(_WidthHeight.x));
 			_objectBody.setShapeFilters(new InteractionFilter(1,~1));
 			_objectBody.cbTypes.add(globalFunctions.projectile);
 			
@@ -276,6 +277,7 @@ package objects
 			_objectBody.isBullet = true;
 			_objectBody.userData.graphic = _objectImage;
 			_objectBody.gravMass = 0.0;
+			_objectBody.mass = 10;
 			
 			_objectBody.space = _mySpace;
 			
@@ -320,7 +322,7 @@ package objects
 		
 		private function onAddedToStageBox(event:Event):void
 		{
-			this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStageStone);
+			this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStageBox);
 		
 			_objectBody = new Body( BodyType.DYNAMIC );
 			_objectImage =  new Image(Assets.getTexture((("scaredBoxRaw"))));

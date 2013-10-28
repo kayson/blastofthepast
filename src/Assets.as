@@ -91,11 +91,15 @@ package
 		[Embed(source = "../media/cronospro_0.png")]
 		public static const FontTexture:Class;
 		
-		//Sound
-		
+		//Sound	
 		[Embed(source="../sound/shoot.mp3")]
 		private static const shootSound:Class;
 		public static const shoot:Sound = new shootSound();
+		
+		[Embed(source="../sound/saw.mp3")]
+		private static const sawSound:Class;
+		public static const saw:Sound = new sawSound();
+
 		
 		private static var gameTextures:Dictionary = new Dictionary();
 		
