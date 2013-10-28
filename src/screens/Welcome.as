@@ -27,7 +27,7 @@ package screens
 		private function onAddedToStage(event:Event):void
 		{
 			trace("welcome screen initialized");
-			
+			this.removeEventListener(starling.events.Event.ADDED_TO_STAGE, onAddedToStage);
 			drawScreen();
 		}
 		
