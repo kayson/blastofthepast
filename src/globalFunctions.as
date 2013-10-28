@@ -165,7 +165,23 @@ package
 			public static function enemyHitGlobal(cb:InteractionCallback, 
 													 mySpace:Space, stage:Stage, lvlInterf:LevelInterface):void {
 				
-				lvlInterf.onMainMenuClick();
+				var a:Body = cb.int1 as Body;
+				psConfig = XML(new Assets.EnemyDeathConfig());
+				psTexture = Texture.fromBitmap(new Assets.EnemyDeathParticle());
+				
+				var ps:PDParticleSystem = new PDParticleSystem(psConfig, psTexture);
+				particleVec.push(ps);
+				ps.emitterX = a.userData.graphic.x;
+				ps.emitterY = a.userData.graphic.y;
+				ps.name = String(lvlInterf.getPlayer().getBody().position.x) + " " +
+					String(lvlInterf.getPlayer().getBody().position.y);
+				
+				lvlInterf.addObjectToInstance(ps);
+				Starling.juggler.add(ps);
+				
+				ps.start(0.5);
+				ps.advanceTime(0.1);
+				//lvlInterf.onMainMenuClick();
 
 			}
 			
