@@ -96,8 +96,8 @@ package screens
 		private function InitBodies():void
 		{	
 			//Parallax background baby!
-			//bg = new GameBackground();
-			///addChild(bg);		
+			bg = new GameBackground();
+			addChild(bg);		
 			
 			//The player
 			player = new Objects("Player",mySpace,

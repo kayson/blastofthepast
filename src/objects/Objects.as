@@ -125,10 +125,10 @@ package objects
 		{
 			this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStagePlayer);
 
-			_playerIdleMovie = new MovieClip(Assets.getAtlas().getTextures("Tween 3"), 30);
+			_playerIdleMovie = new MovieClip(Assets.getAtlas().getTextures("Tween 1"), 30);
 			animationState = IDLE_MOVIE;
 			
-			_playerInairMovie = new MovieClip(Assets.getAtlas().getTextures("Tween 3 instance 10000"), 1);
+			_playerInairMovie = new MovieClip(Assets.getAtlas().getTextures("Tween 1 instance 10000"), 1);
 			
 			_playerIdleMovie.pivotX = _playerIdleMovie.width / 2;
 			_playerIdleMovie.pivotY = _playerIdleMovie.height / 2;

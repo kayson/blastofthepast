@@ -78,12 +78,14 @@ package screens
 		{	
 			//Parallax background baby!
 			bg = new GameBackground();
+			//bg.scaleX = 2;
+			//bg.scaleY = 2;	
 			this.addChild(bg);
 			
 			//The player
 			player = new Objects("Player",mySpace,
 				Vec2.weak(screenWidth / 2, screenHeight / 2),
-				Vec2.weak(16,32)); //16 = radie, 32 = scalevalue. (Behövs fixas)	
+				Vec2.weak(25,50)); //25 = radie, 50 = scalevalue. (Behövs fixas)	
 			addChild(player);
 			
 			//The goal

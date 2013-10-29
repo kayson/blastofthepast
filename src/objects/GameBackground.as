@@ -25,19 +25,21 @@ package objects
 			
 			bgLayer1 = new BgLayer(1);
 			bgLayer1.parallax = 1;
+			bgLayer1.y = - 1150;
 			this.addChild(bgLayer1);
 			
 			bgLayer2 = new BgLayer(2);
 			bgLayer2.parallax = 1.1;
+			bgLayer1.y = 640;
 			this.addChild(bgLayer2);
 			
 			bgLayer3 = new BgLayer(3);
 			bgLayer3.parallax = 1.15;
-			this.addChild(bgLayer3);
+			//this.addChild(bgLayer3);
 			
 			bgLayer4 = new BgLayer(4);
 			bgLayer4.parallax = 1.2;
-			this.addChild(bgLayer4);
+			//this.addChild(bgLayer4);
 			
 			//this.addEventListener(Event.ENTER_FRAME, onEnterFrame);
 		}
@@ -62,12 +64,12 @@ package objects
 
 			/*if((640 - position.y) > 640/2)
 			{*/
-				bgLayer1.y = (640 / 2 - position.y) * bgLayer1.parallax;
+				bgLayer1.y = (-1150 - position.y) * bgLayer1.parallax;
 				bgLayer1.x = (960 / 2 - position.x) * bgLayer1.parallax;
 				//if (bgLayer1.x < -stage.stageWidth) bgLayer1.x = 0;
 				
-				bgLayer2.y = (640 / 2 - position.y) * bgLayer2.parallax;
-				bgLayer2.x = (960 / 2 - position.x) * bgLayer2.parallax;
+				bgLayer2.y = (640 - position.y) *1;
+				bgLayer2.x = (960 - position.x) * bgLayer2.parallax;
 				//if (bgLayer2.x < -stage.stageWidth) bgLayer2.x = 0;
 				
 				bgLayer3.y = (640 / 2 - position.y) * bgLayer3.parallax;

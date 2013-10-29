@@ -32,7 +32,7 @@ package
 		[Embed(source="../images/enemy.png")]
 		private static const enemyRaw:Class;
 		
-		[Embed(source="../images/stone2.jpg")] 
+		[Embed(source="../images/blackstone.jpg")] 
 		private static const stoneBlock:Class;
 		
 		[Embed(source="../images/water.png")] 
@@ -58,10 +58,10 @@ package
 		
 		//Background layers
 		
-		[Embed(source="../images/bgLayer1.jpg")]
+		[Embed(source="../images/andersillu/background_diamonds.png")]
 		public static const BgLayer1:Class;
 		
-		[Embed(source="../images/bgLayer2.png")]
+		[Embed(source="../images/andersillu/background_diamonds_l2.png")]
 		public static const BgLayer2:Class;
 		
 		[Embed(source="../images/bgLayer3.png")]
@@ -122,10 +122,10 @@ package
 		//SPRITESHEETSGREJER
 		private static var gameTextureAtlas:TextureAtlas;
 		
-		[Embed(source="../images/andersillu/flash/player_panda_sprite_idle.png")]
+		[Embed(source="../images/andersillu/flash/player_diamond_idle.png")]
 		public static const AtlasTextureGame:Class;
 		
-		[Embed(source="../images/andersillu/flash/player_panda_sprite_idle.xml", mimeType="application/octet-stream")]
+		[Embed(source="../images/andersillu/flash/player_diamond_idle.xml", mimeType="application/octet-stream")]
 		public static const AtlasXmlGame:Class;
 		
 		public static function getAtlas():TextureAtlas

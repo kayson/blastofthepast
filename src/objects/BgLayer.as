@@ -26,7 +26,7 @@ package objects
 			this.removeEventListener(starling.events.Event.ADDED_TO_STAGE, onAddedToStage);
 		
 			image1 = new Image(Assets.getTexture("BgLayer" + _layer));
-			image2 = new Image(Assets.getTexture("BgLayer" + _layer));
+			/*image2 = new Image(Assets.getTexture("BgLayer" + _layer));
 			image3 = new Image(Assets.getTexture("BgLayer" + _layer));
 	
 			image1.x = 0;
@@ -37,10 +37,10 @@ package objects
 			
 			image3.x = -image3.width;
 			image3.y = image1.y;
-			
+			*/
 			this.addChild(image1);
-			this.addChild(image2);
-			this.addChild(image3);
+			//this.addChild(image2);
+			//this.addChild(image3);
 		}
 		
 		public function get parallax():Number
