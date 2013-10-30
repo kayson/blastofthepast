@@ -20,7 +20,7 @@ package
 		public function BlastFromThePast()
 		{
 			stats = new Stats();
-			this.addChild(stats);
+			//this.addChild(stats);
 			
 			Starling.multitouchEnabled = true;
 			

@@ -21,9 +21,9 @@ package objects
 
 	public class UI extends Sprite
 	{
-		public var timerTxt:TextField;
-		public var seconds:int = 0;
-		public var timer:Timer = new Timer(1000);
+		private var timerTxt:TextField;
+		private var seconds:int = 0;
+		private var timer:Timer = new Timer(1000);
 		
 		public static var shootTimer:ProgressBar;
 		
@@ -44,8 +44,8 @@ package objects
 			
 			timerTxt = new TextField(180, 30, "Time: 0 seconds", "Cronos Pro", 30, 0xFFFFFF);
 			timerTxt.pivotX = timerTxt.width/2;
-			timerTxt.x = 170;
-			timerTxt.y = 0;
+			timerTxt.x = 110;
+			timerTxt.y = 10;
 			timerTxt.hAlign = HAlign.LEFT;
 			timerTxt.vAlign = VAlign.CENTER;
 			addChild(timerTxt);
@@ -58,8 +58,8 @@ package objects
 			shootTimer.minimum = 0;
 			shootTimer.maximum = 1;
 			shootTimer.value = 1;
-			shootTimer.x = 400;
-			shootTimer.y = 10;
+			shootTimer.x = 380;
+			shootTimer.y = 15;
 			addChild( shootTimer );
 		}
 		

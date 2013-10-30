@@ -298,10 +298,10 @@ package screens
 			
 			//The menubutton
 			toMenu = new Button(Assets.getTexture("buttonPlay"));
-			toMenu.scaleX = 0.2;
-			toMenu.scaleY = 0.2;
-			toMenu.x = 100;
-			toMenu.y = 100;
+			toMenu.scaleX = 0.15;
+			toMenu.scaleY = 0.15;
+			toMenu.x = 900;
+			toMenu.y = 570;
 			this.addChild(toMenu);
 						
 			this.addEventListener(Event.TRIGGERED, onMainMenuClick);
