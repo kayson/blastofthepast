@@ -321,12 +321,26 @@ package objects
 			
 			//The level building blocks.  -----------------------------------
 			
-			if(_tile != "0")
+			switch(_tile)	
 			{
-				_objectImage = new Image(Assets.getAtlasTiles().getTexture("Dirt1"));
-			}else
-			{
-				_objectImage = new Image(Assets.getTexture((("stoneBlock"))));
+				case "Dirt0":
+					_objectImage = new Image(Assets.getAtlasTiles().getTexture("Dirt0"));
+					break;
+				case "Dirt1":
+					_objectImage = new Image(Assets.getAtlasTiles().getTexture("Dirt1"));
+					break;
+				case "Dirt2":
+					_objectImage = new Image(Assets.getAtlasTiles().getTexture("Dirt2"));
+					break;
+				case "Dirt3":
+					_objectImage = new Image(Assets.getAtlasTiles().getTexture("Dirt3"));
+					break;
+				case "Dirt4":
+					_objectImage = new Image(Assets.getAtlasTiles().getTexture("Dirt4"));
+					break;
+				case "0":
+					_objectImage = new Image(Assets.getTexture((("stoneBlock"))));
+					break;	
 			}
 			
 			_objectImage.pivotX = _objectImage.width / 2;
