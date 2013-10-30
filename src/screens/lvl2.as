@@ -131,8 +131,8 @@ package screens
 			
 			//Right wall
 			stoneBlock = new Objects("Stone",mySpace,
-				Vec2.weak(350 + screenWidth * 2.5, screenHeight / 2),
-				Vec2.weak(128,960));	
+				Vec2.weak(2350, screenHeight / 2 - 1010),
+				Vec2.weak(100,2460));	
 			addChild(stoneBlock);
 			
 			//Left wall
@@ -200,11 +200,11 @@ package screens
 				stoneBlock = new Objects("Stone",mySpace,
 					Vec2.weak(750, screenHeight - 200 - 100 * i),
 					Vec2.weak(100,100), "Dirt" + (Math.ceil(Math.random()*5)-1));	
-				addChild(stoneBlock);
+				//addChild(stoneBlock);
 			}
 			
 			//Pillar 2
-			for( var i:int = 0; i < 12; i++ )
+			for( var i:int = 0; i < 5; i++ )
 			{
 				stoneBlock = new Objects("Stone",mySpace,
 					Vec2.weak(1050, screenHeight - 200 - 100 * i),
@@ -214,7 +214,14 @@ package screens
 			for( var i:int = 0; i < 6; i++ )
 			{
 				stoneBlock = new Objects("Stone",mySpace,
-					Vec2.weak(1050, screenHeight - 200 - 100 * (i+14)),
+					Vec2.weak(1150, screenHeight - 200 - 100 * i),
+					Vec2.weak(100,100), "Dirt" + (Math.ceil(Math.random()*5)-1));	
+				addChild(stoneBlock);
+			}
+			for( var i:int = 0; i < 12; i++ )
+			{
+				stoneBlock = new Objects("Stone",mySpace,
+					Vec2.weak(1050, screenHeight - 200 - 100 * (i+8)),
 					Vec2.weak(100,100), "Dirt" + (Math.ceil(Math.random()*5)-1));	
 				addChild(stoneBlock);
 			}
@@ -226,6 +233,37 @@ package screens
 					Vec2.weak(100,100));	
 				addChild(enemy);
 			}
+			
+			//Part2 of level
+			for( var i:int = 0; i < 12; i++ )
+			{
+				stoneBlock = new Objects("Stone",mySpace,
+					Vec2.weak(1150 + i*100, screenHeight - 800),
+					Vec2.weak(100,100), "Dirt" + (Math.ceil(Math.random()*5)-1));	
+				addChild(stoneBlock);
+			}
+			for( var i:int = 0; i < 1; i++ )
+			{
+				stoneBlock = new Objects("Stone",mySpace,
+					Vec2.weak(950 + i*100, screenHeight - 600),
+					Vec2.weak(100,100), "Dirt" + (Math.ceil(Math.random()*5)-1));	
+				addChild(stoneBlock);
+			}
+			for( var i:int = 0; i < 10; i++ )
+			{
+				stoneBlock = new Objects("Stone",mySpace,
+					Vec2.weak(1150 + i*100, screenHeight - 1100),
+					Vec2.weak(100,100), "Dirt" + (Math.ceil(Math.random()*5)-1));	
+				addChild(stoneBlock);
+			}
+			for( var i:int = 0; i < 10; i++ )
+			{
+				stoneBlock = new Objects("Stone",mySpace,
+					Vec2.weak(1350 + i*100, screenHeight - 1400),
+					Vec2.weak(100,100), "Dirt" + (Math.ceil(Math.random()*5)-1));	
+				addChild(stoneBlock);
+			}
+			
 						
 			
 			//The menubutton

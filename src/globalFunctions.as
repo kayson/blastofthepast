@@ -161,7 +161,7 @@ package
 					{
 						if(b.cbTypes.has(player) || b.cbTypes.has(other))
 						{
-							impulseForce = Math.log((100-impulseVector.length)/80 + 1)*250;
+							impulseForce = Math.log((120-impulseVector.length)/80 + 1)*250;
 							if(impulseForce > 0)
 							{
 								impulse = impulseVector.mul(impulseForce/impulseVector.length * 2);
