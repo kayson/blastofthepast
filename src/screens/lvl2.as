@@ -91,7 +91,7 @@ package screens
 			
 			
 			goal = new Objects("Goal",mySpace,
-				Vec2.weak(1150, screenHeight - 1700),
+				Vec2.weak(1150, screenHeight - 1800),
 				Vec2.weak(100,100));
 			addChild(goal)
 			
