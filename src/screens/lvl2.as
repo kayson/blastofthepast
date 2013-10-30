@@ -116,10 +116,12 @@ package screens
 			//The level building blocks. (STATIC objects)  -----------------------------------
 			
 			//Floor
+			/*
 			stoneBlock = new Objects("Stone",mySpace,
 				Vec2.weak(screenWidth, screenHeight - 20),
 				Vec2.weak(960 * 3,128));	
 			addChild(stoneBlock);
+			*/
 			
 			//Roof
 			stoneBlock = new Objects("Stone",mySpace,
@@ -142,10 +144,13 @@ package screens
 			
 			
 			//Level-buildingblocks
-			stoneBlock = new Objects("Stone",mySpace,
-				Vec2.weak(screenWidth * 2 / 3, screenHeight - 100),
-				Vec2.weak(100,100), "Dirt1");	
-			addChild(stoneBlock);
+			for( var i:int = 0; i < 15; i++ )
+			{
+				stoneBlock = new Objects("Stone",mySpace,
+					Vec2.weak(100 + 100 * i, screenHeight - 50),
+					Vec2.weak(100,100), "Dirt1");	
+				addChild(stoneBlock);
+			}
 			
 			stoneBlock = new Objects("Stone",mySpace,
 				Vec2.weak(screenWidth * 1, screenHeight / 2 - 80),

@@ -140,10 +140,10 @@ package
 		public static const AtlasXmlGameShoot:Class;
 		
 		//TILES
-		[Embed(source="../images/andersillu/flash/test_tile_spritesheet.png")]
+		[Embed(source="../images/andersillu/flash/tile_sprite.png")]
 		public static const AtlasTextureGameTiles:Class;
 		
-		[Embed(source="../images/andersillu/flash/test_tile_spritesheet.xml", mimeType="application/octet-stream")]
+		[Embed(source="../images/andersillu/flash/tile_sprite.xml", mimeType="application/octet-stream")]
 		public static const AtlasXmlGameTiles:Class;
 		
 		public static function getAtlasIdle():TextureAtlas
