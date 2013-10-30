@@ -1,8 +1,10 @@
 package objects
 {
+	import nape.geom.Vec2;
+	
+	import starling.display.BlendMode;
 	import starling.display.Sprite;
 	import starling.events.Event;
-	import nape.geom.Vec2;
 	
 	public class GameBackground extends Sprite
 	{
@@ -26,6 +28,7 @@ package objects
 			bgLayer1 = new BgLayer(1);
 			bgLayer1.parallax = 1;
 			bgLayer1.y = - 1150;
+			bgLayer1.blendMode = BlendMode.NONE;
 			this.addChild(bgLayer1);
 			
 			bgLayer2 = new BgLayer(2);
