@@ -200,7 +200,7 @@ package screens
 				stoneBlock = new Objects("Stone",mySpace,
 					Vec2.weak(750, screenHeight - 200 - 100 * i),
 					Vec2.weak(100,100), "Dirt" + (Math.ceil(Math.random()*5)-1));	
-				//addChild(stoneBlock);
+				addChild(stoneBlock);
 			}
 			
 			//Pillar 2
