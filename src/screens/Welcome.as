@@ -18,7 +18,7 @@ package screens
 		private var playLvl4:Button;
 		private var playLvl5:Button;
 		
-		public static var levelActive:int = 1;
+		public static var levelActive:int = 5;
 		
 		public function Welcome()
 		{
