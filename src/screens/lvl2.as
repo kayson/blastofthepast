@@ -25,21 +25,21 @@ package screens
 	public class lvl2 extends Sprite implements LevelInterface
 	{
 		
-		private var mySpace:Space;
-		private var screenWidth:Number;
-		private var screenHeight:Number;
-		private var fireBallImage:Image;
-		private var xDir:Number = 0;
-		private var yDir:Number = 0;
+		private static var mySpace:Space;
+		private static var screenWidth:Number;
+		private static var screenHeight:Number;
+		private static var fireBallImage:Image;
+		private static var xDir:Number = 0;
+		private static var yDir:Number = 0;
 		
-		private var bg:GameBackground;
-		private var stoneBlock:Objects;
-		private var fireball:Objects;
-		private var player:Objects;
-		private var goal:Objects;
-		private var enemy:Objects;
-		private var box:Objects;
-		private var toMenu:Button;
+		private static var bg:GameBackground;
+		private static var stoneBlock:Objects;
+		private static var fireball:Objects;
+		private static var player:Objects;
+		private static var goal:Objects;
+		private static var enemy:Objects;
+		private static var box:Objects;
+		private static var toMenu:Button;
 		
 		
 		public function lvl2()
@@ -87,6 +87,7 @@ package screens
 				Vec2.weak(screenWidth / 2, screenHeight / 2),
 				Vec2.weak(25,50)); //25 = radie, 50 = scalevalue. (Behövs fixas)	
 			addChild(player);
+			
 			
 			//The goal
 			goal = new Objects("Goal", mySpace,
@@ -163,7 +164,7 @@ package screens
 			toMenu.x = 100;
 			toMenu.y = 100;
 			this.addChild(toMenu);
-			
+						
 			this.addEventListener(Event.TRIGGERED, onMainMenuClick);
 		}
 		

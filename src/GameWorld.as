@@ -44,6 +44,8 @@ package
 			screenWelcome = new Welcome();
 			this.addChild(screenWelcome);
 			screenWelcome.initialize();
+			
+			this.removeEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 
 		}		
 		
