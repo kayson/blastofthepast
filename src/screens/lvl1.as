@@ -23,18 +23,18 @@ package screens
 	
 	public class lvl1 extends Sprite implements LevelInterface
 	{			
-		private var mySpace:Space;
-		private var screenWidth:Number;
-		private var screenHeight:Number;
-		private var player:Objects;
-		private var water:Objects;
-		private var stoneBlock:Objects;
-		private var enemy:Objects;
-		private var box:Objects;
-		private var toMenu:Button;
-		private var goal:Objects;
+		private static var mySpace:Space;
+		private static var screenWidth:Number;
+		private static var screenHeight:Number;
+		private static var player:Objects;
+		private static var water:Objects;
+		private static var stoneBlock:Objects;
+		private static var enemy:Objects;
+		private static var box:Objects;
+		private static var toMenu:Button;
+		private static var goal:Objects;
 		
-		private var bg:GameBackground;
+		private static var bg:GameBackground;
 		
 		
 		public function lvl1()

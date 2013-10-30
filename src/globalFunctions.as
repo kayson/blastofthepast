@@ -18,6 +18,7 @@ package
 	import objects.UI;
 	
 	import screens.LevelInterface;
+	import screens.Welcome;
 	
 	import starling.core.Starling;
 	import starling.display.Button;
@@ -201,7 +202,9 @@ package
 			public static function playerInGoal(cb:InteractionCallback, 
 												  mySpace:Space, stage:Stage, lvlInterf:LevelInterface):void {
 				
-				lvlInterf.onMainMenuClick();		
+				Welcome.levelActive++;
+				lvlInterf.onMainMenuClick();
+				
 			}
 			
 			public static function updateGraphicsGlobal( body:Body, player:Objects, wh:Vec2):void
