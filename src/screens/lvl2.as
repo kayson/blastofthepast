@@ -148,7 +148,7 @@ package screens
 			{
 				stoneBlock = new Objects("Stone",mySpace,
 					Vec2.weak(100 + 100 * i, screenHeight - 50),
-					Vec2.weak(100,100), "Dirt1");	
+					Vec2.weak(100,100), "Dirt" + (Math.ceil(Math.random()*5)-1));	
 				addChild(stoneBlock);
 			}
 			
