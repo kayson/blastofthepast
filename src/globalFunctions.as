@@ -52,7 +52,7 @@ package
 			private static var ps:PDParticleSystem;
 			private static var particleVec:Vector.<PDParticleSystem> = new Vector.<PDParticleSystem>();
 
-			
+			private static var arrow:Image;
 			
 			public static function performAction():void {
 				
@@ -68,11 +68,33 @@ package
 					if(touch.phase == TouchPhase.BEGAN)//on finger down
 					{
 						xDir = touch.globalX;
-						yDir = touch.globalY;		
-					}else if(touch.phase == TouchPhase.ENDED) //on finger up
+						yDir = touch.globalY;
+						
+						arrow = new Image(Assets.getTexture("arrowRaw"));
+						arrow.pivotX = arrow.width / 2;
+						arrow.pivotY = arrow.height;
+						arrow.scaleX = 50 / arrow.width;
+						arrow.scaleY = 50 / arrow.height;
+						
+						arrow.x = player.getBody().userData.graphic.x;
+						arrow.y = player.getBody().userData.graphic.y;
+						
+						lvlInterf.addObjectToInstance(arrow);
+					}
+					else if(touch.phase == TouchPhase.MOVED)
+					{
+						var shootDir:Vec2 = Vec2.get((touch.globalX-xDir),(touch.globalY-yDir));
+																	
+											
+						arrow.rotation = shootDir.angle+1.5;						
+						
+					}
+					else if(touch.phase == TouchPhase.ENDED) //on finger up
 					{	
 						var shootDir:Vec2 = Vec2.get((touch.globalX-xDir),(touch.globalY-yDir));
-					
+						
+						lvlInterf.removeObjectFromInstance(arrow);
+						
 						if(shootDir.length > 0.1)
 						{
 							shootDir = shootDir.normalise();
@@ -91,6 +113,7 @@ package
 							fireball.getBody().applyImpulse(shootDir);
 													
 							shootCooldown = maxCooldown;
+							
 						}
 					}
 					
