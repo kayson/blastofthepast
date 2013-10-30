@@ -34,6 +34,7 @@ package objects
 		private var _objectBody:Body;
 		private var _objectImage:Image;
 		private var _objectsMovieClip:MovieClip;
+		private var _tile:String;
 		
 		private var animationState:int;
 		private var _playerIdleMovie:MovieClip;
@@ -48,13 +49,16 @@ package objects
 
 		private var _speed:Number = 0;
 		
-		public function Objects(type:String,mySpace:Space,position:Vec2,wh:Vec2 )
+
+		
+		public function Objects(type:String,mySpace:Space,position:Vec2,wh:Vec2, tile:String = "0" )
 		{
 			super();
 			//Koppla till de lokala variablerna
 			_mySpace 	= mySpace;
 			_position	= position;
 			_WidthHeight= wh;
+			_tile = tile;
 
 			switch(type)	
 			{
@@ -221,6 +225,7 @@ package objects
 			this.getBody().rotation = shootDir.angle;
 			this.getBody().userData.graphic = movieVector[newAnimationState];
 			movieVector[newAnimationState].currentFrame = 0;
+			movieVector[animationState].currentFrame = movieVector[animationState].numFrames -1;
 			movieVector[newAnimationState].x = movieVector[animationState].x;
 			movieVector[newAnimationState].y = movieVector[animationState].y;
 			movieVector[newAnimationState].rotation = movieVector[animationState].rotation;
@@ -316,7 +321,14 @@ package objects
 			
 			//The level building blocks.  -----------------------------------
 			
-			_objectImage = new Image(Assets.getTexture((("stoneBlock"))));
+			if(_tile != "0")
+			{
+				_objectImage = new Image(Assets.getAtlasTiles().getTexture("Dirt1"));
+			}else
+			{
+				_objectImage = new Image(Assets.getTexture((("stoneBlock"))));
+			}
+			
 			_objectImage.pivotX = _objectImage.width / 2;
 			_objectImage.pivotY = _objectImage.height / 2;
 			_objectImage.scaleX = _WidthHeight.x / _objectImage.width;

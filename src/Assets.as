@@ -61,7 +61,7 @@ package
 		
 		//Background layers
 		
-		[Embed(source="../images/andersillu/background_diamonds.png")]
+		[Embed(source="../images/andersillu/background_forest2.png")]
 		public static const BgLayer1:Class;
 		
 		[Embed(source="../images/andersillu/background_diamonds_l2.png")]
@@ -86,6 +86,8 @@ package
 		
 		[Embed(source="../particles/enemydeath/texture.png")]
 		public static const EnemyDeathParticle:Class;
+		
+		
 		
 		//Fonts
 		[Embed(source="../media/cronospro.fnt", mimeType="application/octet-stream")]
@@ -121,6 +123,7 @@ package
 		//SPRITESHEETSGREJER
 		private static var gameTextureAtlasIdle:TextureAtlas;
 		private static var gameTextureAtlasShoot:TextureAtlas;
+		private static var gameTextureAtlasTiles:TextureAtlas;
 		
 		//IDLE
 		[Embed(source="../images/andersillu/flash/player_diamond_idle.png")]
@@ -135,6 +138,13 @@ package
 		
 		[Embed(source="../images/andersillu/flash/player_diamond_shoot.xml", mimeType="application/octet-stream")]
 		public static const AtlasXmlGameShoot:Class;
+		
+		//TILES
+		[Embed(source="../images/andersillu/flash/test_tile_spritesheet.png")]
+		public static const AtlasTextureGameTiles:Class;
+		
+		[Embed(source="../images/andersillu/flash/test_tile_spritesheet.xml", mimeType="application/octet-stream")]
+		public static const AtlasXmlGameTiles:Class;
 		
 		public static function getAtlasIdle():TextureAtlas
 		{
@@ -156,6 +166,17 @@ package
 				gameTextureAtlasShoot = new TextureAtlas(texture, xml);
 			}
 			return gameTextureAtlasShoot;
+		}
+		
+		public static function getAtlasTiles():TextureAtlas
+		{
+			if (gameTextureAtlasTiles == null)
+			{
+				var texture:Texture = getTexture("AtlasTextureGameTiles");
+				var xml:XML = XML(new AtlasXmlGameTiles());
+				gameTextureAtlasTiles = new TextureAtlas(texture, xml);
+			}
+			return gameTextureAtlasTiles;
 		}
 
 	}
