@@ -25,7 +25,7 @@ package objects
 		public var seconds:int = 0;
 		public var timer:Timer = new Timer(1000);
 		
-		public var shootTimer:ProgressBar;
+		public static var shootTimer:ProgressBar;
 		
 		private var progressTween:Tween;
 		
@@ -54,24 +54,15 @@ package objects
 			timer.start();
 			
 			new MetalWorksMobileTheme();
-			globalFunctions.timer.addEventListener(flash.events.TimerEvent.TIMER,setBar);
 			shootTimer = new ProgressBar();
 			shootTimer.minimum = 0;
 			shootTimer.maximum = 1;
-			shootTimer.value = 0;
+			shootTimer.value = 1;
 			shootTimer.x = 400;
 			shootTimer.y = 10;
 			addChild( shootTimer );
 		}
 		
-		private function setBar(e:TimerEvent):void
-		{
-			progressTween = new Tween(shootTimer, 0.8, Transitions.EASE_IN);
-			progressTween.animate("value", 1);
-			progressTween.onComplete = function():void { Starling.juggler.removeTweens(progressTween); shootTimer.value = 0; };
-			Starling.juggler.add(progressTween);
-
-		}
 		
 		private function updateClock(e:TimerEvent):void
 		{

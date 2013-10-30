@@ -38,6 +38,9 @@ package
 		[Embed(source="../images/water.png")] 
 		private static const waterRaw:Class;
 		
+		[Embed(source="../images/arrow.png")] 
+		private static const arrowRaw:Class;
+		
 		//Levelnumbers
 		[Embed(source="../images/levelnumbers/1.png")]
 		public static const buttonLvl1:Class;
@@ -95,10 +98,6 @@ package
 		[Embed(source="../sound/shoot.mp3")]
 		private static const shootSound:Class;
 		public static const shoot:Sound = new shootSound();
-		
-		[Embed(source="../sound/saw.mp3")]
-		private static const sawSound:Class;
-		public static const saw:Sound = new sawSound();
 
 		
 		private static var gameTextures:Dictionary = new Dictionary();

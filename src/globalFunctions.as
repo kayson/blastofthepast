@@ -15,6 +15,7 @@ package
 	
 	import objects.GameBackground;
 	import objects.Objects;
+	import objects.UI;
 	
 	import screens.LevelInterface;
 	
@@ -43,46 +44,57 @@ package
 			public static var enemyCb:CbType = new CbType();
 			public static var goal:CbType = new CbType();
 
-			private static var shootAble:Boolean = true;
-			public static var timer:Timer = new Timer(20,40);
+			public static var shootCooldown:int;
+			private static var maxCooldown:int = 30;
 					
 			private static var psConfig:XML;
 			private static var psTexture:Texture;
 			private static var ps:PDParticleSystem;
 			private static var particleVec:Vector.<PDParticleSystem> = new Vector.<PDParticleSystem>();
 
+			private static var arrow:Image;
 			
 			public static function performAction():void {
 				
 			}
 			
-			public static function onTick(e:TimerEvent):void
-			{
-				
-			}
-			
-			public static function onComplete(e:TimerEvent):void
-			{
-					shootAble = true;
-					timer.stop();
-					timer.removeEventListener(TimerEvent.TIMER, onTick);
-					timer.removeEventListener(TimerEvent.TIMER_COMPLETE, onComplete);
-			}
 			
 			public static function touchGlobal(e:TouchEvent, stage:Stage,
 								player:Objects, mySpace:Space, lvlInterf:LevelInterface):void
 			{
 				var touch:Touch = e.getTouch(stage);
-				if( touch && shootAble )
+				if( touch && shootCooldown == 0 )
 				{
 					if(touch.phase == TouchPhase.BEGAN)//on finger down
 					{
 						xDir = touch.globalX;
-						yDir = touch.globalY;		
-					}else if(touch.phase == TouchPhase.ENDED) //on finger up
+						yDir = touch.globalY;
+						
+						arrow = new Image(Assets.getTexture("arrowRaw"));
+						arrow.pivotX = arrow.width / 2;
+						arrow.pivotY = arrow.height;
+						arrow.scaleX = 100 / arrow.width;
+						arrow.scaleY = 100 / arrow.height;
+						
+						arrow.x = player.getBody().userData.graphic.x;
+						arrow.y = player.getBody().userData.graphic.y;
+						
+						lvlInterf.addObjectToInstance(arrow);
+					}
+					else if(touch.phase == TouchPhase.MOVED)
+					{
+						var shootDir:Vec2 = Vec2.get((touch.globalX-xDir),(touch.globalY-yDir));
+																	
+											
+						arrow.rotation = shootDir.angle+1.5;						
+						
+					}
+					else if(touch.phase == TouchPhase.ENDED) //on finger up
 					{	
 						var shootDir:Vec2 = Vec2.get((touch.globalX-xDir),(touch.globalY-yDir));
-					
+						
+						lvlInterf.removeObjectFromInstance(arrow);
+						
 						if(shootDir.length > 0.1)
 						{
 							shootDir = shootDir.normalise();
@@ -100,10 +112,8 @@ package
 							fireball.getBody().rotation = shootDir.angle;
 							fireball.getBody().applyImpulse(shootDir);
 													
-							timer.addEventListener(TimerEvent.TIMER, onTick);
-							timer.addEventListener(TimerEvent.TIMER_COMPLETE, onComplete);
-							timer.start();
-							shootAble = false;
+							shootCooldown = maxCooldown;
+							
 						}
 					}
 					
@@ -238,8 +248,12 @@ package
 
 				//OBS LEVEL 1 FUNKAR INTE NÄR DENNA ÄR MED!?
 				bg.bgPosition(player.getBody().position);
-
 				
+				if(shootCooldown > 0)
+				{
+					shootCooldown--;
+					UI.shootTimer.value = 1-shootCooldown/maxCooldown;
+				}
 				// DETTA FUNKAR BRA !!!!!!!!!!!
 				//var length:int = particleVec.length;
 				var arr:Array;

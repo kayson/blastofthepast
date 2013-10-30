@@ -268,7 +268,6 @@ package objects
 			animation.animate("rotation", 180);
 			Starling.juggler.add(animation);
 												
-			Assets.saw.play(0,int.MAX_VALUE);
 			var anchor:Vec2 = Vec2.get(_objectBody.position.x, _objectBody.position.y - 400);		
 			
 			var pivotJoint:Constraint = new PivotJoint(_objectBody, _mySpace.world, _objectBody.worldPointToLocal(anchor), anchor);
