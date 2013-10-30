@@ -18,6 +18,8 @@ package screens
 		private var playLvl4:Button;
 		private var playLvl5:Button;
 		
+		public static var levelActive:int = 1;
+		
 		public function Welcome()
 		{
 			super();
@@ -49,6 +51,8 @@ package screens
 			playLvl2.scaleY = 0.2;
 			playLvl2.x = 200;
 			playLvl2.y = 100;
+			if(levelActive < 2)
+				playLvl2.enabled = false;
 			this.addChild(playLvl2);
 			
 			playLvl3 = new Button(Assets.getTexture("buttonLvl3"));
@@ -56,6 +60,8 @@ package screens
 			playLvl3.scaleY = 0.2;
 			playLvl3.x = 300;
 			playLvl3.y = 100;
+			if(levelActive < 3)
+				playLvl3.enabled = false;
 			this.addChild(playLvl3);
 			
 			playLvl4 = new Button(Assets.getTexture("buttonLvl4"));
@@ -63,6 +69,8 @@ package screens
 			playLvl4.scaleY = 0.2;
 			playLvl4.x = 400;
 			playLvl4.y = 100;
+			if(levelActive < 4)
+				playLvl4.enabled = false;
 			this.addChild(playLvl4);
 			
 			playLvl5 = new Button(Assets.getTexture("buttonLvl5"));
@@ -70,6 +78,8 @@ package screens
 			playLvl5.scaleY = 0.2;
 			playLvl5.x = 500;
 			playLvl5.y = 100;
+			if(levelActive < 5)
+				playLvl5.enabled = false;
 			this.addChild(playLvl5);
 			
 			this.addEventListener(Event.TRIGGERED, onMainMenuClick);
