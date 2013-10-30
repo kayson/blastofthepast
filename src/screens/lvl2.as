@@ -148,14 +148,10 @@ package screens
 			addChild(stoneBlock);
 			
 			stoneBlock = new Objects("Stone",mySpace,
-				Vec2.weak(screenWidth * 1, screenHeight / 2 - 80),
-				Vec2.weak(128,128));	
+				Vec2.weak(screenWidth * 1 / 3, screenHeight - 200),
+				Vec2.weak(100,100), "Dirt1");	
 			addChild(stoneBlock);
 			
-			stoneBlock = new Objects("Stone",mySpace,
-				Vec2.weak(screenWidth * 1.7, screenHeight / 2 - 200),
-				Vec2.weak(128,128));	
-			addChild(stoneBlock);
 			
 			//The menubutton
 			toMenu = new Button(Assets.getTexture("buttonPlay"));
