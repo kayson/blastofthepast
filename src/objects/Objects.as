@@ -221,6 +221,7 @@ package objects
 			this.getBody().rotation = shootDir.angle;
 			this.getBody().userData.graphic = movieVector[newAnimationState];
 			movieVector[newAnimationState].currentFrame = 0;
+			movieVector[animationState].currentFrame = movieVector[animationState].numFrames -1;
 			movieVector[newAnimationState].x = movieVector[animationState].x;
 			movieVector[newAnimationState].y = movieVector[animationState].y;
 			movieVector[newAnimationState].rotation = movieVector[animationState].rotation;

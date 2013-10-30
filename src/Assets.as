@@ -58,7 +58,7 @@ package
 		
 		//Background layers
 		
-		[Embed(source="../images/andersillu/background_diamonds.png")]
+		[Embed(source="../images/andersillu/background_forest2.png")]
 		public static const BgLayer1:Class;
 		
 		[Embed(source="../images/andersillu/background_diamonds_l2.png")]
