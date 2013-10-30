@@ -89,11 +89,11 @@ package screens
 			addChild(player);
 			
 			
-			//The goal
-			goal = new Objects("Goal", mySpace,
-				Vec2.weak(screenWidth * 2.5 - 256 , -100),
-				Vec2.weak(32,32));
-			addChild(goal);
+			
+			goal = new Objects("Goal",mySpace,
+				Vec2.weak(1150, screenHeight - 1700),
+				Vec2.weak(100,100));
+			addChild(goal)
 			
 			//Add boxes
 //			for( var i:int = 0; i < 6; i++ )
@@ -256,6 +256,13 @@ package screens
 					Vec2.weak(100,100), "Dirt" + (Math.ceil(Math.random()*5)-1));	
 				addChild(stoneBlock);
 			}
+				for( var i:int = 0; i < 1; i++ )
+				{
+					stoneBlock = new Objects("Stone",mySpace,
+						Vec2.weak(2050, screenHeight - 1200),
+						Vec2.weak(100,100), "Dirt" + (Math.ceil(Math.random()*5)-1));	
+					addChild(stoneBlock);
+				}
 			for( var i:int = 0; i < 10; i++ )
 			{
 				stoneBlock = new Objects("Stone",mySpace,
@@ -263,7 +270,30 @@ package screens
 					Vec2.weak(100,100), "Dirt" + (Math.ceil(Math.random()*5)-1));	
 				addChild(stoneBlock);
 			}
-			
+				for( var i:int = 0; i < 1; i++ )
+				{
+					stoneBlock = new Objects("Stone",mySpace,
+						Vec2.weak(1350, screenHeight - 1500),
+						Vec2.weak(100,100), "Dirt" + (Math.ceil(Math.random()*5)-1));	
+					addChild(stoneBlock);
+				}
+			for( var i:int = 0; i < 10; i++ )
+			{
+				stoneBlock = new Objects("Stone",mySpace,
+					Vec2.weak(1150 + i*100, screenHeight - 1700),
+					Vec2.weak(100,100), "Dirt" + (Math.ceil(Math.random()*5)-1));	
+				addChild(stoneBlock);
+			}
+				for( var i:int = 0; i < 1; i++ )
+				{
+					stoneBlock = new Objects("Stone",mySpace,
+						Vec2.weak(2050, screenHeight - 1800),
+						Vec2.weak(100,100), "Dirt" + (Math.ceil(Math.random()*5)-1));	
+					addChild(stoneBlock);
+				}
+
+				
+					
 						
 			
 			//The menubutton
