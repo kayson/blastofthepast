@@ -45,6 +45,8 @@ package objects
 		private static const IN_AIR_MOVIE:int = 1;
 		private static const SHOOT_MOVIE:int = 2;
 		
+		private var _goalMovie:MovieClip;
+		
 		//private var _type:String;
 
 		private var _speed:Number = 0;
@@ -99,11 +101,12 @@ package objects
 		{
 			this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStageGoal);
 			
-			_objectImage = new Image(Assets.getTexture((("goalRaw"))));
-			_objectImage.pivotX = _objectImage.width / 2;
-			_objectImage.pivotY = _objectImage.height / 2;
-			_objectImage.scaleX = _WidthHeight.x / _objectImage.width;
-			_objectImage.scaleY = _WidthHeight.y / _objectImage.height;
+			_goalMovie = new MovieClip(Assets.getAtlasGoal().getTextures("Tween 1"), 150);
+			
+			_goalMovie.pivotX = _goalMovie.width / 2;
+			_goalMovie.pivotY = _goalMovie.height / 2;
+			_goalMovie.scaleX = _WidthHeight.x / _goalMovie.width;
+			_goalMovie.scaleY = _WidthHeight.y / _goalMovie.height;
 			
 			_objectBody = new Body( BodyType.STATIC );
 			
@@ -113,14 +116,15 @@ package objects
 			
 			_objectBody.position.setxy(_position.x, _position.y);
 			_objectBody.setShapeMaterials( Material.steel() );
-			_objectBody.userData.graphic = _objectImage;
+			_objectBody.userData.graphic = _goalMovie;
 			
 			_objectBody.space = _mySpace;
 			
-			_objectImage.x = _objectBody.position.x;
-			_objectImage.y = _objectBody.position.y;
+			_goalMovie.x = _objectBody.position.x;
+			_goalMovie.y = _objectBody.position.y;
 			
-			addChild(_objectImage);
+			Starling.juggler.add(_goalMovie);
+			addChild(_goalMovie);
 			
 			
 		}
@@ -354,7 +358,15 @@ package objects
 			
 			//The level building blocks.  -----------------------------------
 			
-			switch(_tile)	
+			if(_tile != "0")
+			{
+				_objectImage = new Image(Assets.getAtlasTiles().getTexture(_tile));
+			}else
+			{
+				_objectImage = new Image(Assets.getTexture((("stoneBlock"))));
+			}
+			
+			/*switch(_tile)	
 			{
 				case "Dirt0":
 					_objectImage = new Image(Assets.getAtlasTiles().getTexture("Dirt0"));
@@ -374,7 +386,7 @@ package objects
 				case "0":
 					_objectImage = new Image(Assets.getTexture((("stoneBlock"))));
 					break;	
-			}
+			}*/
 			
 			_objectImage.pivotX = _objectImage.width / 2;
 			_objectImage.pivotY = _objectImage.height / 2;
