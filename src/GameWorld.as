@@ -58,7 +58,7 @@ package
 					screenWelcome = new Welcome();
 					this.addChild(screenWelcome);
 					
-					//screenWelcome.disposeTemporarily();
+					screenWelcome.disposeTemporarily();
 					screenWelcome.initialize();
 					
 					this.removeChild(ui);

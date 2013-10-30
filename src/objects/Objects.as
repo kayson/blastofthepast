@@ -345,7 +345,7 @@ package objects
 			_objectBody.userData.graphic = _objectImage;
 			
 			_objectBody.space = _mySpace;
-
+			
 			_objectImage.x = _objectBody.position.x;
 			_objectImage.y = _objectBody.position.y;
 			_objectImage.blendMode = BlendMode.NONE;
