@@ -125,15 +125,22 @@ package objects
 		{
 			this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStagePlayer);
 
-			_playerIdleMovie = new MovieClip(Assets.getAtlas().getTextures("Tween 1"), 30);
+			_playerIdleMovie = new MovieClip(Assets.getAtlasIdle().getTextures("Tween 1"), 30);
 			animationState = IDLE_MOVIE;
 			
-			_playerInairMovie = new MovieClip(Assets.getAtlas().getTextures("Tween 1 instance 10000"), 1);
+			_playerShootMovie = new MovieClip(Assets.getAtlasShoot().getTextures("Tween 22"), 30);
+			
+			_playerInairMovie = new MovieClip(Assets.getAtlasShoot().getTextures("Tween 22 instance 10000"), 1);
 			
 			_playerIdleMovie.pivotX = _playerIdleMovie.width / 2;
 			_playerIdleMovie.pivotY = _playerIdleMovie.height / 2;
 			_playerIdleMovie.scaleX = _WidthHeight.y / _playerIdleMovie.width;
 			_playerIdleMovie.scaleY = _WidthHeight.y / _playerIdleMovie.height;
+			
+			_playerShootMovie.pivotX = _playerShootMovie.width / 2;
+			_playerShootMovie.pivotY = _playerShootMovie.height / 2;
+			_playerShootMovie.scaleX = _WidthHeight.y / _playerShootMovie.width;
+			_playerShootMovie.scaleY = _WidthHeight.y / _playerShootMovie.height;
 			
 			
 			_playerInairMovie.pivotX = _playerInairMovie.width / 2;
@@ -161,6 +168,7 @@ package objects
 			movieVector = new Vector.<MovieClip>();
 			movieVector[IDLE_MOVIE] = _playerIdleMovie;
 			movieVector[IN_AIR_MOVIE] = _playerInairMovie;
+			movieVector[SHOOT_MOVIE] = _playerShootMovie;
 			
 			Starling.juggler.add(_playerIdleMovie);
 			addChild(_playerIdleMovie);
@@ -171,45 +179,59 @@ package objects
 		private function playerStateCheck():void
 		{
 			var newAnimationState:int = -1;	
-			
-			// TODO Auto Generated method stub
-			if(this._objectBody.velocity.x > 0.3 || this._objectBody.velocity.y > 0.3 )
+			if(movieVector[animationState].currentFrame == (movieVector[animationState].numFrames - 1))
 			{
-				newAnimationState = IN_AIR_MOVIE;
-			}else
-			{
-				newAnimationState = IDLE_MOVIE;
-			}
-			
-			//trace(movieVector[animationState].currentFrame == (movieVector[animationState].numFrames - 1));
-			
-			if((newAnimationState != animationState) && 
-				(movieVector[animationState].currentFrame == (movieVector[animationState].numFrames - 1)))
-			{
+				// TODO Auto Generated method stub
+				if(this._objectBody.velocity.x > 0.3 || this._objectBody.velocity.y > 0.3 )
+				{
+					newAnimationState = IN_AIR_MOVIE;
+				}else
+				{
+					newAnimationState = IDLE_MOVIE;
+				}
 				
-				this.getBody().userData.graphic = movieVector[newAnimationState];
-				movieVector[newAnimationState].x = movieVector[animationState].x;
-				movieVector[newAnimationState].y = movieVector[animationState].y;
-				//trace(movieVector[animationState].rotation);
-				movieVector[newAnimationState].rotation = movieVector[animationState].rotation;
-				//movieVector[newAnimationState].pivotX = movieVector[animationState].pivotX;
-				//movieVector[newAnimationState].pivotY = movieVector[animationState].pivotY;
-				//movieVector[newAnimationState].c = movieVector[animationState].root;
-				
-				
-				removeChild(movieVector[animationState]);
-				Starling.juggler.remove(movieVector[animationState]);
-				
-				animationState = newAnimationState;
-				addChild(movieVector[animationState]);
-				Starling.juggler.add(movieVector[animationState]);
-				
-			}
-			
-			//trace("currentFrame: " + movieVector[animationState].currentFrame); 
-			//trace("totalFrames: " + (movieVector[animationState].numFrames - 1));
+				//trace(movieVector[animationState].currentFrame == (movieVector[animationState].numFrames - 1));
+
+				if((newAnimationState != animationState))
+				{
 					
+					this.getBody().userData.graphic = movieVector[newAnimationState];
+					movieVector[newAnimationState].x = movieVector[animationState].x;
+					movieVector[newAnimationState].y = movieVector[animationState].y;
+					movieVector[newAnimationState].rotation = movieVector[animationState].rotation;
+					
+					removeChild(movieVector[animationState]);
+					Starling.juggler.remove(movieVector[animationState]);
+					
+					animationState = newAnimationState;
+					addChild(movieVector[animationState]);
+					Starling.juggler.add(movieVector[animationState]);
+					
+				}
+			}
+		
 			
+		
+		}
+		
+		public function playerStateShoot(shootDir:Vec2):void
+		{
+			var newAnimationState:int = SHOOT_MOVIE;
+			
+			this.getBody().rotation = shootDir.angle;
+			this.getBody().userData.graphic = movieVector[newAnimationState];
+			movieVector[newAnimationState].currentFrame = 0;
+			movieVector[newAnimationState].x = movieVector[animationState].x;
+			movieVector[newAnimationState].y = movieVector[animationState].y;
+			movieVector[newAnimationState].rotation = movieVector[animationState].rotation;
+			
+			removeChild(movieVector[animationState]);
+			Starling.juggler.remove(movieVector[animationState]);
+			
+			animationState = newAnimationState;
+			addChild(movieVector[animationState]);
+			Starling.juggler.add(movieVector[animationState]);
+
 		}
 		
 		private function onAddedToStageEnemy(event:Event):void

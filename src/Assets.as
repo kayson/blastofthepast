@@ -120,23 +120,43 @@ package
 		}
 		
 		//SPRITESHEETSGREJER
-		private static var gameTextureAtlas:TextureAtlas;
+		private static var gameTextureAtlasIdle:TextureAtlas;
+		private static var gameTextureAtlasShoot:TextureAtlas;
 		
+		//IDLE
 		[Embed(source="../images/andersillu/flash/player_diamond_idle.png")]
-		public static const AtlasTextureGame:Class;
+		public static const AtlasTextureGameIdle:Class;
 		
 		[Embed(source="../images/andersillu/flash/player_diamond_idle.xml", mimeType="application/octet-stream")]
-		public static const AtlasXmlGame:Class;
+		public static const AtlasXmlGameIdle:Class;
 		
-		public static function getAtlas():TextureAtlas
+		//SHOOT
+		[Embed(source="../images/andersillu/flash/player_diamond_shoot.png")]
+		public static const AtlasTextureGameShoot:Class;
+		
+		[Embed(source="../images/andersillu/flash/player_diamond_shoot.xml", mimeType="application/octet-stream")]
+		public static const AtlasXmlGameShoot:Class;
+		
+		public static function getAtlasIdle():TextureAtlas
 		{
-			if (gameTextureAtlas == null)
+			if (gameTextureAtlasIdle == null)
 			{
-				var texture:Texture = getTexture("AtlasTextureGame");
-				var xml:XML = XML(new AtlasXmlGame());
-				gameTextureAtlas = new TextureAtlas(texture, xml);
+				var texture:Texture = getTexture("AtlasTextureGameIdle");
+				var xml:XML = XML(new AtlasXmlGameIdle());
+				gameTextureAtlasIdle = new TextureAtlas(texture, xml);
 			}
-			return gameTextureAtlas;
+			return gameTextureAtlasIdle;
+		}
+		
+		public static function getAtlasShoot():TextureAtlas
+		{
+			if (gameTextureAtlasShoot == null)
+			{
+				var texture:Texture = getTexture("AtlasTextureGameShoot");
+				var xml:XML = XML(new AtlasXmlGameShoot());
+				gameTextureAtlasShoot = new TextureAtlas(texture, xml);
+			}
+			return gameTextureAtlasShoot;
 		}
 
 	}

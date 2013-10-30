@@ -6,8 +6,8 @@ package objects
 	
 	public class GameBackground extends Sprite
 	{
-		private var bgLayer1:BgLayer;
-		private var bgLayer2:BgLayer;
+		public var bgLayer1:BgLayer;
+		public var bgLayer2:BgLayer;
 		private var bgLayer3:BgLayer;
 		private var bgLayer4:BgLayer;
 		

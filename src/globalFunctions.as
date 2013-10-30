@@ -87,6 +87,9 @@ package
 						{
 							shootDir = shootDir.normalise();
 							
+							//Anropa state-change till shoot
+							player.playerStateShoot(shootDir);
+							
 							shootDir.x *= 5000;
 							shootDir.y *= 5000;
 		
@@ -237,7 +240,7 @@ package
 				bg.bgPosition(player.getBody().position);
 
 				
-				// DETTA FUNKAR SÅ JÄVLA BRA !!!!!!!!!!!
+				// DETTA FUNKAR BRA !!!!!!!!!!!
 				//var length:int = particleVec.length;
 				var arr:Array;
 				var diffX:Number;
