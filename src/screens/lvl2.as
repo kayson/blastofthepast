@@ -214,9 +214,17 @@ package screens
 			for( var i:int = 0; i < 6; i++ )
 			{
 				stoneBlock = new Objects("Stone",mySpace,
-					Vec2.weak(1050, screenHeight - 200 - 100 * (i+13)),
+					Vec2.weak(1050, screenHeight - 200 - 100 * (i+14)),
 					Vec2.weak(100,100), "Dirt" + (Math.ceil(Math.random()*5)-1));	
 				addChild(stoneBlock);
+			}
+			
+			for( var i:int = 0; i < 2; i++ )
+			{
+				enemy = new Objects("Enemy",mySpace,
+					Vec2.weak(850 + i * 100 ,  screenHeight - 300),
+					Vec2.weak(100,100));	
+				addChild(enemy);
 			}
 						
 			

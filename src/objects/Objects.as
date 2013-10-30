@@ -250,6 +250,39 @@ package objects
 			_objectImage.scaleY = _WidthHeight.y / _objectImage.height;
 						
 			_objectBody = PhysicsData.createBody("enemy");
+			_objectBody.type = BodyType.KINEMATIC;
+			_objectBody.space = _mySpace;
+			_objectBody.position.setxy( _position.x, _position.y );
+			_objectBody.userData.graphic = _objectImage;
+			
+			_objectBody.setShapeFilters(new InteractionFilter(2));
+			
+			_objectBody.cbTypes.add(globalFunctions.enemyCb);
+			_objectBody.cbTypes.add(globalFunctions.other);
+			
+			_objectImage.x = _objectBody.position.x;
+			_objectImage.y = _objectBody.position.y;
+			addChild(_objectImage);
+			
+			var animation:Tween = new Tween(_objectImage, 15);
+			animation.repeatCount = int.MAX_VALUE;
+			animation.animate("rotation", 180);
+			Starling.juggler.add(animation);
+												
+						
+		}
+		
+		private function onAddedToStagePivotSaw(event:Event):void
+		{
+			this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStagePivotSaw);
+			
+			_objectImage = new Image(Assets.getTexture("enemyRaw"));
+			_objectImage.pivotX = _objectImage.width / 2;
+			_objectImage.pivotY = _objectImage.height / 2;
+			_objectImage.scaleX = _WidthHeight.y / _objectImage.width;
+			_objectImage.scaleY = _WidthHeight.y / _objectImage.height;
+			
+			_objectBody = PhysicsData.createBody("enemy");
 			_objectBody.type = BodyType.DYNAMIC;
 			_objectBody.space = _mySpace;
 			_objectBody.mass = 5;
@@ -271,7 +304,7 @@ package objects
 			animation.repeatCount = int.MAX_VALUE;
 			animation.animate("rotation", 180);
 			Starling.juggler.add(animation);
-												
+			
 			var anchor:Vec2 = Vec2.get(_objectBody.position.x, _objectBody.position.y - 400);		
 			
 			var pivotJoint:Constraint = new PivotJoint(_objectBody, _mySpace.world, _objectBody.worldPointToLocal(anchor), anchor);
@@ -279,7 +312,7 @@ package objects
 			pivotJoint.stiff = false;
 			pivotJoint.frequency = 20;
 			pivotJoint.damping = 1;
-						
+			
 		}
 		
 		private function onAddedToStageFireball(event:Event):void
