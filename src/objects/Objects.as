@@ -285,12 +285,12 @@ package objects
 			_objectImage = new Image(Assets.getTexture((("fireBallRaw"))));
 			_objectImage.pivotX = _objectImage.width / 2;
 			_objectImage.pivotY = _objectImage.height / 2;
-			_objectImage.scaleX =  8/648;//_WidthHeight.y / _objectImage.width;
-			_objectImage.scaleY =  8/648;//_WidthHeight.y / _objectImage.height;
+			_objectImage.scaleX =  _WidthHeight.x/648;//_WidthHeight.y / _objectImage.width;
+			_objectImage.scaleY =  _WidthHeight.y/648;//_WidthHeight.y / _objectImage.height;
 			
 			_objectBody = new Body( BodyType.DYNAMIC );
 			
-			_objectBody.shapes.add( new Circle(_WidthHeight.x));
+			_objectBody.shapes.add( new Circle(1));
 			_objectBody.setShapeFilters(new InteractionFilter(1,~1));
 			_objectBody.cbTypes.add(globalFunctions.projectile);
 			

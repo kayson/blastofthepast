@@ -95,7 +95,7 @@ package
 		
 							var fireball:Objects = new Objects("Fireball",mySpace,
 								Vec2.weak(player.getBody().position.x, player.getBody().position.y),
-								Vec2.weak(8,8));
+								Vec2.weak(32,32));
 							lvlInterf.addObjectToInstance(fireball);
 							fireball.getBody().rotation = shootDir.angle;
 							fireball.getBody().applyImpulse(shootDir);
