@@ -67,11 +67,11 @@ package objects
 
 			/*if((640 - position.y) > 640/2)
 			{*/
-				bgLayer1.y = (-1150 - position.y) * bgLayer1.parallax;
-				bgLayer1.x = (960 / 2 - position.x) * bgLayer1.parallax;
+				bgLayer1.y = (-1300 - position.y) * bgLayer1.parallax;
+				bgLayer1.x = (360 + 960 / 2 - position.x) * bgLayer1.parallax;
 				//if (bgLayer1.x < -stage.stageWidth) bgLayer1.x = 0;
 				
-				bgLayer2.y = (640 - position.y) *1;
+				bgLayer2.y = (640 - 200 - position.y) *1;
 				bgLayer2.x = (960 - position.x) * bgLayer2.parallax;
 				//if (bgLayer2.x < -stage.stageWidth) bgLayer2.x = 0;
 				

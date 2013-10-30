@@ -125,38 +125,100 @@ package screens
 			
 			//Roof
 			stoneBlock = new Objects("Stone",mySpace,
-				Vec2.weak(screenWidth, -200),
+				Vec2.weak(screenWidth + 350, screenHeight-2200),
 				Vec2.weak(960 * 3 ,128));	
 			addChild(stoneBlock);
 			
 			//Right wall
 			stoneBlock = new Objects("Stone",mySpace,
-				Vec2.weak(screenWidth * 2.5, screenHeight / 2),
+				Vec2.weak(350 + screenWidth * 2.5, screenHeight / 2),
 				Vec2.weak(128,960));	
 			addChild(stoneBlock);
 			
 			//Left wall
 			stoneBlock = new Objects("Stone",mySpace,
-				Vec2.weak(0, screenHeight / 2),
-				Vec2.weak(128,960));	
-			addChild(stoneBlock);
+				Vec2.weak(350, screenHeight / 2 - 1010),
+				Vec2.weak(100,2460));	
+			addChild(stoneBlock);			
 			
-			
-			
-			//Level-buildingblocks
+			//Floor
 			for( var i:int = 0; i < 15; i++ )
 			{
 				stoneBlock = new Objects("Stone",mySpace,
-					Vec2.weak(100 + 100 * i, screenHeight - 50),
+					Vec2.weak(450 + 100 * i, screenHeight - 200),
 					Vec2.weak(100,100), "Dirt" + (Math.ceil(Math.random()*5)-1));	
 				addChild(stoneBlock);
 			}
 			
-			stoneBlock = new Objects("Stone",mySpace,
-				Vec2.weak(screenWidth * 1 / 3, screenHeight - 200),
-				Vec2.weak(100,100), "Dirt1");	
-			addChild(stoneBlock);
+			//First steps
+			for( var i:int = 0; i < 2; i++ )
+			{
+				stoneBlock = new Objects("Stone",mySpace,
+					Vec2.weak(450 + 100 * i, screenHeight - 400),
+					Vec2.weak(100,100), "Dirt" + (Math.ceil(Math.random()*5)-1));	
+				addChild(stoneBlock);
+			}		
+			for( var i:int = 0; i < 2; i++ )
+			{
+				stoneBlock = new Objects("Stone",mySpace,
+					Vec2.weak(550 + 100 * i, screenHeight - 700),
+					Vec2.weak(100,100), "Dirt" + (Math.ceil(Math.random()*5)-1));	
+				addChild(stoneBlock);
+			}			
+			for( var i:int = 0; i < 2; i++ )
+			{
+				stoneBlock = new Objects("Stone",mySpace,
+					Vec2.weak(450 + 100 * i, screenHeight - 1000),
+					Vec2.weak(100,100), "Dirt" + (Math.ceil(Math.random()*5)-1));	
+				addChild(stoneBlock);
+			}
+			for( var i:int = 0; i < 2; i++ )
+			{
+				stoneBlock = new Objects("Stone",mySpace,
+					Vec2.weak(550 + 100 * i, screenHeight - 1300),
+					Vec2.weak(100,100), "Dirt" + (Math.ceil(Math.random()*5)-1));	
+				addChild(stoneBlock);
+			}
+			for( var i:int = 0; i < 2; i++ )
+			{
+				stoneBlock = new Objects("Stone",mySpace,
+					Vec2.weak(450 + 100 * i, screenHeight - 1600),
+					Vec2.weak(100,100), "Dirt" + (Math.ceil(Math.random()*5)-1));	
+				addChild(stoneBlock);
+			}
+			for( var i:int = 0; i < 2; i++ )
+			{
+				stoneBlock = new Objects("Stone",mySpace,
+					Vec2.weak(550 + 100 * i, screenHeight - 1900),
+					Vec2.weak(100,100), "Dirt" + (Math.ceil(Math.random()*5)-1));	
+				addChild(stoneBlock);
+			}
 			
+			//Pillar
+			for( var i:int = 0; i < 18; i++ )
+			{
+				stoneBlock = new Objects("Stone",mySpace,
+					Vec2.weak(750, screenHeight - 200 - 100 * i),
+					Vec2.weak(100,100), "Dirt" + (Math.ceil(Math.random()*5)-1));	
+				addChild(stoneBlock);
+			}
+			
+			//Pillar 2
+			for( var i:int = 0; i < 12; i++ )
+			{
+				stoneBlock = new Objects("Stone",mySpace,
+					Vec2.weak(1050, screenHeight - 200 - 100 * i),
+					Vec2.weak(100,100), "Dirt" + (Math.ceil(Math.random()*5)-1));	
+				addChild(stoneBlock);
+			}
+			for( var i:int = 0; i < 6; i++ )
+			{
+				stoneBlock = new Objects("Stone",mySpace,
+					Vec2.weak(1050, screenHeight - 200 - 100 * (i+13)),
+					Vec2.weak(100,100), "Dirt" + (Math.ceil(Math.random()*5)-1));	
+				addChild(stoneBlock);
+			}
+						
 			
 			//The menubutton
 			toMenu = new Button(Assets.getTexture("buttonPlay"));

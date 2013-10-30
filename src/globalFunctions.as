@@ -71,6 +71,8 @@ package
 						xDir = touch.globalX;
 						yDir = touch.globalY;
 						
+						player.getBody().angularVel = 0;
+						
 						arrow = new Image(Assets.getTexture("arrowRaw"));
 						arrow.pivotX = arrow.width / 2;
 						arrow.pivotY = arrow.height;
@@ -146,7 +148,7 @@ package
 				ps.start(0.5);
 				ps.advanceTime(0.1);
 				
-				Assets.shoot.play();
+				//Assets.shoot.play();
 				
 				var impulseForce:Number;
 				var impulse:Vec2;
@@ -159,7 +161,7 @@ package
 					{
 						if(b.cbTypes.has(player) || b.cbTypes.has(other))
 						{
-							impulseForce = Math.log((100-impulseVector.length)/80 + 1)*200;
+							impulseForce = Math.log((100-impulseVector.length)/80 + 1)*250;
 							if(impulseForce > 0)
 							{
 								impulse = impulseVector.mul(impulseForce/impulseVector.length * 2);
