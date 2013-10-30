@@ -61,7 +61,7 @@ package
 		
 		//Background layers
 		
-		[Embed(source="../images/andersillu/background_forest2.png")]
+		[Embed(source="../images/andersillu/background_forest.png")]
 		public static const BgLayer1:Class;
 		
 		[Embed(source="../images/andersillu/background_diamonds_l2.png")]
@@ -124,6 +124,7 @@ package
 		private static var gameTextureAtlasIdle:TextureAtlas;
 		private static var gameTextureAtlasShoot:TextureAtlas;
 		private static var gameTextureAtlasTiles:TextureAtlas;
+		private static var gameTextureAtlasGoal:TextureAtlas;
 		
 		//IDLE
 		[Embed(source="../images/andersillu/flash/player_diamond_idle.png")]
@@ -145,6 +146,13 @@ package
 		
 		[Embed(source="../images/andersillu/flash/tile_sprite.xml", mimeType="application/octet-stream")]
 		public static const AtlasXmlGameTiles:Class;
+		
+		//GOAL
+		[Embed(source="../images/andersillu/flash/goal_spritesheet.png")]
+		public static const AtlasTextureGameGoal:Class;
+		
+		[Embed(source="../images/andersillu/flash/goal_spritesheet.xml", mimeType="application/octet-stream")]
+		public static const AtlasXmlGameGoal:Class;
 		
 		public static function getAtlasIdle():TextureAtlas
 		{
@@ -177,6 +185,17 @@ package
 				gameTextureAtlasTiles = new TextureAtlas(texture, xml);
 			}
 			return gameTextureAtlasTiles;
+		}
+		
+		public static function getAtlasGoal():TextureAtlas
+		{
+			if (gameTextureAtlasGoal == null)
+			{
+				var texture:Texture = getTexture("AtlasTextureGameGoal");
+				var xml:XML = XML(new AtlasXmlGameGoal());
+				gameTextureAtlasGoal = new TextureAtlas(texture, xml);
+			}
+			return gameTextureAtlasGoal;
 		}
 
 	}
