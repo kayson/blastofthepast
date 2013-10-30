@@ -45,7 +45,7 @@ package
 			public static var goal:CbType = new CbType();
 
 			public static var shootCooldown:int;
-			private static var maxCooldown:int = 60;
+			private static var maxCooldown:int = 30;
 					
 			private static var psConfig:XML;
 			private static var psTexture:Texture;
@@ -73,8 +73,8 @@ package
 						arrow = new Image(Assets.getTexture("arrowRaw"));
 						arrow.pivotX = arrow.width / 2;
 						arrow.pivotY = arrow.height;
-						arrow.scaleX = 50 / arrow.width;
-						arrow.scaleY = 50 / arrow.height;
+						arrow.scaleX = 100 / arrow.width;
+						arrow.scaleY = 100 / arrow.height;
 						
 						arrow.x = player.getBody().userData.graphic.x;
 						arrow.y = player.getBody().userData.graphic.y;
