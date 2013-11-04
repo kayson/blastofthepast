@@ -417,7 +417,7 @@ package objects
 			this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStageBox);
 		
 			_objectBody = new Body( BodyType.DYNAMIC );
-			_objectImage =  new Image(Assets.getTexture((("scaredBoxRaw"))));
+			_objectImage =  new Image(Assets.getTexture((("stoneBlock"))));
 			
 			_objectImage.pivotX = _objectImage.width / 2;
 			_objectImage.pivotY = _objectImage.height / 2;

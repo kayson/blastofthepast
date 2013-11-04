@@ -256,6 +256,20 @@ package screens
 					Vec2.weak(100,100), "Dirt" + (Math.ceil(Math.random()*5)-1));	
 				addChild(stoneBlock);
 			}
+			
+			//Add boxes
+			for( var i:int = 0; i < 8; i++ )
+			{
+				for( var j:int = -2; j < 3; j++ )
+				{
+					box = new Objects("Box",mySpace,
+						Vec2.weak((1400) - (j * 16), (screenHeight - 900) - (i * 16)),
+						Vec2.weak(16,16));	
+					addChild(box);
+				}
+			}
+			
+			
 				for( var i:int = 0; i < 1; i++ )
 				{
 					stoneBlock = new Objects("Stone",mySpace,

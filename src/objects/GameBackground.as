@@ -34,7 +34,7 @@ package objects
 			bgLayer2 = new BgLayer(2);
 			bgLayer2.parallax = 1.1;
 			bgLayer1.y = 640;
-			this.addChild(bgLayer2);
+			//this.addChild(bgLayer2);
 			
 			bgLayer3 = new BgLayer(3);
 			bgLayer3.parallax = 1.15;
