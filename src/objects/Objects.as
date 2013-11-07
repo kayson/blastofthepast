@@ -92,6 +92,10 @@ package objects
 					trace("Water created ");
 					this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStageWater);
 					break;
+				case "WaterGravity":
+					trace("WaterGravity created ");
+					this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStageGravity);
+					break;
 				
 			}
 				
@@ -250,8 +254,8 @@ package objects
 			_objectImage = new Image(Assets.getTexture("enemyRaw"));
 			_objectImage.pivotX = _objectImage.width / 2;
 			_objectImage.pivotY = _objectImage.height / 2;
-			_objectImage.scaleX = _WidthHeight.y / _objectImage.width;
-			_objectImage.scaleY = _WidthHeight.y / _objectImage.height;
+			//_objectImage.scaleX = _WidthHeight.y / _objectImage.width;
+			//_objectImage.scaleY = _WidthHeight.y / _objectImage.height;
 						
 			_objectBody = PhysicsData.createBody("enemy");
 			_objectBody.type = BodyType.KINEMATIC;
@@ -366,34 +370,13 @@ package objects
 				_objectImage = new Image(Assets.getTexture((("stoneBlock"))));
 			}
 			
-			/*switch(_tile)	
-			{
-				case "Dirt0":
-					_objectImage = new Image(Assets.getAtlasTiles().getTexture("Dirt0"));
-					break;
-				case "Dirt1":
-					_objectImage = new Image(Assets.getAtlasTiles().getTexture("Dirt1"));
-					break;
-				case "Dirt2":
-					_objectImage = new Image(Assets.getAtlasTiles().getTexture("Dirt2"));
-					break;
-				case "Dirt3":
-					_objectImage = new Image(Assets.getAtlasTiles().getTexture("Dirt3"));
-					break;
-				case "Dirt4":
-					_objectImage = new Image(Assets.getAtlasTiles().getTexture("Dirt4"));
-					break;
-				case "0":
-					_objectImage = new Image(Assets.getTexture((("stoneBlock"))));
-					break;	
-			}*/
-			
 			_objectImage.pivotX = _objectImage.width / 2;
 			_objectImage.pivotY = _objectImage.height / 2;
 			_objectImage.scaleX = _WidthHeight.x / _objectImage.width;
 			_objectImage.scaleY = _WidthHeight.y / _objectImage.height;
 			
-			_objectBody = new Body( BodyType.STATIC );
+			_objectBody = new Body( BodyType.KINEMATIC );
+			
 			
 			_objectBody.shapes.add( new Polygon(Polygon.box(_WidthHeight.x, _WidthHeight.y)));
 			_objectBody.setShapeFilters(new InteractionFilter(2));
@@ -408,7 +391,7 @@ package objects
 			_objectImage.x = _objectBody.position.x;
 			_objectImage.y = _objectBody.position.y;
 			_objectImage.blendMode = BlendMode.NONE;
-			addChild(_objectImage);
+			addChild(_objectImage);0
 
 		}
 		
@@ -417,7 +400,7 @@ package objects
 			this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStageBox);
 		
 			_objectBody = new Body( BodyType.DYNAMIC );
-			_objectImage =  new Image(Assets.getTexture((("stoneBlock"))));
+			_objectImage =  new Image(Assets.getTexture((("NeonBoxRaw"))));
 			
 			_objectImage.pivotX = _objectImage.width / 2;
 			_objectImage.pivotY = _objectImage.height / 2;
@@ -472,6 +455,41 @@ package objects
 			addChild(_objectImage);
 			
 					
+		}
+		
+		private function onAddedToStageGravity(event:Event):void
+		{
+			this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStageWater);
+			
+			//_objectBody = new Body( BodyType.STATIC );
+			_objectImage =  new Image(Assets.getTexture((("waterRawGravity"))));
+			
+			_objectImage.pivotX = _objectImage.width / 2;
+			_objectImage.pivotY = _objectImage.height / 2;
+			_objectImage.scaleX = _WidthHeight.x / _objectImage.width;
+			_objectImage.scaleY = _WidthHeight.y / _objectImage.height;
+			
+			var water:Polygon = new Polygon(Polygon.box( _WidthHeight.x, _WidthHeight.y));
+			water.fluidEnabled = true;
+			water.fluidProperties.density = 3;
+			water.fluidProperties.viscosity = 5;
+			water.body = new Body(BodyType.STATIC);
+			water.body.position.setxy(_position.x,_position.y);
+			water.body.userData.graphic = _objectImage;
+			water.body.space = _mySpace;		
+			
+			_objectBody = water.body;
+			
+			_objectImage.x = _position.x;
+			_objectImage.y = _position.y;
+			_objectImage.alpha = 1.0;
+			addChild(_objectImage);
+			
+			
+		}
+		public function setBodyRotation(angle:Number):void
+		{
+			_objectBody.rotation = angle;
 		}
 		
 		public function getBody():Body

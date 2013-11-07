@@ -93,7 +93,7 @@ package screens
 			goal = new Objects("Goal",mySpace,
 				Vec2.weak(1150, screenHeight - 1800),
 				Vec2.weak(100,100));
-			addChild(goal)
+			addChild(goal);
 			
 			//Add boxes
 //			for( var i:int = 0; i < 6; i++ )
@@ -312,9 +312,9 @@ package screens
 			
 			//The menubutton
 			toMenu = new Button(Assets.getTexture("buttonPlay"));
-			toMenu.scaleX = 0.15;
-			toMenu.scaleY = 0.15;
-			toMenu.x = 900;
+			toMenu.scaleX = 0.5;
+			toMenu.scaleY = 0.5;
+			toMenu.x = 880;
 			toMenu.y = 570;
 			this.addChild(toMenu);
 						

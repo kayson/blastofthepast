@@ -11,10 +11,10 @@ package
 	public class Assets
 	{
 		
-		[Embed(source="../images/bgWelcome.jpg")]
+		[Embed(source="../images/andersillu/BFTP_Welcome.png")]
 		public static const BgWelcome:Class;
 		
-		[Embed(source="../images/play.png")]
+		[Embed(source="../images/levelnumbers/return.png")]
 		public static const buttonPlay:Class;
 		
 		[Embed(source="../images/goal.png")] 
@@ -23,8 +23,8 @@ package
 		[Embed(source="../images/CircleBadGuy.png")] 
 		public static const circleBadGuyRaw:Class;
 		
-		[Embed(source="../images/ScaredBox.png")] 
-		public static const scaredBoxRaw:Class;
+		[Embed(source="../images/andersillu/tiles/Neon.png")] 
+		public static const NeonBoxRaw:Class;
 		
 		[Embed(source="../images/Fireball.png")] 
 		private static const fireBallRaw:Class;
@@ -38,23 +38,26 @@ package
 		[Embed(source="../images/water.png")] 
 		private static const waterRaw:Class;
 		
+		[Embed(source="../images/waterGravity.png")] 
+		private static const waterRawGravity:Class;
+		
 		[Embed(source="../images/arrow.png")] 
 		private static const arrowRaw:Class;
 		
 		//Levelnumbers
-		[Embed(source="../images/levelnumbers/1.png")]
+		[Embed(source="../images/levelnumbers/11.png")]
 		public static const buttonLvl1:Class;
 		
-		[Embed(source="../images/levelnumbers/2.png")]
+		[Embed(source="../images/levelnumbers/22.png")]
 		public static const buttonLvl2:Class;
 		
-		[Embed(source="../images/levelnumbers/3.png")]
+		[Embed(source="../images/levelnumbers/33.png")]
 		public static const buttonLvl3:Class;
 		
-		[Embed(source="../images/levelnumbers/4.png")]
+		[Embed(source="../images/levelnumbers/44.png")]
 		public static const buttonLvl4:Class;
 		
-		[Embed(source="../images/levelnumbers/5.png")]
+		[Embed(source="../images/levelnumbers/55.png")]
 		public static const buttonLvl5:Class;
 		
 		

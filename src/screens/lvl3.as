@@ -93,89 +93,203 @@ package screens
 
 		private function InitBodies():void
 		{	
-			var tempValue:Number = 300;
-			
 			//Parallax background baby!
 			bg = new GameBackground();
-			addChild(bg);		
-			
+			//bg.scaleX = 2;
+			//bg.scaleY = 2;	
+			this.addChild(bg);
 			
 			//The player
 			player = new Objects("Player",mySpace,
 				Vec2.weak(screenWidth / 2, screenHeight / 2),
-				Vec2.weak(50,100)); //16 = radie, 32 = scalevalue. (Behövs fixas)
+				Vec2.weak(25,50)); //25 = radie, 50 = scalevalue. (Behövs fixas)	
 			addChild(player);
 			
-			//The goal
-			goal = new Objects("Goal", mySpace,
-				Vec2.weak(screenWidth - 150 + tempValue, screenHeight - 150),
-				Vec2.weak(32,32));
+			//Goal
+			goal = new Objects("Goal",mySpace,
+				Vec2.weak(2350, screenHeight - 300),
+				Vec2.weak(100,100));
 			addChild(goal);
 			
-			//Add boxes
-			for( var i:int = 0; i < 20; i++ )
-			{
-				for( var j:int = -1; j < 1; j++ )
-				{
-					box = new Objects("Box",mySpace,
-						Vec2.weak(600 - (j * 16), (screenHeight - 200) - (i * 16)),
-						Vec2.weak(16,16));	
-					addChild(box);
-				}
-			}
-				
+			//Roof
 			stoneBlock = new Objects("Stone",mySpace,
-				Vec2.weak(20 + tempValue, screenHeight / 2 + 310),
-				Vec2.weak(256,256));	
-			addChild(stoneBlock);
-			
-			/*
-			water = new Objects("Water",mySpace,
-				Vec2.weak(300, screenHeight / 2 + 420),
-				Vec2.weak(500,500));	
-			addChild(water);
-			*/
-			
-			//The level building blocks. (STATIC objects)  -----------------------------------
-			
-			
-			
-			//Middle pillar
-			stoneBlock = new Objects("Stone",mySpace,
-				Vec2.weak(600 + tempValue, screenHeight - 100),
-				Vec2.weak(128,150));	
+				Vec2.weak(screenWidth + 350, screenHeight-2200),
+				Vec2.weak(960 * 3 ,128));	
 			addChild(stoneBlock);
 			
 			//Right wall
 			stoneBlock = new Objects("Stone",mySpace,
-				Vec2.weak(screenWidth + 128 + tempValue, screenHeight / 2),
-				Vec2.weak(256 + 128,1300));	
+				Vec2.weak(2450, screenHeight / 2 - 1010),
+				Vec2.weak(100,2460));	
 			addChild(stoneBlock);
 			
 			//Left wall
 			stoneBlock = new Objects("Stone",mySpace,
-				Vec2.weak(-128 + tempValue, screenHeight / 2),
-				Vec2.weak(256 + 128,1300));	
-			addChild(stoneBlock);
+				Vec2.weak(350, screenHeight / 2 - 1010),
+				Vec2.weak(100,2460));	
+			addChild(stoneBlock);			
 			
-			//FLOOR
-			stoneBlock = new Objects("Stone",mySpace,
-					Vec2.weak(screenWidth / 2 + tempValue, screenHeight + 128),
-					Vec2.weak(960,256 + 128));	
-			addChild(stoneBlock);
+			//Floor
+			for( var i:int = 0; i < 20; i++ )
+			{
+				stoneBlock = new Objects("Stone",mySpace,
+					Vec2.weak(450 + 100 * i, screenHeight - 200),
+					Vec2.weak(100,100), "Dirt" + (Math.ceil(Math.random()*5)-1));	
+				addChild(stoneBlock);
+			}
 			
-			//Roof
+			//BOXESFLOOR
+			for( var i:int = 0; i < 2; i++ )
+			{
+				for( var j:int = -1; j < 3; j++ )
+				{
+					stoneBlock = new Objects("Stone",mySpace,
+						Vec2.weak((1050) - (j * 100), (screenHeight - 300) - (i * 100)),
+						Vec2.weak(100,100), "Dirt" + (Math.ceil(Math.random()*5)-1));	
+					addChild(stoneBlock);
+				}
+			}
+			
+			//Midpillar
+			for( var i:int = 0; i < 10; i++ )
+			{
+				stoneBlock = new Objects("Stone",mySpace,
+					Vec2.weak(1250, screenHeight - 300 - 100 * i),
+					Vec2.weak(100,100), "Dirt" + (Math.ceil(Math.random()*5)-1));	
+				addChild(stoneBlock);
+			}
+			
+			//BOXESFLOOR
+			for( var i:int = 0; i < 3; i++ )
+			{
+				for( var j:int = -1; j < 3; j++ )
+				{
+					stoneBlock = new Objects("Stone",mySpace,
+						Vec2.weak((650) - (j * 100), (screenHeight - 700) - (i * 100)),
+						Vec2.weak(100,100), "Dirt" + (Math.ceil(Math.random()*5)-1));	
+					addChild(stoneBlock);
+				}
+			}
+	
+			
+			//Mid roof
+			for( var i:int = 0; i < 11; i++ )
+			{
+				stoneBlock = new Objects("Stone",mySpace,
+					Vec2.weak(950 + 100 * i, screenHeight - 1300),
+					Vec2.weak(100,100), "Dirt" + (Math.ceil(Math.random()*5)-1));	
+				addChild(stoneBlock);
+			}
+			
+			//ENEMY LEFT TOP
+			enemy = new Objects("Enemy",mySpace,
+				Vec2.weak(850,  screenHeight - 1300),
+				Vec2.weak(100,100));	
+			addChild(enemy);
+			
+			//ENEMY RIGHT TOP
+			enemy = new Objects("Enemy",mySpace,
+				Vec2.weak(2050,  screenHeight - 1300),
+				Vec2.weak(100,100));	
+			addChild(enemy);
+			
+			
+			//RIGHT SIDE
+			//Left floor
+			for( var i:int = 0; i < 7; i++ )
+			{
+				stoneBlock = new Objects("Stone",mySpace,
+					Vec2.weak(2350 - 100 * i, screenHeight - 700),
+					Vec2.weak(100,100), "Dirt" + (Math.ceil(Math.random()*5)-1));	
+				addChild(stoneBlock);
+			}
+			
+			//ENEMY RIGHT 1
+			enemy = new Objects("Enemy",mySpace,
+				Vec2.weak(1750,  screenHeight - 1200),
+				Vec2.weak(100,100));	
+			addChild(enemy);
+			
+			//ENEMY RIGHT 2
+			enemy = new Objects("Enemy",mySpace,
+				Vec2.weak(1750,  screenHeight - 1080),
+				Vec2.weak(100,100));	
+			addChild(enemy);
+			
+			//ENEMY RIGHT 3
+			enemy = new Objects("Enemy",mySpace,
+				Vec2.weak(1750,  screenHeight - 800),
+				Vec2.weak(100,100));	
+			addChild(enemy);
+			
+			
+			
+			
+			//Extra for map
+			/*
+			//ENEMY
+			for( var i:int = 0; i < 2; i++ )
+			{
+				enemy = new Objects("Enemy",mySpace,
+					Vec2.weak(2000 + i * 100 ,  screenHeight - 300),
+					Vec2.weak(100,100));	
+				addChild(enemy);
+			}
+			
+			//WATER
+			water = new Objects("Water",mySpace,
+				Vec2.weak(1400, screenHeight - 275),
+				Vec2.weak(450,50));	
+			addChild(water);
+			
+			//BOXES
+			//Add boxes
+			for( var i:int = 0; i < 8; i++ )
+			{
+				for( var j:int = -2; j < 3; j++ )
+				{
+					box = new Objects("Box",mySpace,
+						Vec2.weak((650) - (j * 16), (screenHeight - 300) - (i * 16)),
+						Vec2.weak(16,16));	
+					addChild(box);
+				}
+			}
+			
+			//Add boxes
+			for( var i:int = 0; i < 8; i++ )
+			{
+				for( var j:int = -1; j < 2; j++ )
+				{
+					box = new Objects("Box",mySpace,
+						Vec2.weak((750) - (j * 32), (screenHeight - 300) - (i * 32)),
+						Vec2.weak(32,32));	
+					addChild(box);
+				}
+			}
+			
+			*/
+			
+			
+			
+			
+			//First steps
+			/*for( var i:int = 0; i < 2; i++ )
+			{
 			stoneBlock = new Objects("Stone",mySpace,
-				Vec2.weak(screenWidth / 2 + tempValue, -128),
-				Vec2.weak(960,256 + 128));	
+			Vec2.weak(450 + 100 * i, screenHeight - 400),
+			Vec2.weak(100,100), "Dirt" + (Math.ceil(Math.random()*5)-1));	
 			addChild(stoneBlock);
-				
-			//The menubuttonlan
+			}		
+			*/
+			
+			
+			
+			//The menubutton
 			toMenu = new Button(Assets.getTexture("buttonPlay"));
-			toMenu.scaleX = 0.2;
-			toMenu.scaleY = 0.2;
-			toMenu.x = 100;
-			toMenu.y = 100;
+			toMenu.scaleX = 0.5;
+			toMenu.scaleY = 0.5;
+			toMenu.x = 880;
+			toMenu.y = 570;
 			this.addChild(toMenu);
 			
 			this.addEventListener(Event.TRIGGERED, onMainMenuClick);			

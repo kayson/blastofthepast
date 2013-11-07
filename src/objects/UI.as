@@ -26,6 +26,7 @@ package objects
 		private var timer:Timer = new Timer(1000);
 		
 		public static var shootTimer:ProgressBar;
+		public static var hpBar:ProgressBar;
 		
 		private var progressTween:Tween;
 		
@@ -61,6 +62,15 @@ package objects
 			shootTimer.x = 380;
 			shootTimer.y = 15;
 			addChild( shootTimer );
+			
+			hpBar = new ProgressBar();
+			hpBar.minimum = 0;
+			hpBar.maximum = 1;
+			hpBar.value = 1;
+			hpBar.x = 380;
+			hpBar.y = 50;
+			//hpBar.direction = ProgressBar.DIRECTION_VERTICAL;
+			addChild( hpBar );
 		}
 		
 		

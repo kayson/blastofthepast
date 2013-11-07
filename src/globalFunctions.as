@@ -1,11 +1,13 @@
 package
 {
+	import events.NavigationEvent;
+	
 	import flash.display.Sprite;
 	import flash.events.TimerEvent;
 	import flash.text.StaticText;
 	import flash.utils.Timer;
 	
-	import events.NavigationEvent;
+	import flashx.textLayout.events.DamageEvent;
 	
 	import nape.callbacks.CbType;
 	import nape.callbacks.InteractionCallback;
@@ -54,6 +56,7 @@ package
 			private static var particleVec:Vector.<PDParticleSystem> = new Vector.<PDParticleSystem>();
 
 			private static var arrow:Image;
+			private static var damageTaken:Number = 0;
 			
 			public static function performAction():void {
 				
@@ -194,6 +197,23 @@ package
 				
 				lvlInterf.addObjectToInstance(ps);
 				Starling.juggler.add(ps);
+				
+				trace(damageTaken);
+				damageTaken += 1;
+				UI.hpBar.value -= 0.2;
+				if(damageTaken > 4)
+				{
+					damageTaken = 0;
+					UI.hpBar.value = 1;
+					lvlInterf.getPlayer().getBody().rotation = 0;
+					lvlInterf.getPlayer().getBody().angularVel = 0;
+					lvlInterf.getPlayer().getBody().velocity.x = 0;
+					lvlInterf.getPlayer().getBody().velocity.y = 0;
+					lvlInterf.getPlayer().getBody().position.y = 640/2;
+					lvlInterf.getPlayer().getBody().position.x = 960/2;
+				}
+				
+				
 				
 				ps.start(0.5);
 				ps.advanceTime(0.1);
